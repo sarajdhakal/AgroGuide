@@ -3,19 +3,17 @@ import Users from "./model/userModel.js"; // adjust if needed
 
 const MONGO_URL = process.env.MONGO_URL || "mongodb://localhost:27017/mern";
 
-async function removeNameField() {
-    try {
-        await mongoose.connect(MONGO_URL);
-        console.log("✅ Connected to MongoDB");
+async function updateExistingUsers() {
+    await mongoose.connect("mongodb://localhost:27017/your-db-name");
 
-        const result = await Users.updateMany({}, { $unset: { name: "" } });
-        console.log(`🧹 Removed 'name' from ${result.modifiedCount} users.`);
-    } catch (err) {
-        console.error("❌ Error during cleanup:", err);
-    } finally {
-        await mongoose.disconnect();
-        console.log("🔌 Disconnected from MongoDB");
-    }
+    await Users.updateMany(
+        { password: { $exists: false } },
+        { $set: { password: "password" } }
+    );
+
+
+    console.log("All existing users updated with default password.");
+    await mongoose.disconnect();
 }
 
-removeNameField();
+updateExistingUsers();

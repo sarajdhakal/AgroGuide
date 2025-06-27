@@ -9,7 +9,6 @@ export default function Home({ onNavigate }) {
       id="home"
       className="relative min-h-screen flex items-center justify-center"
       style={{
-        backgroundImage: "url('/hero-bg.png')",
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
@@ -28,7 +27,7 @@ export default function Home({ onNavigate }) {
           Discover the perfect crops for your land with our innovative AI-powered platform.
         </p>
         <p className="text-lg sm:text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
-          Maximize yield, minimize risk, and grow smarter with data-driven insights.
+          Maximize yield, and minimize risk, and grow smarter with data-driven insights.
         </p>
         <Button
           size="lg"

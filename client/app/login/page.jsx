@@ -10,6 +10,10 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Leaf, Mail, Lock, Eye, EyeOff, ArrowLeft, AlertCircle } from "lucide-react"
 import Link from "next/link"
+import { useAuth } from "@/components/AuthProvider"
+
+
+
 
 export default function UserLoginPage() {
   const router = useRouter()
@@ -20,31 +24,24 @@ export default function UserLoginPage() {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    rememberMe: false,
   })
+  const { userLogin } = useAuth()
 
   const handleLogin = async (e) => {
     e.preventDefault()
     setIsLoading(true)
     setError("")
 
-    try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1500))
+    const result = await userLogin(formData.email, formData.password)
 
-      // Mock validation
-      if (formData.email === "user@agroguide.com" && formData.password === "password") {
-        router.push("/")
-      } else {
-        setError("Invalid email or password")
-      }
-    } catch (err) {
-      setError("Login failed. Please try again.")
-    } finally {
-      setIsLoading(false)
+    if (result.success) {
+      router.push(result.redirect)
+    } else {
+      setError(result.error)
     }
-  }
 
+    setIsLoading(false)
+  }
   const handleInputChange = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }))
     setError("")

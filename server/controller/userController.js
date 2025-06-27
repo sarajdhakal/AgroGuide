@@ -41,6 +41,43 @@ export const getUserById = async (req, res) => {
         res.status(500).json({ errorMessage: error.message });
     }
 };
+export const userLogin = async (req, res) => {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+        return res.status(400).json({ message: "Email and password are required" });
+    }
+
+    try {
+        // Find user by email
+        const user = await User.findOne({ email });
+
+        if (!user) {
+            return res.status(401).json({ message: "Invalid email or password" });
+        }
+
+        // Compare plain password
+        if (user.password !== password) {
+            return res.status(401).json({ message: "Invalid email or password" });
+        }
+
+        // Success: Send back basic user info (no token)
+        return res.status(200).json({
+            message: "Login successful",
+            user: {
+                id: user._id,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                role: user.role,
+                status: user.status,
+            },
+        });
+    } catch (err) {
+        console.error("Login Error:", err);
+        return res.status(500).json({ message: "Server error" });
+    }
+};
 
 export const update = async (req, res) => {
     try {

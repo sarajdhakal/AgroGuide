@@ -6,10 +6,10 @@ import joblib
 app = Flask(__name__)
 CORS(app)
 
-# Load model and scaler
+# Load model and scalers
 model = joblib.load("model.pkl")
-# or use standscaler.pkl if that's correct
-scaler = joblib.load("minmaxscaler.pkl")
+minmaxscaler = joblib.load("minmaxscaler.pkl")
+standscaler = joblib.load("standscaler.pkl")
 
 
 @app.route('/predict', methods=['POST'])
@@ -24,13 +24,24 @@ def predict():
             data['ph'], data['rainfall']
         ]])
 
-        # Scale the input
-        input_scaled = scaler.transform(input_data)
+        # Apply both scalers in the same order as during training
+        input_minmax = minmaxscaler.transform(input_data)
+        input_scaled = standscaler.transform(input_minmax)
 
-        # Predict using the model
-        prediction = model.predict(input_scaled)
+        # Predict probabilities
+        probabilities = model.predict_proba(input_scaled)[0]
+        top3_indices = np.argsort(probabilities)[::-1][:3]
+        top3_labels = model.classes_[top3_indices]
+        top3_probs = probabilities[top3_indices]
 
-        return jsonify({'recommended_crop': prediction[0]})
+        # Format response with risk levels
+        result = {
+            "Low Risk": f"{top3_labels[0]} ({top3_probs[0]:.2f})",
+            "Medium Risk": f"{top3_labels[1]} ({top3_probs[1]:.2f})",
+            "High Risk": f"{top3_labels[2]} ({top3_probs[2]:.2f})"
+        }
+
+        return jsonify(result)
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500

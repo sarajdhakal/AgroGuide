@@ -9,9 +9,13 @@ import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Leaf, Mail, Lock, Eye, EyeOff, ArrowLeft, AlertCircle, User, MapPin } from "lucide-react"
+import { Mail, Lock, Eye, EyeOff, ArrowLeft, AlertCircle, User, MapPin } from "lucide-react"
 import Link from "next/link"
+import axios from "axios"
 
+const capitalize = (value) => {
+  return value ? value.charAt(0).toUpperCase() + value.slice(1).toLowerCase() : "";
+};
 export default function RegisterPage() {
   const router = useRouter()
   const [showPassword, setShowPassword] = useState(false)
@@ -20,18 +24,21 @@ export default function RegisterPage() {
   const [error, setError] = useState("")
   const [success, setSuccess] = useState("")
 
-  const [formData, setFormData] = useState({
+  const users = {
     firstName: "",
-    lastName: "",
     email: "",
+    address: "",
+    phoneNumber: "",
     password: "",
     confirmPassword: "",
-    farmLocation: "",
+    lastName: "",
     farmSize: "",
+    role: "User",
+    status: "Active",
     experience: "",
-    agreeToTerms: false,
-    subscribeNewsletter: true,
-  })
+
+  };
+  const [user, setUser] = useState(users);
 
   const handleRegister = async (e) => {
     e.preventDefault()
@@ -40,27 +47,44 @@ export default function RegisterPage() {
     setSuccess("")
 
     // Validation
-    if (formData.password !== formData.confirmPassword) {
+    if (user.password !== user.confirmPassword) {
       setError("Passwords do not match")
       setIsLoading(false)
       return
     }
 
-    if (!formData.agreeToTerms) {
+    if (!user.agreeToTerms) {
       setError("Please agree to the terms and conditions")
+      setIsLoading(false)
+      return
+    }
+    if (!user.farmSize) {
+      setError("Please select your farm size ")
+      setIsLoading(false)
+      return
+    }
+    if (!user.experience) {
+      setError("Please select experience level")
       setIsLoading(false)
       return
     }
 
     try {
       // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 2000))
+
+      await axios
+        .post("http://localhost:8000/api/user", {
+          ...user,
+          role: capitalize(user.role),
+          status: capitalize(user.status),
+        })
 
       setSuccess("Account created successfully! Redirecting to login...")
       setTimeout(() => {
         router.push("/login")
       }, 2000)
     } catch (err) {
+      console.log(err);
       setError("Registration failed. Please try again.")
     } finally {
       setIsLoading(false)
@@ -68,7 +92,7 @@ export default function RegisterPage() {
   }
 
   const handleInputChange = (field, value) => {
-    setFormData((prev) => ({ ...prev, [field]: value }))
+    setUser((prev) => ({ ...prev, [field]: value }))
     setError("")
   }
 
@@ -132,7 +156,7 @@ export default function RegisterPage() {
                       id="firstName"
                       type="text"
                       placeholder="Saraj"
-                      value={formData.firstName}
+                      value={user.firstName}
                       onChange={(e) => handleInputChange("firstName", e.target.value)}
                       className="pl-10 bg-white/10 border-white/20 text-white placeholder:text-slate-400 focus:border-emerald-500"
                       required
@@ -147,7 +171,7 @@ export default function RegisterPage() {
                     id="lastName"
                     type="text"
                     placeholder="Dhakal"
-                    value={formData.lastName}
+                    value={user.lastName}
                     onChange={(e) => handleInputChange("lastName", e.target.value)}
                     className="bg-white/10 border-white/20 text-white placeholder:text-slate-400 focus:border-emerald-500"
                     required
@@ -166,7 +190,7 @@ export default function RegisterPage() {
                     id="email"
                     type="email"
                     placeholder="sarajdhakal@gmail.com"
-                    value={formData.email}
+                    value={user.email}
                     onChange={(e) => handleInputChange("email", e.target.value)}
                     className="pl-10 bg-white/10 border-white/20 text-white placeholder:text-slate-400 focus:border-emerald-500"
                     required
@@ -186,7 +210,7 @@ export default function RegisterPage() {
                       id="password"
                       type={showPassword ? "text" : "password"}
                       placeholder="Create password"
-                      value={formData.password}
+                      value={user.password}
                       onChange={(e) => handleInputChange("password", e.target.value)}
                       className="pl-10 pr-10 bg-white/10 border-white/20 text-white placeholder:text-slate-400 focus:border-emerald-500"
                       required
@@ -210,7 +234,7 @@ export default function RegisterPage() {
                       id="confirmPassword"
                       type={showConfirmPassword ? "text" : "password"}
                       placeholder="Confirm password"
-                      value={formData.confirmPassword}
+                      value={user.confirmPassword}
                       onChange={(e) => handleInputChange("confirmPassword", e.target.value)}
                       className="pl-10 pr-10 bg-white/10 border-white/20 text-white placeholder:text-slate-400 focus:border-emerald-500"
                       required
@@ -229,17 +253,17 @@ export default function RegisterPage() {
               {/* Farm Information */}
               <div className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="farmLocation" className="text-white">
+                  <Label htmlFor="address" className="text-white">
                     Farm Location
                   </Label>
                   <div className="relative">
                     <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4" />
                     <Input
-                      id="farmLocation"
+                      id="address"
                       type="text"
                       placeholder="City, State"
-                      value={formData.farmLocation}
-                      onChange={(e) => handleInputChange("farmLocation", e.target.value)}
+                      value={user.address}
+                      onChange={(e) => handleInputChange("address", e.target.value)}
                       className="pl-10 bg-white/10 border-white/20 text-white placeholder:text-slate-400 focus:border-emerald-500"
                       required
                     />
@@ -256,10 +280,10 @@ export default function RegisterPage() {
                         <SelectValue placeholder="Select size" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="small">Under 10 acres</SelectItem>
-                        <SelectItem value="medium">10-100 acres</SelectItem>
-                        <SelectItem value="large">100-500 acres</SelectItem>
-                        <SelectItem value="enterprise">500+ acres</SelectItem>
+                        <SelectItem value="small">Under 10 kattha</SelectItem>
+                        <SelectItem value="medium">10-100 kattha</SelectItem>
+                        <SelectItem value="large">100-500 kattha</SelectItem>
+                        <SelectItem value="enterprise">500+ kattha</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -287,7 +311,7 @@ export default function RegisterPage() {
                 <div className="flex items-start space-x-2">
                   <Checkbox
                     id="agreeToTerms"
-                    checked={formData.agreeToTerms}
+                    checked={user.agreeToTerms}
                     onCheckedChange={(checked) => handleInputChange("agreeToTerms", checked)}
                     className="border-white/20 data-[state=checked]:bg-emerald-600 mt-1"
                   />
@@ -303,17 +327,7 @@ export default function RegisterPage() {
                   </Label>
                 </div>
 
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="subscribeNewsletter"
-                    checked={formData.subscribeNewsletter}
-                    onCheckedChange={(checked) => handleInputChange("subscribeNewsletter", checked)}
-                    className="border-white/20 data-[state=checked]:bg-emerald-600"
-                  />
-                  <Label htmlFor="subscribeNewsletter" className="text-sm text-slate-300">
-                    Subscribe to our newsletter for farming tips and updates
-                  </Label>
-                </div>
+
               </div>
 
               <Button

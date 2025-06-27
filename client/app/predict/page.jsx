@@ -1,6 +1,8 @@
 "use client"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
+import axios from "axios"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -19,11 +21,15 @@ import {
   DollarSign,
   Calendar,
   AlertTriangle,
+  ArrowRight,
 } from "lucide-react"
 import Header from "@/components/Header"
 import Footer from "@/components/Footer"
+import { useAuth } from "@/components/AuthProvider"
 
 export default function Predict() {
+  const router = useRouter()
+  const { user } = useAuth()
   const [formData, setFormData] = useState({
     location: "",
     soilType: "",
@@ -44,6 +50,7 @@ export default function Predict() {
 
   const [predictions, setPredictions] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
+  const [predictionId, setPredictionId] = useState(null)
 
   const handleInputChange = (field, value) => {
     setFormData((prev) => ({
@@ -52,42 +59,31 @@ export default function Predict() {
     }))
   }
 
-  // const handlePredict = async () => {
-  //   setIsLoading(true)
-  //   // Simulate API call
-  //   setTimeout(() => {
-  //     setPredictions({
-  //       recommendedCrops: [
-  //         { name: "Corn", suitability: 95, expectedYield: "180 bushels/kattha", profit: "$850/kattha", risk: "Low" },
-  //         { name: "Soybeans", suitability: 88, expectedYield: "55 bushels/kattha", profit: "$720/kattha", risk: "Medium" },
-  //         { name: "Wheat", suitability: 82, expectedYield: "65 bushels/kattha", profit: "$650/kattha", risk: "Low" },
-  //       ],
-  //       insights: {
-  //         bestPlantingTime: "Mid-April to Early May",
-  //         weatherRisk: "Low - Favorable conditions expected",
-  //         marketOutlook: "Strong demand projected for corn",
-  //         soilRecommendation: "Consider nitrogen supplementation",
-  //       },
-  //     })
-  //     setIsLoading(false)
-  //   }, 2000)
-  // }
-
   const handlePredict = async () => {
     setIsLoading(true)
 
-    // ✅ Validate required fields (you can customize this further)
-    const requiredFields = [
+    const requiredNumericFields = [
       "nitrogenRequired",
       "phosphorousRequired",
       "potassiumRequired",
       "temperature",
       "humidity",
       "soilpH",
-      "rainfall"
+      "rainfall",
     ]
 
-    for (const field of requiredFields) {
+    const requiredTextFields = [
+      "location",
+      "soilType",
+      "climate",
+      "previousCrop",
+      "budget",
+      "experience",
+      "farmSize"
+    ]
+
+    // Validate numeric fields
+    for (const field of requiredNumericFields) {
       if (!formData[field] || isNaN(Number(formData[field]))) {
         alert(`Please enter a valid number for "${field}"`)
         setIsLoading(false)
@@ -95,8 +91,17 @@ export default function Predict() {
       }
     }
 
-    // ✅ Prepare safe numeric payload for model
-    const payload = {
+    // Validate text fields
+    for (const field of requiredTextFields) {
+      if (!formData[field] || formData[field].trim() === "") {
+        alert(`Please select or enter a value for "${field}"`)
+        setIsLoading(false)
+        return
+      }
+    }
+
+    // Prepare payload for AI model
+    const aiPayload = {
       N: Number(formData.nitrogenRequired),
       P: Number(formData.phosphorousRequired),
       K: Number(formData.potassiumRequired),
@@ -107,26 +112,84 @@ export default function Predict() {
     }
 
     try {
-      const response = await fetch("http://localhost:8000/api/crops/predict", {
-        method: "POST",
+      // Get AI predictions using axios
+      const aiResponse = await axios.post("http://localhost:8000/api/crops/predict", aiPayload, {
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        timeout: 30000,
       })
 
-      const data = await response.json()
+      const aiData = aiResponse.data
+      console.log("🌱 AI Response:", aiData)
 
-      console.log("🌱 Recommended crop:", data.recommended_crop)
+      // Convert AI response to recommended crops format
+      let recommendedCrops = []
 
-      setPredictions({
-        recommendedCrops: [
-          {
-            name: data.recommended_crop,
-            suitability: 95,
+      // AI response format: { "Low Risk": "cropName (confidence)", ... }
+      const riskLevels = Object.keys(aiData)
+
+      if (riskLevels.length > 0) {
+        recommendedCrops = riskLevels.map((riskLabel) => {
+          const value = aiData[riskLabel] || ""
+          const [name, confidenceRaw] = value.split(" (")
+          const confidence = confidenceRaw ? parseFloat(confidenceRaw.replace(")", "")) : 0.8
+
+          return {
+            cropName: name.trim(),
+            scientificName: getCropScientificName(name.trim()),
+            suitability: Math.round(confidence * 100),
             expectedYield: "Auto-calculated",
             profit: "Est. based on local market",
-            risk: "Low",
-          },
-        ],
+            risk: riskLabel.replace(" Risk", ""),
+          }
+        }).slice(0, 3) // limit to top 3
+      } else {
+        recommendedCrops = [{
+          cropName: "Unknown",
+          scientificName: "Unknown",
+          suitability: 90,
+          expectedYield: "Auto-calculated",
+          profit: "Est. based on local market",
+          risk: "Low"
+        }]
+      }
+      // Prepare data for your backend API
+      const predictionData = {
+        userId: user?.id || "665d18a23f52fc2a8ef3bc9a", // Use actual user ID or fallback
+        inputData: {
+          location: formData.location,
+          soilType: formData.soilType,
+          nitrogenRequired: formData.nitrogenRequired,
+          phosphorousRequired: formData.phosphorousRequired,
+          potassiumRequired: formData.potassiumRequired,
+          soilpH: formData.soilpH,
+          temperature: formData.temperature,
+          humidity: formData.humidity,
+          rainfall: formData.rainfall,
+          farmSize: formData.farmSize,
+          climate: formData.climate,
+          previousCrop: formData.previousCrop,
+          budget: formData.budget,
+          experience: formData.experience || "intermediate",
+          notes: formData.notes,
+        },
+        recommendedCrops: recommendedCrops.map((crop) => ({
+          cropName: crop.cropName,
+          scientificName: crop.scientificName,
+          suitability: crop.suitability,
+          risk: crop.risk,
+        })),
+      }
+
+      // Save to your backend
+      const saveResponse = await axios.post("http://localhost:8000/api/predictions", predictionData, {
+        headers: { "Content-Type": "application/json" },
+      })
+
+      console.log("Saved Prediction:", saveResponse.data);
+      setPredictionId(saveResponse.data.prediction._id);
+      // Set predictions for UI display
+      setPredictions({
+        recommendedCrops,
         insights: {
           bestPlantingTime: "As per forecasted window",
           weatherRisk: "Low",
@@ -134,14 +197,88 @@ export default function Predict() {
           soilRecommendation: "Monitor pH and nutrient levels",
         },
       })
+
+      console.log("✅ Prediction saved successfully")
     } catch (err) {
       console.error("❌ Prediction failed:", err)
-      alert("Prediction failed. Please try again.")
+
+      if (err.response) {
+        alert(`Prediction failed: ${err.response.data?.message || err.response.statusText}`)
+      } else if (err.request) {
+        alert("No response from server. Please check if the AI service is running.")
+      } else {
+        alert(`Prediction failed: ${err.message}`)
+      }
     } finally {
       setIsLoading(false)
     }
   }
 
+  const handleCropSelect = async (crop) => {
+    if (!predictionId) {
+      alert("Please save your prediction first")
+      return
+    }
+
+    try {
+
+      const kebabCaseScientificName = crop.scientificName.toLowerCase().replace(/\s+/g, "-")
+
+      // Save the selected crop choice using your backend API
+      const selectionData = {
+        predictionId: predictionId,
+        cropName: crop.cropName,
+        scientificName: crop.scientificName,
+      }
+      console.log("✅ Sending crop selection:", selectionData)
+      await axios.post("http://localhost:8000/api/predictions/select", selectionData, {
+        headers: { "Content-Type": "application/json" },
+      })
+
+      // Redirect to crop details page using kebab-case scientific name
+      router.push(`/crop-details/${kebabCaseScientificName}?predictionId=${predictionId}`)
+    } catch (error) {
+      console.error("Error selecting crop:", error)
+      alert("Failed to select crop. Please try again.")
+    }
+  }
+
+  const getCropScientificName = (cropName) => {
+    // Map common names to scientific names (matching your backend data)
+    const cropMapping = {
+
+      // Cereals
+      rice: "Oryza sativa",
+      maize: "Zea mays",
+
+      // Legumes
+      chickpea: "Cicer arietinum",
+      kidneybeans: "Phaseolus vulgaris",
+      pigeonpeas: "Cajanus cajan",
+      mothbeans: "Vigna aconitifolia",
+      mungbean: "Vigna radiata",
+      blackgram: "Vigna mungo",
+      lentil: "Lens culinaris",
+
+      // Fruits
+      pomegranate: "Punica granatum",
+      banana: "Musa spp.",
+      mango: "Mangifera indica",
+      grapes: "Vitis vinifera",
+      watermelon: "Citrullus lanatus",
+      muskmelon: "Cucumis melo",
+      apple: "Malus domestica",
+      orange: "Citrus sinensis",
+      papaya: "Carica papaya",
+      coconut: "Cocos nucifera",
+
+      // Cash crops
+      cotton: "Gossypium hirsutum",
+      jute: "Corchorus olitorius",
+      coffee: "Coffea arabica",
+    };
+    return cropMapping[cropName.toLowerCase()] || cropName
+  }
 
   const stats = [
     { number: "10,000+", label: "Active Farmers" },
@@ -250,7 +387,8 @@ export default function Predict() {
                     <Label htmlFor="farmSize" className="text-white">
                       Farm Size (katthas)
                     </Label>
-                    <Input type="number"
+                    <Input
+                      type="number"
                       id="farmSize"
                       placeholder="e.g., 100"
                       className="bg-slate-600 border-slate-500 text-white"
@@ -278,12 +416,14 @@ export default function Predict() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="nitrogenRrquired" className="text-white">
+                    <Label htmlFor="nitrogenRequired" className="text-white">
                       Nitrogen Content (N)
                     </Label>
-                    <Input type="number"
+                    <Input
+                      type="number"
                       id="nitrogenRequired"
-                      placeholder="e.g., 100" required
+                      placeholder="e.g., 100"
+                      required
                       className="bg-slate-600 border-slate-500 text-white"
                       value={formData.nitrogenRequired}
                       onChange={(e) => handleInputChange("nitrogenRequired", e.target.value)}
@@ -293,8 +433,10 @@ export default function Predict() {
                     <Label htmlFor="phosphorousRequired" className="text-white">
                       Phosphorous Content (P)
                     </Label>
-                    <Input type="number"
-                      id="phosphorousRequired" required
+                    <Input
+                      type="number"
+                      id="phosphorousRequired"
+                      required
                       placeholder="e.g., 100"
                       className="bg-slate-600 border-slate-500 text-white"
                       value={formData.phosphorousRequired}
@@ -302,10 +444,12 @@ export default function Predict() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="farmSize" className="text-white">
+                    <Label htmlFor="potassiumRequired" className="text-white">
                       Potassium Content (K)
                     </Label>
-                    <Input type="number" required
+                    <Input
+                      type="number"
+                      required
                       id="potassiumRequired"
                       placeholder="e.g., 100"
                       className="bg-slate-600 border-slate-500 text-white"
@@ -317,8 +461,10 @@ export default function Predict() {
                     <Label htmlFor="rainfall" className="text-white">
                       Rainfall
                     </Label>
-                    <Input type="number"
-                      id="rainfall" required
+                    <Input
+                      type="number"
+                      id="rainfall"
+                      required
                       placeholder="e.g., 100"
                       className="bg-slate-600 border-slate-500 text-white"
                       value={formData.rainfall}
@@ -329,7 +475,9 @@ export default function Predict() {
                     <Label htmlFor="humidity" className="text-white">
                       Humidity
                     </Label>
-                    <Input type="number" required
+                    <Input
+                      type="number"
+                      required
                       id="humidity"
                       placeholder="e.g., 100"
                       className="bg-slate-600 border-slate-500 text-white"
@@ -341,9 +489,11 @@ export default function Predict() {
                     <Label htmlFor="temperature" className="text-white">
                       Temperature (degree C)
                     </Label>
-                    <Input type="number" required
+                    <Input
+                      type="number"
+                      required
                       id="temperature"
-                      placeholder="e.g., 100"
+                      placeholder="e.g., 25"
                       className="bg-slate-600 border-slate-500 text-white"
                       value={formData.temperature}
                       onChange={(e) => handleInputChange("temperature", e.target.value)}
@@ -353,9 +503,11 @@ export default function Predict() {
                     <Label htmlFor="soilpH" className="text-white">
                       Soil pH
                     </Label>
-                    <Input type="number"
+                    <Input
+                      type="number"
+                      step="0.1"
                       id="soilpH"
-                      placeholder="e.g., 100"
+                      placeholder="e.g., 6.5"
                       className="bg-slate-600 border-slate-500 text-white"
                       value={formData.soilpH}
                       onChange={(e) => handleInputChange("soilpH", e.target.value)}
@@ -414,6 +566,21 @@ export default function Predict() {
                       </SelectContent>
                     </Select>
                   </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="experience" className="text-white">Farming Experience</Label>
+                    <Select onValueChange={(value) => handleInputChange("experience", value)}
+                    >
+                      <SelectTrigger className="bg-slate-600 border-slate-500 text-white">
+                        <SelectValue placeholder="Select experience" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="beginner">0-2 years</SelectItem>
+                        <SelectItem value="intermediate">3-10 years</SelectItem>
+                        <SelectItem value="experienced">10+ years</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
 
                 <div className="space-y-2">
@@ -453,11 +620,19 @@ export default function Predict() {
               {/* Recommended Crops */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
                 {predictions.recommendedCrops.map((crop, index) => (
-                  <Card key={index} className="bg-slate-800 border-slate-700">
+                  <Card
+                    key={index}
+                    className="bg-slate-800 border-slate-700 hover:border-emerald-500 transition-all duration-300 cursor-pointer transform hover:scale-105"
+                    onClick={() => handleCropSelect(crop)}
+                  >
                     <CardContent className="p-6">
                       <div className="flex items-center justify-between mb-4">
-                        <h3 className="text-xl font-bold text-white">{crop.name}</h3>
+                        <h3 className="text-xl font-bold text-white">{crop.cropName}</h3>
                         <div className="text-emerald-400 font-bold">{crop.suitability}%</div>
+                      </div>
+
+                      <div className="space-y-2 mb-4">
+                        <p className="text-gray-400 text-sm italic">{crop.scientificName}</p>
                       </div>
 
                       <div className="space-y-3">
@@ -483,6 +658,17 @@ export default function Predict() {
                           />
                         </div>
                       </div>
+
+                      <Button
+                        className="w-full mt-4 bg-emerald-500 hover:bg-emerald-600 text-white"
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          handleCropSelect(crop)
+                        }}
+                      >
+                        Choose This Crop
+                        <ArrowRight className="w-4 h-4 ml-2" />
+                      </Button>
                     </CardContent>
                   </Card>
                 ))}
