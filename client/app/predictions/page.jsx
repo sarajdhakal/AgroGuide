@@ -175,6 +175,16 @@ export default function PredictionsPage() {
         })
     }
 
+    useEffect(() => {
+        if (!user) {
+            const timer = setTimeout(() => {
+                router.push("/login")
+            }, 5000)
+
+            return () => clearTimeout(timer)
+        }
+    }, [user, router])
+
     if (!user) {
         return (
             <div className="min-h-screen bg-slate-900">
@@ -183,17 +193,15 @@ export default function PredictionsPage() {
                     <Card className="bg-slate-800 border-slate-700 p-8 text-center">
                         <CardContent>
                             <h2 className="text-2xl font-bold text-white mb-4">Please Login</h2>
-                            <p className="text-gray-300 mb-6">You need to be logged in to view your predictions.</p>
-                            <Button onClick={() => router.push("/login")} className="bg-emerald-500 hover:bg-emerald-600">
-                                Login
-                            </Button>
+                            <p className="text-gray-300 mb-6">
+                                You need to be logged in to view your predictions. Redirecting in 5 seconds...
+                            </p>
                         </CardContent>
                     </Card>
                 </div>
             </div>
         )
     }
-
     return (
         <div className="min-h-screen bg-slate-900">
             <Header />

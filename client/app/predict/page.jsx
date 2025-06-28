@@ -14,7 +14,6 @@ import {
   Star,
   Shield,
   CheckCircle,
-  MapPin,
   Thermometer,
   Leaf,
   TrendingUp,
@@ -25,6 +24,7 @@ import {
 } from "lucide-react"
 import Header from "@/components/Header"
 import Footer from "@/components/Footer"
+import FarmLocationPicker from "@/components/FarmLocationPicker"
 import { useAuth } from "@/components/AuthProvider"
 
 export default function Predict() {
@@ -32,6 +32,7 @@ export default function Predict() {
   const { user } = useAuth()
   const [formData, setFormData] = useState({
     location: "",
+    locationCoordinates: null,
     soilType: "",
     nitrogenRequired: "",
     phosphorousRequired: "",
@@ -59,6 +60,14 @@ export default function Predict() {
     }))
   }
 
+  const handleLocationChange = (location, coordinates) => {
+    setFormData((prev) => ({
+      ...prev,
+      location,
+      locationCoordinates: coordinates || null,
+    }))
+  }
+
   const handlePredict = async () => {
     setIsLoading(true)
 
@@ -72,15 +81,7 @@ export default function Predict() {
       "rainfall",
     ]
 
-    const requiredTextFields = [
-      "location",
-      "soilType",
-      "climate",
-      "previousCrop",
-      "budget",
-      "experience",
-      "farmSize"
-    ]
+    const requiredTextFields = ["location", "soilType", "climate", "previousCrop", "budget", "experience", "farmSize"]
 
     // Validate numeric fields
     for (const field of requiredNumericFields) {
@@ -98,6 +99,13 @@ export default function Predict() {
         setIsLoading(false)
         return
       }
+    }
+
+    // Validate location specifically
+    if (!formData.location.trim()) {
+      alert("Please select a valid location using the location picker")
+      setIsLoading(false)
+      return
     }
 
     // Prepare payload for AI model
@@ -128,35 +136,41 @@ export default function Predict() {
       const riskLevels = Object.keys(aiData)
 
       if (riskLevels.length > 0) {
-        recommendedCrops = riskLevels.map((riskLabel) => {
-          const value = aiData[riskLabel] || ""
-          const [name, confidenceRaw] = value.split(" (")
-          const confidence = confidenceRaw ? parseFloat(confidenceRaw.replace(")", "")) : 0.8
+        recommendedCrops = riskLevels
+          .map((riskLabel) => {
+            const value = aiData[riskLabel] || ""
+            const [name, confidenceRaw] = value.split(" (")
+            const confidence = confidenceRaw ? Number.parseFloat(confidenceRaw.replace(")", "")) : 0.8
 
-          return {
-            cropName: name.trim(),
-            scientificName: getCropScientificName(name.trim()),
-            suitability: Math.round(confidence * 100),
+            return {
+              cropName: name.trim(),
+              scientificName: getCropScientificName(name.trim()),
+              suitability: Math.round(confidence * 100),
+              expectedYield: "Auto-calculated",
+              profit: "Est. based on local market",
+              risk: riskLabel.replace(" Risk", ""),
+            }
+          })
+          .slice(0, 3) // limit to top 3
+      } else {
+        recommendedCrops = [
+          {
+            cropName: "Unknown",
+            scientificName: "Unknown",
+            suitability: 90,
             expectedYield: "Auto-calculated",
             profit: "Est. based on local market",
-            risk: riskLabel.replace(" Risk", ""),
-          }
-        }).slice(0, 3) // limit to top 3
-      } else {
-        recommendedCrops = [{
-          cropName: "Unknown",
-          scientificName: "Unknown",
-          suitability: 90,
-          expectedYield: "Auto-calculated",
-          profit: "Est. based on local market",
-          risk: "Low"
-        }]
+            risk: "Low",
+          },
+        ]
       }
+
       // Prepare data for your backend API
       const predictionData = {
         userId: user?.id || "665d18a23f52fc2a8ef3bc9a", // Use actual user ID or fallback
         inputData: {
           location: formData.location,
+          locationCoordinates: formData.locationCoordinates,
           soilType: formData.soilType,
           nitrogenRequired: formData.nitrogenRequired,
           phosphorousRequired: formData.phosphorousRequired,
@@ -185,8 +199,9 @@ export default function Predict() {
         headers: { "Content-Type": "application/json" },
       })
 
-      console.log("Saved Prediction:", saveResponse.data);
-      setPredictionId(saveResponse.data.prediction._id);
+      console.log("Saved Prediction:", saveResponse.data)
+      setPredictionId(saveResponse.data.prediction._id)
+
       // Set predictions for UI display
       setPredictions({
         recommendedCrops,
@@ -221,7 +236,6 @@ export default function Predict() {
     }
 
     try {
-
       const kebabCaseScientificName = crop.scientificName.toLowerCase().replace(/\s+/g, "-")
 
       // Save the selected crop choice using your backend API
@@ -246,7 +260,6 @@ export default function Predict() {
   const getCropScientificName = (cropName) => {
     // Map common names to scientific names (matching your backend data)
     const cropMapping = {
-
       // Cereals
       rice: "Oryza sativa",
       maize: "Zea mays",
@@ -276,7 +289,7 @@ export default function Predict() {
       cotton: "Gossypium hirsutum",
       jute: "Corchorus olitorius",
       coffee: "Coffea arabica",
-    };
+    }
     return cropMapping[cropName.toLowerCase()] || cropName
   }
 
@@ -319,14 +332,20 @@ export default function Predict() {
               <Button
                 size="lg"
                 className="bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-3 text-lg font-semibold rounded-full"
-                onClick={() => document.getElementById("prediction-form").scrollIntoView({ behavior: "smooth" })}
+                onClick={() => {
+                  if (!user) {
+                    router.push("/login")
+                  } else {
+                    document.getElementById("prediction-form").scrollIntoView({ behavior: "smooth" })
+                  }
+                }}
               >
                 Start Prediction
               </Button>
               <Button
                 size="lg"
                 variant="outline"
-                className="border-emerald-500 text-emerald-400 hover:bg-emerald-500 hover:text-white px-8 py-3 text-lg font-semibold rounded-full"
+                className="border-emerald-500 text-emerald-400 hover:bg-emerald-500 hover:text-white px-8 py-3 text-lg font-semibold rounded-full bg-transparent"
               >
                 <Play className="w-5 h-5 mr-2" />
                 Watch Demo
@@ -354,259 +373,259 @@ export default function Predict() {
         </section>
 
         {/* Prediction Form */}
-        <section id="prediction-form" className="py-20 bg-slate-800">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-white mb-4">Get Your Crop Predictions</h2>
-              <p className="text-gray-300">Fill in your farming details to receive personalized recommendations</p>
-            </div>
+        {user ? (
+          <section id="prediction-form" className="py-20 bg-slate-800">
+            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="text-center mb-12">
+                <h2 className="text-3xl font-bold text-white mb-4">Get Your Crop Predictions</h2>
+                <p className="text-gray-300">Fill in your farming details to receive personalized recommendations</p>
+              </div>
 
-            <Card className="bg-slate-700 border-slate-600">
-              <CardHeader>
-                <CardTitle className="text-white text-xl">Farm Information</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="location" className="text-white">
-                      Farm Location
-                    </Label>
-                    <div className="relative">
-                      <MapPin className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+              <Card className="bg-slate-700 border-slate-600">
+                <CardHeader>
+                  <CardTitle className="text-white text-xl">Farm Information</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {/* Enhanced Farm Location Picker */}
+                    <div className="space-y-2">
+                      <Label htmlFor="location" className="text-white">
+                        Farm Location *
+                      </Label>
+                      <FarmLocationPicker value={formData.location} onChange={handleLocationChange} />
+                      {formData.locationCoordinates && (
+                        <p className="text-xs text-gray-400">📍 Coordinates saved for weather data accuracy</p>
+                      )}
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="farmSize" className="text-white">
+                        Farm Size (katthas)
+                      </Label>
                       <Input
-                        id="location"
-                        placeholder="City, State or ZIP code"
-                        className="pl-10 bg-slate-600 border-slate-500 text-white"
-                        value={formData.location}
-                        onChange={(e) => handleInputChange("location", e.target.value)}
+                        type="number"
+                        id="farmSize"
+                        placeholder="e.g., 100"
+                        className="bg-slate-600 border-slate-500 text-white"
+                        value={formData.farmSize}
+                        onChange={(e) => handleInputChange("farmSize", e.target.value)}
                       />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="soilType" className="text-white">
+                        Soil Type
+                      </Label>
+                      <Select onValueChange={(value) => handleInputChange("soilType", value)}>
+                        <SelectTrigger className="bg-slate-600 border-slate-500 text-white">
+                          <SelectValue placeholder="Select soil type" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="clay">Clay</SelectItem>
+                          <SelectItem value="sandy">Sandy</SelectItem>
+                          <SelectItem value="loam">Loam</SelectItem>
+                          <SelectItem value="silt">Silt</SelectItem>
+                          <SelectItem value="mixed">Mixed</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="nitrogenRequired" className="text-white">
+                        Nitrogen Content (N)
+                      </Label>
+                      <Input
+                        type="number"
+                        id="nitrogenRequired"
+                        placeholder="e.g., 100"
+                        required
+                        className="bg-slate-600 border-slate-500 text-white"
+                        value={formData.nitrogenRequired}
+                        onChange={(e) => handleInputChange("nitrogenRequired", e.target.value)}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="phosphorousRequired" className="text-white">
+                        Phosphorous Content (P)
+                      </Label>
+                      <Input
+                        type="number"
+                        id="phosphorousRequired"
+                        required
+                        placeholder="e.g., 100"
+                        className="bg-slate-600 border-slate-500 text-white"
+                        value={formData.phosphorousRequired}
+                        onChange={(e) => handleInputChange("phosphorousRequired", e.target.value)}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="potassiumRequired" className="text-white">
+                        Potassium Content (K)
+                      </Label>
+                      <Input
+                        type="number"
+                        required
+                        id="potassiumRequired"
+                        placeholder="e.g., 100"
+                        className="bg-slate-600 border-slate-500 text-white"
+                        value={formData.potassiumRequired}
+                        onChange={(e) => handleInputChange("potassiumRequired", e.target.value)}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="rainfall" className="text-white">
+                        Rainfall
+                      </Label>
+                      <Input
+                        type="number"
+                        id="rainfall"
+                        required
+                        placeholder="e.g., 100"
+                        className="bg-slate-600 border-slate-500 text-white"
+                        value={formData.rainfall}
+                        onChange={(e) => handleInputChange("rainfall", e.target.value)}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="humidity" className="text-white">
+                        Humidity
+                      </Label>
+                      <Input
+                        type="number"
+                        required
+                        id="humidity"
+                        placeholder="e.g., 100"
+                        className="bg-slate-600 border-slate-500 text-white"
+                        value={formData.humidity}
+                        onChange={(e) => handleInputChange("humidity", e.target.value)}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="temperature" className="text-white">
+                        Temperature (degree C)
+                      </Label>
+                      <Input
+                        type="number"
+                        required
+                        id="temperature"
+                        placeholder="e.g., 25"
+                        className="bg-slate-600 border-slate-500 text-white"
+                        value={formData.temperature}
+                        onChange={(e) => handleInputChange("temperature", e.target.value)}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="soilpH" className="text-white">
+                        Soil pH
+                      </Label>
+                      <Input
+                        type="number"
+                        step="0.1"
+                        id="soilpH"
+                        placeholder="e.g., 6.5"
+                        className="bg-slate-600 border-slate-500 text-white"
+                        value={formData.soilpH}
+                        onChange={(e) => handleInputChange("soilpH", e.target.value)}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="climate" className="text-white">
+                        Climate Zone
+                      </Label>
+                      <Select onValueChange={(value) => handleInputChange("climate", value)}>
+                        <SelectTrigger className="bg-slate-600 border-slate-500 text-white">
+                          <SelectValue placeholder="Select climate zone" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="temperate">Temperate</SelectItem>
+                          <SelectItem value="subtropical">Subtropical</SelectItem>
+                          <SelectItem value="arid">Arid</SelectItem>
+                          <SelectItem value="tropical">Tropical</SelectItem>
+                          <SelectItem value="continental">Continental</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="previousCrop" className="text-white">
+                        Previous Crop
+                      </Label>
+                      <Select onValueChange={(value) => handleInputChange("previousCrop", value)}>
+                        <SelectTrigger className="bg-slate-600 border-slate-500 text-white">
+                          <SelectValue placeholder="What did you grow last?" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="corn">Corn</SelectItem>
+                          <SelectItem value="soybeans">Soybeans</SelectItem>
+                          <SelectItem value="wheat">Wheat</SelectItem>
+                          <SelectItem value="cotton">Cotton</SelectItem>
+                          <SelectItem value="rice">Rice</SelectItem>
+                          <SelectItem value="none">First time farming</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="budget" className="text-white">
+                        Budget Range
+                      </Label>
+                      <Select onValueChange={(value) => handleInputChange("budget", value)}>
+                        <SelectTrigger className="bg-slate-600 border-slate-500 text-white">
+                          <SelectValue placeholder="Select budget range" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="low">Under NPR 1000000</SelectItem>
+                          <SelectItem value="medium">NPR 1000000 - NPR 5000000</SelectItem>
+                          <SelectItem value="high">NPR 5000000 - NPR 10000000</SelectItem>
+                          <SelectItem value="enterprise">Over NPR 10000000</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="experience" className="text-white">
+                        Farming Experience
+                      </Label>
+                      <Select onValueChange={(value) => handleInputChange("experience", value)}>
+                        <SelectTrigger className="bg-slate-600 border-slate-500 text-white">
+                          <SelectValue placeholder="Select experience" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="beginner">0-2 years</SelectItem>
+                          <SelectItem value="intermediate">3-10 years</SelectItem>
+                          <SelectItem value="experienced">10+ years</SelectItem>
+                        </SelectContent>
+                      </Select>
                     </div>
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="farmSize" className="text-white">
-                      Farm Size (katthas)
+                    <Label htmlFor="notes" className="text-white">
+                      Additional Notes (Optional)
                     </Label>
-                    <Input
-                      type="number"
-                      id="farmSize"
-                      placeholder="e.g., 100"
+                    <Textarea
+                      id="notes"
+                      placeholder="Any specific requirements, concerns, or goals for your farm..."
                       className="bg-slate-600 border-slate-500 text-white"
-                      value={formData.farmSize}
-                      onChange={(e) => handleInputChange("farmSize", e.target.value)}
+                      value={formData.notes}
+                      onChange={(e) => handleInputChange("notes", e.target.value)}
                     />
                   </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="soilType" className="text-white">
-                      Soil Type
-                    </Label>
-                    <Select onValueChange={(value) => handleInputChange("soilType", value)}>
-                      <SelectTrigger className="bg-slate-600 border-slate-500 text-white">
-                        <SelectValue placeholder="Select soil type" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="clay">Clay</SelectItem>
-                        <SelectItem value="sandy">Sandy</SelectItem>
-                        <SelectItem value="loam">Loam</SelectItem>
-                        <SelectItem value="silt">Silt</SelectItem>
-                        <SelectItem value="mixed">Mixed</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="nitrogenRequired" className="text-white">
-                      Nitrogen Content (N)
-                    </Label>
-                    <Input
-                      type="number"
-                      id="nitrogenRequired"
-                      placeholder="e.g., 100"
-                      required
-                      className="bg-slate-600 border-slate-500 text-white"
-                      value={formData.nitrogenRequired}
-                      onChange={(e) => handleInputChange("nitrogenRequired", e.target.value)}
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="phosphorousRequired" className="text-white">
-                      Phosphorous Content (P)
-                    </Label>
-                    <Input
-                      type="number"
-                      id="phosphorousRequired"
-                      required
-                      placeholder="e.g., 100"
-                      className="bg-slate-600 border-slate-500 text-white"
-                      value={formData.phosphorousRequired}
-                      onChange={(e) => handleInputChange("phosphorousRequired", e.target.value)}
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="potassiumRequired" className="text-white">
-                      Potassium Content (K)
-                    </Label>
-                    <Input
-                      type="number"
-                      required
-                      id="potassiumRequired"
-                      placeholder="e.g., 100"
-                      className="bg-slate-600 border-slate-500 text-white"
-                      value={formData.potassiumRequired}
-                      onChange={(e) => handleInputChange("potassiumRequired", e.target.value)}
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="rainfall" className="text-white">
-                      Rainfall
-                    </Label>
-                    <Input
-                      type="number"
-                      id="rainfall"
-                      required
-                      placeholder="e.g., 100"
-                      className="bg-slate-600 border-slate-500 text-white"
-                      value={formData.rainfall}
-                      onChange={(e) => handleInputChange("rainfall", e.target.value)}
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="humidity" className="text-white">
-                      Humidity
-                    </Label>
-                    <Input
-                      type="number"
-                      required
-                      id="humidity"
-                      placeholder="e.g., 100"
-                      className="bg-slate-600 border-slate-500 text-white"
-                      value={formData.humidity}
-                      onChange={(e) => handleInputChange("humidity", e.target.value)}
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="temperature" className="text-white">
-                      Temperature (degree C)
-                    </Label>
-                    <Input
-                      type="number"
-                      required
-                      id="temperature"
-                      placeholder="e.g., 25"
-                      className="bg-slate-600 border-slate-500 text-white"
-                      value={formData.temperature}
-                      onChange={(e) => handleInputChange("temperature", e.target.value)}
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="soilpH" className="text-white">
-                      Soil pH
-                    </Label>
-                    <Input
-                      type="number"
-                      step="0.1"
-                      id="soilpH"
-                      placeholder="e.g., 6.5"
-                      className="bg-slate-600 border-slate-500 text-white"
-                      value={formData.soilpH}
-                      onChange={(e) => handleInputChange("soilpH", e.target.value)}
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="climate" className="text-white">
-                      Climate Zone
-                    </Label>
-                    <Select onValueChange={(value) => handleInputChange("climate", value)}>
-                      <SelectTrigger className="bg-slate-600 border-slate-500 text-white">
-                        <SelectValue placeholder="Select climate zone" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="temperate">Temperate</SelectItem>
-                        <SelectItem value="subtropical">Subtropical</SelectItem>
-                        <SelectItem value="arid">Arid</SelectItem>
-                        <SelectItem value="tropical">Tropical</SelectItem>
-                        <SelectItem value="continental">Continental</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="previousCrop" className="text-white">
-                      Previous Crop
-                    </Label>
-                    <Select onValueChange={(value) => handleInputChange("previousCrop", value)}>
-                      <SelectTrigger className="bg-slate-600 border-slate-500 text-white">
-                        <SelectValue placeholder="What did you grow last?" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="corn">Corn</SelectItem>
-                        <SelectItem value="soybeans">Soybeans</SelectItem>
-                        <SelectItem value="wheat">Wheat</SelectItem>
-                        <SelectItem value="cotton">Cotton</SelectItem>
-                        <SelectItem value="rice">Rice</SelectItem>
-                        <SelectItem value="none">First time farming</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="budget" className="text-white">
-                      Budget Range
-                    </Label>
-                    <Select onValueChange={(value) => handleInputChange("budget", value)}>
-                      <SelectTrigger className="bg-slate-600 border-slate-500 text-white">
-                        <SelectValue placeholder="Select budget range" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="low">Under NPR 1000000</SelectItem>
-                        <SelectItem value="medium">NPR 1000000 - NPR 5000000</SelectItem>
-                        <SelectItem value="high">NPR 5000000 - NPR 10000000</SelectItem>
-                        <SelectItem value="enterprise">Over NPR 10000000</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="experience" className="text-white">Farming Experience</Label>
-                    <Select onValueChange={(value) => handleInputChange("experience", value)}
-                    >
-                      <SelectTrigger className="bg-slate-600 border-slate-500 text-white">
-                        <SelectValue placeholder="Select experience" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="beginner">0-2 years</SelectItem>
-                        <SelectItem value="intermediate">3-10 years</SelectItem>
-                        <SelectItem value="experienced">10+ years</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="notes" className="text-white">
-                    Additional Notes (Optional)
-                  </Label>
-                  <Textarea
-                    id="notes"
-                    placeholder="Any specific requirements, concerns, or goals for your farm..."
-                    className="bg-slate-600 border-slate-500 text-white"
-                    value={formData.notes}
-                    onChange={(e) => handleInputChange("notes", e.target.value)}
-                  />
-                </div>
-
-                <Button
-                  onClick={handlePredict}
-                  disabled={isLoading || !formData.location || !formData.soilType}
-                  className="w-full bg-emerald-500 hover:bg-emerald-600 text-white py-3 text-lg font-semibold"
-                >
-                  {isLoading ? "Analyzing Your Farm..." : "Get Crop Predictions"}
-                </Button>
-              </CardContent>
-            </Card>
-          </div>
-        </section>
+                  <Button
+                    onClick={handlePredict}
+                    disabled={isLoading || !formData.location || !formData.soilType}
+                    className="w-full bg-emerald-500 hover:bg-emerald-600 text-white py-3 text-lg font-semibold"
+                  >
+                    {isLoading ? "Analyzing Your Farm..." : "Get Crop Predictions"}
+                  </Button>
+                </CardContent>
+              </Card>
+            </div>
+          </section>
+        ) : (
+          <></>
+        )}
 
         {/* Prediction Results */}
         {predictions && (
@@ -717,7 +736,7 @@ export default function Predict() {
         )}
 
         {/* CTA Section */}
-        <section className="py-20 bg-gradient-to-br from-emerald-900/20 to-teal-900/20">
+        <section className={user ? "py-20 bg-gradient-to-br from-emerald-900/20 to-teal-900/20" : "py-20 bg-slate-800"}>
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-3xl font-bold text-white mb-6">Ready to Transform Your Farming?</h2>
             <p className="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
@@ -727,13 +746,21 @@ export default function Predict() {
               <Button
                 size="lg"
                 className="bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-3 text-lg font-semibold rounded-full"
+                onClick={() => {
+                  if (!user) {
+                    router.push("/login")
+                  } else {
+                    // Add actual free trial logic or route here
+                    alert("Starting free trial (placeholder)")
+                  }
+                }}
               >
                 Start Free Trial
               </Button>
               <Button
                 size="lg"
                 variant="outline"
-                className="border-emerald-500 text-emerald-400 hover:bg-emerald-500 hover:text-white px-8 py-3 text-lg font-semibold rounded-full"
+                className="border-emerald-500 text-emerald-400 hover:bg-emerald-500 hover:text-white px-8 py-3 text-lg font-semibold rounded-full bg-transparent"
               >
                 Contact Sales
               </Button>

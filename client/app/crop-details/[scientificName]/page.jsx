@@ -24,6 +24,23 @@ import Header from "@/components/Header"
 import Footer from "@/components/Footer"
 
 export default function CropDetailsPage() {
+    const [user, setUser] = useState(null)
+    const [redirecting, setRedirecting] = useState(false)
+    const router = useRouter()
+
+    useEffect(() => {
+        // Simulating auth check (e.g., from localStorage)
+        const userData = localStorage.getItem("userData")
+        if (!userData) {
+            setRedirecting(true)
+            const timer = setTimeout(() => {
+                router.push("/login")
+            }, 5000)
+            return () => clearTimeout(timer)
+        } else {
+            setUser(JSON.parse(userData))
+        }
+    }, [])
     const params = useParams()
     const searchParams = useSearchParams()
     const predictionId = searchParams.get("predictionId")
@@ -32,7 +49,7 @@ export default function CropDetailsPage() {
 
     console.log("Scientific Name:", scientificName)
     console.log("Prediction ID:", predictionId)
-    const router = useRouter()
+    const [weatherAlert, setWeatherAlert] = useState("");
 
     const [cropData, setCropData] = useState(null)
     const [timeline, setTimeline] = useState([])
@@ -67,7 +84,9 @@ export default function CropDetailsPage() {
                 setTimeline(selectedTimeline?.tasks || [])
                 setPredictionData({
                     suitability: recommendedCrop?.suitability ?? 0,
-                    risk: selectedCrop?.risk || "Unknown",
+                    risk: recommendedCrop?.risk || "Unknown",
+                    predictedAt: predictionJson.predictedAt,
+                    locationCoordinates: predictionJson.inputData?.locationCoordinates
                 })
                 console.log("Timeline Data :", selectedTimeline)
 
@@ -80,6 +99,66 @@ export default function CropDetailsPage() {
             fetchData()
         }
     }, [scientificName, predictionId])
+
+    useEffect(() => {
+        const fetchWeather = async () => {
+            try {
+                if (!predictionData?.locationCoordinates) return;
+
+                const { lat, lng } = predictionData.locationCoordinates;
+                const apiKey = "e392bb3cf3260ab706be3b8f4eee9c8e";
+
+                const response = await fetch(
+                    `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&units=metric&appid=${apiKey}`
+                );
+
+                const data = await response.json();
+                console.log("Weather API response:", data);
+
+                let description = "";
+
+                const condition = data.weather?.[0]?.main?.toLowerCase() || "";
+                const detail = data.weather?.[0]?.description || "N/A";
+                const temperature = data.main?.temp;
+                const feelsLike = data.main?.feels_like;
+                const locationName = data.name || "Unknown Location";
+
+                // Build description
+                description += `📍 Location: ${locationName} (${lat}, ${lng})\n`;
+                description += `🌤️ Condition: ${detail}\n`;
+                description += `🌡️ Temp: ${temperature}°C (Feels like ${feelsLike}°C)\n`;
+
+                // Alerts
+                if (data.alerts && data.alerts.length > 0) {
+                    const alert = data.alerts[0]; // Show only first alert
+                    description += `🚨 **Weather Alert:** ${alert.event} - ${alert.description}`;
+                } else {
+                    if (condition.includes("rain")) {
+                        description += "🌧️ Light to moderate rain is expected.\n";
+                    } else if (condition.includes("storm")) {
+                        description += "⛈️ Thunderstorm warning. Avoid fieldwork.\n";
+                    } else if (condition.includes("clear")) {
+                        description += "☀️ Sunny day. Ideal for outdoor activities.\n";
+                    } else if (condition.includes("cloud")) {
+                        description += "⛅ Cloudy sky. Keep irrigation in check.\n";
+                    } else {
+                        description += "🔎 No severe weather alert found.\n";
+                    }
+                }
+
+                setWeatherAlert(description);
+            } catch (err) {
+                console.error("Failed to fetch weather data", err);
+                setWeatherAlert("❌ Unable to retrieve weather data.");
+            }
+        };
+
+        if (predictionData?.locationCoordinates) {
+            fetchWeather();
+        }
+    }, [predictionData?.locationCoordinates]);
+
+
 
     // Static maize data
     const cropData1 = {
@@ -125,7 +204,26 @@ export default function CropDetailsPage() {
         if (day === currentDay) return "bg-yellow-500"
         return "bg-gray-400"
     }
+    if (redirecting) {
+        return (
+            <div className="min-h-screen bg-slate-900">
+                <Header />
+                <div className="pt-20 flex items-center justify-center min-h-screen">
+                    <Card className="bg-slate-800 border-slate-700 p-8 text-center">
+                        <CardContent>
+                            <h2 className="text-2xl font-bold text-white mb-4">Authentication Required</h2>
+                            <p className="text-gray-300 mb-6">
+                                You must be logged in to view crop details. Redirecting to login page in 5 seconds...
+                            </p>
+                        </CardContent>
+                    </Card>
+                </div>
+            </div>
+        )
+    }
+
     if (!cropData || !predictionData) return <div className="text-white p-10">Loading...</div>
+
 
 
     return (
@@ -288,7 +386,7 @@ export default function CropDetailsPage() {
                                         </div>
                                         <div className="flex justify-between">
                                             <span className="text-gray-400">Prediction Date</span>
-                                            <span className="text-white">{new Date().toLocaleDateString()}</span>
+                                            <span className="text-white">{predictionData.predictedAt}</span>
                                         </div>
                                     </div>
                                 </CardContent>
@@ -324,11 +422,14 @@ export default function CropDetailsPage() {
                                     </CardTitle>
                                 </CardHeader>
                                 <CardContent>
-                                    <p className="text-gray-300 text-sm">
-                                        Rain expected in next 3 days. Avoid field work during heavy showers.
+                                    <p className="text-gray-300 text-sm whitespace-pre-wrap">
+                                        {weatherAlert || "Loading weather info..."}
                                     </p>
                                 </CardContent>
                             </Card>
+
+
+
                         </div>
                     </div>
                 </div>

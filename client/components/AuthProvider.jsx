@@ -30,13 +30,13 @@ export function AuthProvider({ children }) {
       // Add avatar and initials for better Header integration
       setUser({
         ...parsedUserData,
-        avatar: parsedUserData.avatar || "/placeholder.svg?height=32&width=32",
+        avatar: "/saraj.jpg",
         initials:
           parsedUserData.name
             ?.split(" ")
             .map((n) => n[0])
             .join("")
-            .toUpperCase() || "U",
+            .toUpperCase() || "SD",
       })
     }
 
@@ -46,7 +46,7 @@ export function AuthProvider({ children }) {
       // Set admin as user too for Header display
       setUser({
         ...parsedAdminData,
-        avatar: parsedAdminData.avatar || "/placeholder.svg?height=32&width=32",
+        avatar: "saraj.jpg",
         initials:
           parsedAdminData.name
             ?.split(" ")

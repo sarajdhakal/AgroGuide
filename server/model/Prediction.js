@@ -7,7 +7,11 @@ const predictionSchema = new mongoose.Schema({
         required: true,
     },
     inputData: {
-        location: String,
+        location: { type: String },
+        locationCoordinates: {
+            lat: { type: Number },
+            lng: { type: Number },
+        },
         soilType: String,
         nitrogenRequired: String,
         phosphorousRequired: String,

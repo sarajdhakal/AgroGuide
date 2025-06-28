@@ -1,5 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card"
-import { TrendingUp, Globe, Users, Award, Lightbulb, Heart } from "lucide-react"
+import { TrendingUp, Globe, Users, Award, Lightbulb, Heart, Star, Linkedin, Mail } from "lucide-react"
 import Header from "@/components/Header"
 import Footer from "@/components/Footer"
 
@@ -121,6 +121,298 @@ export default function About() {
                 </CardContent>
               </Card>
             </div>
+          </div>
+        </section>
+
+        {/* Our Team Section */}
+        <section className="py-20 bg-slate-900">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">Meet Our Team</h2>
+              <p className="text-lg text-gray-300 max-w-3xl mx-auto">
+                Our diverse team combines agricultural expertise, technology innovation, and passion for sustainable
+                farming to bring you the best crop recommendation solutions.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {/* Team Member 1 - Saraj Dhakal */}
+              <Card className="bg-slate-800/50 border-slate-700 backdrop-blur-sm hover:border-emerald-500 transition-all duration-300">
+                <CardContent className="p-6 text-center">
+                  <div className="relative w-24 h-24 mx-auto mb-4">
+                    <img
+                      src="/saraj.jpg"
+                      alt="Saraj Dhakal - CEO & Co-Founder"
+                      className="w-24 h-24 rounded-full object-cover border-4 border-emerald-500/50 hover:border-emerald-400 transition-all duration-300  filter brightness-125"
+                    />
+                    <div className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-400/20 to-purple-500/20"></div>
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-2">Saraj Dhakal</h3>
+                  <p className="text-emerald-400 text-sm mb-3">CEO & Founder </p>
+                  <p className="text-gray-300 text-sm leading-relaxed mb-4">
+                    Computer engineer with advanced agricultural knowledge with 22+ years of experience in precision farming and sustainable agriculture
+                    practices.
+                  </p>
+                  <div className="flex justify-center space-x-3">
+                    <div className="w-8 h-8 bg-slate-700 rounded-full flex items-center justify-center hover:bg-emerald-500 transition-colors cursor-pointer">
+                      <Linkedin className="w-4 h-4 text-white" />
+                    </div>
+                    <div className="w-8 h-8 bg-slate-700 rounded-full flex items-center justify-center hover:bg-emerald-500 transition-colors cursor-pointer">
+                      <Mail className="w-4 h-4 text-white" />
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Team Member 2 - Samar Bhattarai */}
+              <Card className="bg-slate-800/50 border-slate-700 backdrop-blur-sm hover:border-emerald-500 transition-all duration-300">
+                <CardContent className="p-6 text-center">
+                  <div className="relative w-24 h-24 mx-auto mb-4">
+                    <img
+                      src="/samar.jpg"
+                      alt="Samar Bhattarai CTO"
+                      className="w-24 h-24 rounded-full object-cover border-4 border-emerald-500/50 hover:border-emerald-400 transition-all duration-300  filter brightness-125"
+                    />
+                    <div className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-400/20 to-purple-500/20"></div>
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-2">Samar Bhattarai</h3>
+                  <p className="text-emerald-400 text-sm mb-3">CTO </p>
+                  <p className="text-gray-300 text-sm leading-relaxed mb-4">
+                    Machine learning expert specializing in agricultural AI and predictive analytics for crop
+                    optimization.
+                  </p>
+                  <div className="flex justify-center space-x-3">
+                    <div className="w-8 h-8 bg-slate-700 rounded-full flex items-center justify-center hover:bg-emerald-500 transition-colors cursor-pointer">
+                      <Linkedin className="w-4 h-4 text-white" />
+                    </div>
+                    <div className="w-8 h-8 bg-slate-700 rounded-full flex items-center justify-center hover:bg-emerald-500 transition-colors cursor-pointer">
+                      <Mail className="w-4 h-4 text-white" />
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+
+
+              {/* Team Member 3 - NIshani Kumari Rai */}
+              <Card className="bg-slate-800/50 border-slate-700 backdrop-blur-sm hover:border-emerald-500 transition-all duration-300">
+                <CardContent className="p-6 text-center">
+                  <div className="relative w-24 h-24 mx-auto mb-4">
+                    <img
+                      src="/nisha.jpg"
+                      alt="Nishani Kumari Rai Head of Agriculture"
+                      className="w-24 h-24 rounded-full object-cover border-4 border-emerald-500/50 hover:border-emerald-400 transition-all duration-300  filter brightness-125"
+                    />
+                    <div className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-400/20 to-purple-500/20"></div>
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-2">Nishani Kumari Rai </h3>
+                  <p className="text-emerald-400 text-sm mb-3">Head of Agriculture </p>
+                  <p className="text-gray-300 text-sm leading-relaxed mb-4">
+                    Soil scientist and crop specialist with deep knowledge of Nepalese farming conditions and
+                    traditional practices.
+                  </p>
+                  <div className="flex justify-center space-x-3">
+                    <div className="w-8 h-8 bg-slate-700 rounded-full flex items-center justify-center hover:bg-emerald-500 transition-colors cursor-pointer">
+                      <Linkedin className="w-4 h-4 text-white" />
+                    </div>
+                    <div className="w-8 h-8 bg-slate-700 rounded-full flex items-center justify-center hover:bg-emerald-500 transition-colors cursor-pointer">
+                      <Mail className="w-4 h-4 text-white" />
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+
+              {/* Team Member 4 - Soviyat Lamsal */}
+              <Card className="bg-slate-800/50 border-slate-700 backdrop-blur-sm hover:border-emerald-500 transition-all duration-300">
+                <CardContent className="p-6 text-center">
+                  <div className="relative w-24 h-24 mx-auto mb-4">
+                    <img
+                      src="/soviyat.jpg"
+                      alt="Soviyat Lamsal"
+                      className="w-24 h-24 rounded-full object-cover border-4 border-emerald-500/50 hover:border-emerald-400 transition-all duration-300  filter brightness-125"
+                    />
+                    <div className="absolute inset-0 rounded-full bg-gradient-to-br from-pink-400/20 to-purple-500/20"></div>
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-2">Soviyat Lamsal</h3>
+                  <p className="text-emerald-400 text-sm mb-3">Head of Product</p>
+                  <p className="text-gray-300 text-sm leading-relaxed mb-4">
+                    UX designer and product strategist focused on creating intuitive farming solutions for rural
+                    communities.
+                  </p>
+                  <div className="flex justify-center space-x-3">
+                    <div className="w-8 h-8 bg-slate-700 rounded-full flex items-center justify-center hover:bg-emerald-500 transition-colors cursor-pointer">
+                      <Linkedin className="w-4 h-4 text-white" />
+                    </div>
+                    <div className="w-8 h-8 bg-slate-700 rounded-full flex items-center justify-center hover:bg-emerald-500 transition-colors cursor-pointer">
+                      <Mail className="w-4 h-4 text-white" />
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </section>
+
+        {/* Testimonials Section */}
+        <section className="py-20 bg-gradient-to-br from-emerald-900/20 to-teal-900/20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">What Farmers Say</h2>
+              <p className="text-lg text-gray-300 max-w-3xl mx-auto">
+                Hear from farmers across Nepal who have transformed their agricultural practices with AgroGuide's
+                intelligent crop recommendations.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {/* Testimonial 1 */}
+              <Card className="bg-slate-800/50 border-slate-700 backdrop-blur-sm">
+                <CardContent className="p-6">
+                  <div className="flex items-center mb-4">
+                    <div className="w-12 h-12 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-full flex items-center justify-center mr-4">
+                      <span className="text-lg font-bold text-white">RB</span>
+                    </div>
+                    <div>
+                      <h4 className="text-white font-semibold">Ram Bahadur Thapa</h4>
+                      <p className="text-gray-400 text-sm">Chitwan District</p>
+                    </div>
+                  </div>
+                  <div className="flex mb-3">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="w-4 h-4 text-yellow-400 fill-current" />
+                    ))}
+                  </div>
+                  <p className="text-gray-300 leading-relaxed">
+                    "AgroGuide helped me increase my tomato yield by 40% last season. The soil analysis and crop
+                    recommendations were spot-on. Now I'm planning my next crop with confidence!"
+                  </p>
+                </CardContent>
+              </Card>
+
+              {/* Testimonial 2 */}
+              <Card className="bg-slate-800/50 border-slate-700 backdrop-blur-sm">
+                <CardContent className="p-6">
+                  <div className="flex items-center mb-4">
+                    <div className="w-12 h-12 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full flex items-center justify-center mr-4">
+                      <span className="text-lg font-bold text-white">SK</span>
+                    </div>
+                    <div>
+                      <h4 className="text-white font-semibold">Sita Kumari Poudel</h4>
+                      <p className="text-gray-400 text-sm">Kaski District</p>
+                    </div>
+                  </div>
+                  <div className="flex mb-3">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="w-4 h-4 text-yellow-400 fill-current" />
+                    ))}
+                  </div>
+                  <p className="text-gray-300 leading-relaxed">
+                    "As a new farmer, I was unsure about what to grow. AgroGuide's predictions guided me to choose
+                    cauliflower, and I got excellent results. The platform is very easy to use!"
+                  </p>
+                </CardContent>
+              </Card>
+
+              {/* Testimonial 3 */}
+              <Card className="bg-slate-800/50 border-slate-700 backdrop-blur-sm">
+                <CardContent className="p-6">
+                  <div className="flex items-center mb-4">
+                    <div className="w-12 h-12 bg-gradient-to-br from-orange-400 to-red-500 rounded-full flex items-center justify-center mr-4">
+                      <span className="text-lg font-bold text-white">BG</span>
+                    </div>
+                    <div>
+                      <h4 className="text-white font-semibold">Bikash Gurung</h4>
+                      <p className="text-gray-400 text-sm">Lalitpur District</p>
+                    </div>
+                  </div>
+                  <div className="flex mb-3">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="w-4 h-4 text-yellow-400 fill-current" />
+                    ))}
+                  </div>
+                  <p className="text-gray-300 leading-relaxed">
+                    "The weather and market insights are incredibly valuable. I switched from rice to vegetables based
+                    on AgroGuide's recommendation and doubled my income this year."
+                  </p>
+                </CardContent>
+              </Card>
+
+              {/* Testimonial 4 */}
+              <Card className="bg-slate-800/50 border-slate-700 backdrop-blur-sm">
+                <CardContent className="p-6">
+                  <div className="flex items-center mb-4">
+                    <div className="w-12 h-12 bg-gradient-to-br from-green-400 to-emerald-500 rounded-full flex items-center justify-center mr-4">
+                      <span className="text-lg font-bold text-white">MS</span>
+                    </div>
+                    <div>
+                      <h4 className="text-white font-semibold">Maya Shrestha</h4>
+                      <p className="text-gray-400 text-sm">Bhaktapur District</p>
+                    </div>
+                  </div>
+                  <div className="flex mb-3">
+                    {[...Array(4)].map((_, i) => (
+                      <Star key={i} className="w-4 h-4 text-yellow-400 fill-current" />
+                    ))}
+                    <Star className="w-4 h-4 text-gray-400" />
+                  </div>
+                  <p className="text-gray-300 leading-relaxed">
+                    "The soil nutrient analysis feature is amazing. I learned so much about my land and now use
+                    fertilizers more efficiently. My crops are healthier than ever!"
+                  </p>
+                </CardContent>
+              </Card>
+
+              {/* Testimonial 5 */}
+              <Card className="bg-slate-800/50 border-slate-700 backdrop-blur-sm">
+                <CardContent className="p-6">
+                  <div className="flex items-center mb-4">
+                    <div className="w-12 h-12 bg-gradient-to-br from-purple-400 to-pink-500 rounded-full flex items-center justify-center mr-4">
+                      <span className="text-lg font-bold text-white">DT</span>
+                    </div>
+                    <div>
+                      <h4 className="text-white font-semibold">Deepak Tamang</h4>
+                      <p className="text-gray-400 text-sm">Nuwakot District</p>
+                    </div>
+                  </div>
+                  <div className="flex mb-3">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="w-4 h-4 text-yellow-400 fill-current" />
+                    ))}
+                  </div>
+                  <p className="text-gray-300 leading-relaxed">
+                    "AgroGuide's timeline feature helps me plan my farming activities perfectly. I never miss important
+                    tasks like fertilization or pest control anymore."
+                  </p>
+                </CardContent>
+              </Card>
+
+              {/* Testimonial 6 */}
+              <Card className="bg-slate-800/50 border-slate-700 backdrop-blur-sm">
+                <CardContent className="p-6">
+                  <div className="flex items-center mb-4">
+                    <div className="w-12 h-12 bg-gradient-to-br from-teal-400 to-cyan-500 rounded-full flex items-center justify-center mr-4">
+                      <span className="text-lg font-bold text-white">LM</span>
+                    </div>
+                    <div>
+                      <h4 className="text-white font-semibold">Laxmi Maharjan</h4>
+                      <p className="text-gray-400 text-sm">Kathmandu District</p>
+                    </div>
+                  </div>
+                  <div className="flex mb-3">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="w-4 h-4 text-yellow-400 fill-current" />
+                    ))}
+                  </div>
+                  <p className="text-gray-300 leading-relaxed">
+                    "Being a commercial farmer, I need accurate predictions. AgroGuide's AI recommendations have helped
+                    me reduce risks and maximize profits across my 50-kattha farm."
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
+
+
           </div>
         </section>
       </main>

@@ -218,16 +218,106 @@ export default function ContactPage() {
                         </div>
                     </div>
 
-                    {/* Map Section */}
+                    {/* Interactive Map Section */}
                     <div className="mt-16">
+                        <div className="text-center mb-8">
+                            <h2 className="text-3xl font-bold text-white mb-4">Find Us</h2>
+                            <p className="text-gray-300 max-w-2xl mx-auto">
+                                Visit our office in Chitwan, Nepal. We're located in the heart of the agricultural region.
+                            </p>
+                        </div>
+
                         <Card className="bg-slate-800 border-slate-700 overflow-hidden">
-                            <div className="h-96 w-full bg-slate-700 flex items-center justify-center">
-                                <div className="text-center p-8">
-                                    <p className="text-gray-400 mb-2">Map placeholder</p>
-                                    <p className="text-sm text-gray-500">An interactive map would be displayed here in production</p>
+                            <div className="relative">
+                                {/* Google Maps Embed */}
+                                <iframe
+                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3532.8947654321!2d84.3297!3d27.6244!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3994fb5c5b5c5b5b%3A0x5b5c5b5c5b5c5b5c!2sBharatpur%2C%20Nepal!5e0!3m2!1sen!2sus!4v1234567890123!5m2!1sen!2sus"
+                                    width="100%"
+                                    height="400"
+                                    style={{ border: 0 }}
+                                    allowFullScreen
+                                    loading="lazy"
+                                    referrerPolicy="no-referrer-when-downgrade"
+                                    className="w-full h-96"
+                                    title="AgroGuide Office Location - Ward Chowk, Fulbari, Bharatpur-15, Chitwan, Nepal"
+                                />
+
+                                {/* Map Overlay with Location Details */}
+                                <div className="absolute top-40 left-4 bg-slate-900/90 backdrop-blur-sm rounded-lg p-4 max-w-sm">
+                                    <div className="flex items-start space-x-3">
+                                        <div className="bg-emerald-500/20 p-2 rounded-full">
+                                            <MapPin className="h-5 w-5 text-emerald-400" />
+                                        </div>
+                                        <div>
+                                            <h3 className="text-white font-semibold mb-1">AgroGuide Office</h3>
+                                            <p className="text-gray-300 text-sm">
+                                                Ward Chowk, Fulbari
+                                                <br />
+                                                Bharatpur-15, Chitwan
+                                                <br />
+                                                Nepal
+                                            </p>
+                                            <div className="mt-2 flex items-center space-x-2">
+                                                <Phone className="h-4 w-4 text-emerald-400" />
+                                                <span className="text-gray-300 text-sm">+977 9866115177</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Directions Button */}
+                                <div className="absolute bottom-4 right-4">
+                                    <Button
+                                        onClick={() =>
+                                            window.open("https://maps.google.com/?q=Ward+Chowk+Fulbari+Bharatpur+Chitwan+Nepal", "_blank")
+                                        }
+                                        className="bg-emerald-500 hover:bg-emerald-600 text-white"
+                                    >
+                                        <MapPin className="h-4 w-4 mr-2" />
+                                        Get Directions
+                                    </Button>
                                 </div>
                             </div>
                         </Card>
+
+                        {/* Location Features */}
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+                            <Card className="bg-slate-800 border-slate-700">
+                                <CardContent className="p-6 text-center">
+                                    <div className="w-12 h-12 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                                        <MapPin className="h-6 w-6 text-emerald-400" />
+                                    </div>
+                                    <h3 className="text-white font-semibold mb-2">Easy to Find</h3>
+                                    <p className="text-gray-300 text-sm">
+                                        Located in the central area of Bharatpur, easily accessible by public transport.
+                                    </p>
+                                </CardContent>
+                            </Card>
+
+                            <Card className="bg-slate-800 border-slate-700">
+                                <CardContent className="p-6 text-center">
+                                    <div className="w-12 h-12 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                                        <Phone className="h-6 w-6 text-emerald-400" />
+                                    </div>
+                                    <h3 className="text-white font-semibold mb-2">Call Ahead</h3>
+                                    <p className="text-gray-300 text-sm">
+                                        We recommend calling before visiting to ensure our team is available to assist you.
+                                    </p>
+                                </CardContent>
+                            </Card>
+
+                            <Card className="bg-slate-800 border-slate-700">
+                                <CardContent className="p-6 text-center">
+                                    <div className="w-12 h-12 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                                        <Mail className="h-6 w-6 text-emerald-400" />
+                                    </div>
+                                    <h3 className="text-white font-semibold mb-2">Schedule a Meeting</h3>
+                                    <p className="text-gray-300 text-sm">
+                                        Email us to schedule a consultation or demonstration of our platform.
+                                    </p>
+                                </CardContent>
+                            </Card>
+                        </div>
                     </div>
 
                     {/* FAQ Section */}

@@ -162,6 +162,33 @@ export default function PredictionDetailsPage() {
             minute: "2-digit",
         })
     }
+    useEffect(() => {
+        if (!user) {
+            const timer = setTimeout(() => {
+                router.push("/login")
+            }, 5000)
+
+            return () => clearTimeout(timer)
+        }
+    }, [user, router])
+
+    if (!user) {
+        return (
+            <div className="min-h-screen bg-slate-900">
+                <Header />
+                <div className="pt-20 flex items-center justify-center min-h-screen">
+                    <Card className="bg-slate-800 border-slate-700 p-8 text-center">
+                        <CardContent>
+                            <h2 className="text-2xl font-bold text-white mb-4">Please Login</h2>
+                            <p className="text-gray-300 mb-6">
+                                You need to be logged in to view your predictions. Redirecting in 5 seconds...
+                            </p>
+                        </CardContent>
+                    </Card>
+                </div>
+            </div>
+        )
+    }
 
     if (loading) {
         return (
@@ -192,6 +219,7 @@ export default function PredictionDetailsPage() {
             </div>
         )
     }
+
 
     return (
         <div className="min-h-screen bg-slate-900">
