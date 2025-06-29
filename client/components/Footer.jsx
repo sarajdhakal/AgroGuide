@@ -1,7 +1,7 @@
 "use client"
 
 import { useRouter } from "next/navigation"
-import { Shield, CheckCircle, Star } from "lucide-react"
+import { Shield, CheckCircle, Star, Phone, MapPin, Mail } from "lucide-react"
 
 export default function Footer() {
   const router = useRouter()
@@ -16,7 +16,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center gap-2 mb-4 cursor-pointer" onClick={() => handleNavigation("/")}>
-              <div className="w-14 h-8  rounded-lg flex items-center justify-center">
+              <div className="w-14 h-8 rounded-lg flex items-center justify-center">
                 <img src="/logo.png" alt="AgroGuide Logo" />
               </div>
               <span className="text-xl font-bold text-white">AgroGuide</span>
@@ -24,6 +24,30 @@ export default function Footer() {
             <p className="text-gray-300 mb-4 max-w-md">
               Empowering farmers worldwide with AI-driven insights for sustainable and profitable agriculture.
             </p>
+
+            {/* Contact Information */}
+            <div className="space-y-3 mb-6">
+              <div className="flex items-center gap-3 text-gray-300">
+                <Phone className="w-4 h-4 text-emerald-400" />
+                <a href="tel:+977-9866115177" className="hover:text-emerald-400 transition-colors">
+                  +977-9866115177
+                </a>
+              </div>
+              <div className="flex items-center gap-3 text-gray-300">
+                <Mail className="w-4 h-4 text-emerald-400" />
+                <a href="mailto:info@agroguide.com" className="hover:text-emerald-400 transition-colors">
+                  info@agroguide.com
+                </a>
+              </div>
+              <div className="flex items-start gap-3 text-gray-300">
+                <MapPin className="w-4 h-4 text-emerald-400 mt-0.5" />
+                <div>
+                  <p>Chitwan, Nepal</p>
+                  <p className="text-sm text-gray-400">Bharatpur-15</p>
+                </div>
+              </div>
+            </div>
+
             <div className="flex flex-wrap items-center gap-6 text-gray-400 text-sm">
               <div className="flex items-center gap-2">
                 <Star className="w-4 h-4 text-yellow-400 fill-current" />

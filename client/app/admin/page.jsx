@@ -15,6 +15,7 @@ import SettingsManagement from "@/components/admin/SettingsManagement";
 import BlogManagement from "@/components/admin/BlogManagement";
 import ContactsManagement from "@/components/admin/ContactsManagement";
 import CropInsightsManagement from "@/components/admin/CropsInsightsManagement";
+import SubscriptionsManagement from "@/components/admin/SubscriptionsManagement";
 
 export default function AdminDashboard() {
   const searchParams = useSearchParams();
@@ -54,6 +55,8 @@ export default function AdminDashboard() {
         return <ContactsManagement />
       case "cropsinsights":
         return <CropInsightsManagement />
+      case "subscriptions":
+        return <SubscriptionsManagement />
       default:
         return <DashboardOverview />;
     }
@@ -68,7 +71,7 @@ export default function AdminDashboard() {
         setSidebarOpen={setSidebarOpen}
       />
 
-      <div className={`transition-all duration-300 ${sidebarOpen ? "ml-64" : "ml-16"}`}>
+      <div className={`transition-all duration-300 ${sidebarOpen ? "ml-72" : "ml-16"}`}>
         <AdminHeader
           sidebarOpen={sidebarOpen}
           setSidebarOpen={setSidebarOpen}

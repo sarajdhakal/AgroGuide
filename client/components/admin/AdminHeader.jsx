@@ -18,8 +18,12 @@ export default function AdminHeader({ activeTab }) {
     const titles = {
       dashboard: "Dashboard Overview",
       users: "User Management",
+      subscriptions: "Subscription Management",
       crops: "Crop Management",
+      cropsinsights: "Crops Insights Management",
       features: "Feature Management",
+      blog: "Blog Management",
+      contacts: "Contact Management",
       predictions: "Prediction Management",
       analytics: "Analytics & Reports",
       settings: "System Settings",
@@ -27,12 +31,29 @@ export default function AdminHeader({ activeTab }) {
     return titles[activeTab] || "Dashboard"
   }
 
+  const getPageDescription = () => {
+    const descriptions = {
+      dashboard: "Monitor your AgroGuide platform performance",
+      users: "Manage user accounts and permissions",
+      subscriptions: "Handle user subscriptions and billing",
+      crops: "Manage crop database and information",
+      cropsinsights: "Manage crop timelines and insights",
+      features: "Configure platform features",
+      blog: "Create and manage blog content",
+      contacts: "View and respond to user inquiries",
+      predictions: "Monitor and manage AI predictions",
+      analytics: "View detailed reports and analytics",
+      settings: "Configure system settings",
+    }
+    return descriptions[activeTab] || "Manage your AgroGuide platform"
+  }
+
   return (
     <header className="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 px-6 py-4">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-slate-900 dark:text-white">{getPageTitle()}</h1>
-          <p className="text-slate-600 dark:text-slate-400">Manage your AgroGuide platform</p>
+          <p className="text-slate-600 dark:text-slate-400">{getPageDescription()}</p>
         </div>
 
         <div className="flex items-center gap-4">

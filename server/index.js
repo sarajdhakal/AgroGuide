@@ -10,7 +10,8 @@ import routeTimeline from "./routes/timeline.js";
 import predictRoute from "./routes/predictRoute.js";
 import predictionRoutes from "./routes/predictionRoutes.js";
 import selectedCropRoutes from "./routes/selectedCropRoutes.js"
-
+import esewaRoutes from "./routes/esewaroute.js"
+import esewaSignatureRoute from "./routes/esewasignature.js"
 
 
 const app = express();
@@ -40,6 +41,9 @@ app.use("/api", routeTimeline);
 app.use("/api/crops", predictRoute);
 app.use("/api/predictions", predictionRoutes);
 app.use("/api/selected-crops", selectedCropRoutes)
+app.use("/api/esewa", esewaRoutes)
+app.use("/api/esewa/signature", esewaSignatureRoute)
+
 
 const PORT2 = process.env.PORT || 5000;
 app.listen(PORT2, () => console.log(`Server running on port ${PORT2}`));

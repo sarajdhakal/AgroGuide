@@ -1,19 +1,20 @@
 import mongoose from "mongoose";
-import Users from "./model/userModel.js"; // adjust if needed
+import userModel from "./model/userModel.js";
 
-const MONGO_URL = process.env.MONGO_URL || "mongodb://localhost:27017/mern";
+export async function updateUserSubscription({ userId, plan, billingCycle, transactionId, amount }) {
+    const duration = billingCycle === "yearly" ? 365 : 30
+    const now = new Date()
+    const endDate = new Date(now.getTime() + duration * 24 * 60 * 60 * 1000)
 
-async function updateExistingUsers() {
-    await mongoose.connect("mongodb://localhost:27017/your-db-name");
-
-    await Users.updateMany(
-        { password: { $exists: false } },
-        { $set: { password: "password" } }
-    );
-
-
-    console.log("All existing users updated with default password.");
-    await mongoose.disconnect();
+    await userModel.findByIdAndUpdate(userId, {
+        subscription: {
+            plan,
+            billingCycle,
+            status: "active",
+            transactionId,
+            amount,
+            startDate: now,
+            endDate,
+        },
+    })
 }
-
-updateExistingUsers();

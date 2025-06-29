@@ -8,88 +8,260 @@ import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { Search, Filter, MoreHorizontal, Brain, Download, Eye, Trash2 } from "lucide-react"
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { Label } from "@/components/ui/label"
+import { Textarea } from "@/components/ui/textarea"
+import {
+  Search,
+  Filter,
+  MoreHorizontal,
+  Brain,
+  Download,
+  Eye,
+  Trash2,
+  Edit,
+  User,
+  Calendar,
+  MapPin,
+  Thermometer,
+  Leaf, Plus,
+  CheckCircle,
+} from "lucide-react"
+import { useToast } from "@/hooks/use-toast"
+import axios from "axios"
 
 export default function PredictionsManagement() {
   const router = useRouter()
+  const { toast } = useToast()
   const [predictions, setPredictions] = useState([])
+  const [users, setUsers] = useState([])
+  const [selectedCrops, setSelectedCrops] = useState([])
   const [searchTerm, setSearchTerm] = useState("")
   const [filterStatus, setFilterStatus] = useState("all")
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState("")
+  const [selectedPrediction, setSelectedPrediction] = useState(null)
+  const [isViewModalOpen, setIsViewModalOpen] = useState(false)
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false)
+
 
   useEffect(() => {
-    const loadPredictions = async () => {
-      setLoading(true)
-      // Mock data
-      const mockPredictions = [
-        {
-          id: 1,
-          user: "John Farmer",
-          crop: "Corn",
-          location: "Iowa, USA",
-          confidence: 92,
-          expectedYield: "120 bushels/acre",
-          status: "completed",
-          createdAt: "2024-12-06",
-          riskLevel: "low",
-        },
-        {
-          id: 2,
-          user: "Sarah Green",
-          crop: "Soybeans",
-          location: "California, USA",
-          confidence: 87,
-          expectedYield: "45 bushels/acre",
-          status: "completed",
-          createdAt: "2024-12-05",
-          riskLevel: "medium",
-        },
-        {
-          id: 3,
-          user: "Anonymous",
-          crop: "Wheat",
-          location: "Kansas, USA",
-          confidence: 95,
-          expectedYield: "65 bushels/acre",
-          status: "processing",
-          createdAt: "2024-12-06",
-          riskLevel: "low",
-        },
-      ]
-      setPredictions(mockPredictions)
-      setLoading(false)
+    const loadData = async () => {
+      try {
+        setLoading(true)
+        const [predictionsRes, usersRes, selectedCropsRes] = await Promise.all([
+          axios.get("http://localhost:8000/api/predictions"),
+          axios.get("http://localhost:8000/api/users"),
+          axios.get("http://localhost:8000/api/selected-crops"),
+        ])
+
+        setPredictions(predictionsRes.data)
+        setUsers(usersRes.data)
+        setSelectedCrops(selectedCropsRes.data)
+        setError("")
+
+        toast({
+          title: "Data Loaded Successfully",
+          description: `Loaded ${predictionsRes.data.length} predictions, ${usersRes.data.length} users, and ${selectedCropsRes.data.length} selected crops`,
+          variant: "success",
+        })
+      } catch (error) {
+        console.error("Error loading predictions:", error)
+        setError("Failed to fetch predictions data")
+
+        toast({
+          title: "Error Loading Data",
+          description: "Failed to fetch predictions data from server",
+          variant: "destructive",
+        })
+
+        // Fallback mock data based on your schema
+        setPredictions([
+          {
+            _id: "68600017c4d51a2327538f7",
+            userId: "685aba74ad3275a4a39980ab",
+            inputData: {
+              location: "Current Location",
+              locationCoordinates: {},
+              soilType: "sandy",
+              nitrogenRequired: "90",
+              phosphorousRequired: "42",
+              potassiumRequired: "38",
+              soilpH: "7",
+              temperature: "26",
+              humidity: "89",
+              rainfall: "202",
+              farmSize: "34",
+              climate: "subtropical",
+              previousCrop: "soybeans",
+              budget: "medium",
+              experience: "intermediate",
+              notes: "saraj dhakal",
+            },
+            recommendedCrops: [
+              {
+                cropName: "papaya",
+                scientificName: "Carica papaya",
+                suitability: 15,
+                risk: "High",
+                _id: "68600017c4d51a2327538f8",
+              },
+              {
+                cropName: "rice",
+                scientificName: "Oryza sativa",
+                suitability: 85,
+                risk: "Low",
+                _id: "68600017c4d51a2327538f9",
+              },
+              {
+                cropName: "wheat",
+                scientificName: "Triticum aestivum",
+                suitability: 65,
+                risk: "Medium",
+                _id: "68600017c4d51a2327538fa",
+              },
+            ],
+            predictedAt: "2025-06-28T14:45:21.209+00:00",
+            __v: 0,
+          },
+        ])
+
+        setSelectedCrops([
+          {
+            _id: "68600017c4d51a2327538fb",
+            predictionId: "68600017c4d51a2327538f7",
+            cropName: "rice",
+            scientificName: "Oryza sativa",
+            selectedAt: "2025-06-28T14:45:31.251+00:00",
+            __v: 0,
+          },
+        ])
+      } finally {
+        setLoading(false)
+      }
     }
-    loadPredictions()
+    loadData()
   }, [])
 
+  const getUserById = (userId) => {
+    const id = typeof userId === "object" && userId !== null ? userId._id : userId
+    const user = users.find((u) => u._id.toString() === id?.toString())
+    if (!user) console.warn("User not found for ID:", id)
+    return user || { firstName: "Unknown", lastName: "User", email: "N/A" }
+  }
+
+  const getSelectedCropByPredictionId = (predictionId) => {
+    return selectedCrops.find((crop) => crop.predictionId === predictionId)
+  }
+
   const filteredPredictions = predictions.filter((prediction) => {
+    const user = getUserById(prediction.userId)
+    const userName = `${user.firstName} ${user.lastName}`.toLowerCase()
     const matchesSearch =
-      prediction.user.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      prediction.crop.toLowerCase().includes(searchTerm.toLowerCase())
-    const matchesFilter = filterStatus === "all" || prediction.status === filterStatus
+      userName.includes(searchTerm.toLowerCase()) ||
+      prediction.inputData?.location?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      prediction.recommendedCrops?.[0]?.cropName?.toLowerCase().includes(searchTerm.toLowerCase())
+
+    // Filter by status based on whether crops are recommended and selected
+    const hasRecommendations = prediction.recommendedCrops && prediction.recommendedCrops.length > 0
+    const hasSelection = getSelectedCropByPredictionId(prediction._id)
+
+    const matchesFilter =
+      filterStatus === "all" ||
+      (filterStatus === "completed" && hasRecommendations && hasSelection) ||
+      (filterStatus === "pending" && hasRecommendations && !hasSelection) ||
+      (filterStatus === "processing" && !hasRecommendations)
+
     return matchesSearch && matchesFilter
   })
 
-  const getStatusBadge = (status) => {
-    const colors = {
-      completed: "bg-green-100 text-green-800",
-      processing: "bg-yellow-100 text-yellow-800",
-      failed: "bg-red-100 text-red-800",
+  const getStatusBadge = (prediction) => {
+    const hasRecommendations = prediction.recommendedCrops && prediction.recommendedCrops.length > 0
+    const hasSelection = getSelectedCropByPredictionId(prediction._id)
+
+    if (hasRecommendations && hasSelection) {
+      return <Badge className="bg-green-100 text-green-800">Completed</Badge>
+    } else if (hasRecommendations && !hasSelection) {
+      return <Badge className="bg-yellow-100 text-yellow-800">Pending Selection</Badge>
+    } else {
+      return <Badge className="bg-blue-100 text-blue-800">Processing</Badge>
     }
-    return <Badge className={colors[status]}>{status}</Badge>
   }
 
   const getRiskBadge = (risk) => {
     const colors = {
-      low: "bg-green-100 text-green-800",
-      medium: "bg-yellow-100 text-yellow-800",
-      high: "bg-red-100 text-red-800",
+      Low: "bg-green-100 text-green-800",
+      Medium: "bg-yellow-100 text-yellow-800",
+      High: "bg-red-100 text-red-800",
     }
-    return <Badge className={colors[risk]}>{risk} risk</Badge>
+    return <Badge className={colors[risk] || "bg-gray-100 text-gray-800"}>{risk} Risk</Badge>
   }
 
-  const handleCreatePrediction = () => {
-    router.push("/admin/predictions/create")
+  const handleViewPrediction = (prediction) => {
+    setSelectedPrediction(prediction)
+    setIsViewModalOpen(true)
+  }
+
+  const handleEditPrediction = (prediction) => {
+    setSelectedPrediction(prediction)
+    setIsEditModalOpen(true)
+  }
+
+  const handleUpdatePrediction = async (updatedData) => {
+    try {
+      await axios.put(`http://localhost:8000/api/predictions/${selectedPrediction._id}`, updatedData)
+
+      // Update local state
+      setPredictions((prev) => prev.map((p) => (p._id === selectedPrediction._id ? { ...p, ...updatedData } : p)))
+
+      setIsEditModalOpen(false)
+      setSelectedPrediction(null)
+
+      toast({
+        title: "Prediction Edited Successfully",
+        description: "The prediction has been successfully updated with new information",
+        variant: "success",
+      })
+    } catch (error) {
+      console.error("Error updating prediction:", error)
+      toast({
+        title: "Update Failed",
+        description: "Failed to update prediction. Please try again.",
+        variant: "destructive",
+      })
+    }
+  }
+
+  const handleDeletePrediction = async (predictionId) => {
+    if (!confirm("Are you sure you want to delete this prediction?")) return
+
+    try {
+      await axios.delete(`http://localhost:8000/api/predictions/${predictionId}`)
+      setPredictions((prev) => prev.filter((p) => p._id !== predictionId))
+
+      toast({
+        title: "Prediction Deleted",
+        description: "Prediction has been successfully deleted",
+        variant: "success",
+      })
+    } catch (error) {
+      console.error("Error deleting prediction:", error)
+      toast({
+        title: "Delete Failed",
+        description: "Failed to delete prediction. Please try again.",
+        variant: "destructive",
+      })
+    }
+  }
+
+  const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    })
   }
 
   if (loading) {
@@ -105,6 +277,8 @@ export default function PredictionsManagement() {
 
   return (
     <div className="space-y-6">
+      {error && <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">{error}</div>}
+
       {/* Header Actions */}
       <div className="flex flex-col sm:flex-row gap-4 justify-between">
         <div className="flex gap-4">
@@ -119,7 +293,7 @@ export default function PredictionsManagement() {
           </div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="flex items-center gap-2">
+              <Button variant="outline" className="flex items-center gap-2 bg-transparent">
                 <Filter className="w-4 h-4" />
                 Filter: {filterStatus === "all" ? "All" : filterStatus}
               </Button>
@@ -127,22 +301,19 @@ export default function PredictionsManagement() {
             <DropdownMenuContent>
               <DropdownMenuItem onClick={() => setFilterStatus("all")}>All Predictions</DropdownMenuItem>
               <DropdownMenuItem onClick={() => setFilterStatus("completed")}>Completed</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setFilterStatus("pending")}>Pending Selection</DropdownMenuItem>
               <DropdownMenuItem onClick={() => setFilterStatus("processing")}>Processing</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setFilterStatus("failed")}>Failed</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
+        <Button onClick={() => setIsCreateDialogOpen(true)} className="bg-emerald-600 hover:bg-emerald-700">
+          <Plus className="h-4 w-4 mr-2" />
+          Create Prediction
+        </Button>
         <div className="flex gap-2">
-          <Button variant="outline" className="flex items-center gap-2">
+          <Button variant="outline" className="flex items-center gap-2 bg-transparent">
             <Download className="w-4 h-4" />
             Export
-          </Button>
-          <Button
-            onClick={handleCreatePrediction}
-            className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700"
-          >
-            <Brain className="w-4 h-4" />
-            Create Prediction
           </Button>
         </div>
       </div>
@@ -157,55 +328,120 @@ export default function PredictionsManagement() {
             <TableHeader>
               <TableRow>
                 <TableHead>User</TableHead>
-                <TableHead>Crop</TableHead>
                 <TableHead>Location</TableHead>
-                <TableHead>Confidence</TableHead>
-                <TableHead>Expected Yield</TableHead>
-                <TableHead>Risk Level</TableHead>
+                <TableHead>Soil Type</TableHead>
+                <TableHead>Recommendations</TableHead>
+                <TableHead>Selected Crop</TableHead>
+                <TableHead>Top Suitability</TableHead>
                 <TableHead>Status</TableHead>
                 <TableHead>Date</TableHead>
                 <TableHead className="text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {filteredPredictions.map((prediction) => (
-                <TableRow key={prediction.id}>
-                  <TableCell>
-                    <div className="font-medium text-slate-900 dark:text-white">{prediction.user}</div>
-                  </TableCell>
-                  <TableCell>{prediction.crop}</TableCell>
-                  <TableCell>{prediction.location}</TableCell>
-                  <TableCell>
-                    <div className="flex items-center gap-2">
-                      <div className="text-emerald-600 font-medium">{prediction.confidence}%</div>
-                    </div>
-                  </TableCell>
-                  <TableCell>{prediction.expectedYield}</TableCell>
-                  <TableCell>{getRiskBadge(prediction.riskLevel)}</TableCell>
-                  <TableCell>{getStatusBadge(prediction.status)}</TableCell>
-                  <TableCell>{prediction.createdAt}</TableCell>
-                  <TableCell className="text-right">
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="sm">
-                          <MoreHorizontal className="w-4 h-4" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuItem className="flex items-center gap-2">
-                          <Eye className="w-4 h-4" />
-                          View Details
-                        </DropdownMenuItem>
-                        <DropdownMenuItem className="flex items-center gap-2">Download Report</DropdownMenuItem>
-                        <DropdownMenuItem className="flex items-center gap-2 text-red-600">
-                          <Trash2 className="w-4 h-4" />
-                          Delete Prediction
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </TableCell>
-                </TableRow>
-              ))}
+              {filteredPredictions.map((prediction) => {
+                const user = getUserById(prediction.userId)
+                const selectedCrop = getSelectedCropByPredictionId(prediction._id)
+                const topCrop = prediction.recommendedCrops?.[0]
+                const bestSuitability =
+                  prediction.recommendedCrops?.reduce(
+                    (max, crop) => (crop.suitability > max ? crop.suitability : max),
+                    0,
+                  ) || 0
+
+                return (
+                  <TableRow key={prediction._id}>
+                    <TableCell>
+                      <div>
+                        <div className="font-medium text-slate-900 dark:text-white">
+                          {user.firstName} {user.lastName}
+                        </div>
+                        <div className="text-sm text-slate-500">{user.email}</div>
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex items-center gap-1">
+                        <MapPin className="w-4 h-4 text-slate-400" />
+                        {prediction.inputData?.location || "N/A"}
+                      </div>
+                    </TableCell>
+                    <TableCell className="capitalize">{prediction.inputData?.soilType || "N/A"}</TableCell>
+                    <TableCell>
+                      <div className="text-sm">
+                        <td className="p-4">
+                          <div className="space-y-1">
+                            {prediction.recommendedCrops?.map((crop, index) => (
+                              <div key={index} className="flex items-center text-sm">
+                                <span className="font-medium text-gray-900">
+                                  {index + 1}. {crop.cropName}
+                                </span>
+                                <Badge variant="outline" className="ml-2 text-xs">
+                                  {crop.suitability}%
+                                </Badge>
+                              </div>
+                            )) || <span className="text-gray-500">No recommendations</span>}
+                          </div>
+                        </td>
+
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      {selectedCrop ? (
+                        <div className="flex items-center gap-1">
+                          <CheckCircle className="w-4 h-4 text-green-600" />
+                          <div>
+                            <div className="font-medium text-green-700">{selectedCrop.cropName}</div>
+                            <div className="text-xs text-slate-500 italic">{selectedCrop.scientificName}</div>
+                          </div>
+                        </div>
+                      ) : (
+                        <span className="text-slate-400">Not selected</span>
+                      )}
+                    </TableCell>
+                    <TableCell>
+                      <div className="text-emerald-600 font-medium">{bestSuitability}%</div>
+                    </TableCell>
+                    <TableCell>{getStatusBadge(prediction)}</TableCell>
+                    <TableCell>{formatDate(prediction.predictedAt)}</TableCell>
+                    <TableCell className="text-right">
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button variant="ghost" size="sm">
+                            <MoreHorizontal className="w-4 h-4" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                          <DropdownMenuItem
+                            onClick={() => handleViewPrediction(prediction)}
+                            className="flex items-center gap-2"
+                          >
+                            <Eye className="w-4 h-4" />
+                            View Details
+                          </DropdownMenuItem>
+                          <DropdownMenuItem
+                            onClick={() => handleEditPrediction(prediction)}
+                            className="flex items-center gap-2"
+                          >
+                            <Edit className="w-4 h-4" />
+                            Edit Prediction
+                          </DropdownMenuItem>
+                          <DropdownMenuItem className="flex items-center gap-2">
+                            <Download className="w-4 h-4" />
+                            Download Report
+                          </DropdownMenuItem>
+                          <DropdownMenuItem
+                            onClick={() => handleDeletePrediction(prediction._id)}
+                            className="flex items-center gap-2 text-red-600"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                            Delete Prediction
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </TableCell>
+                  </TableRow>
+                )
+              })}
             </TableBody>
           </Table>
         </CardContent>
@@ -222,7 +458,13 @@ export default function PredictionsManagement() {
         <Card>
           <CardContent className="p-4">
             <div className="text-2xl font-bold text-green-600">
-              {predictions.filter((p) => p.status === "completed").length}
+              {
+                predictions.filter((p) => {
+                  const hasRecommendations = p.recommendedCrops && p.recommendedCrops.length > 0
+                  const hasSelection = getSelectedCropByPredictionId(p._id)
+                  return hasRecommendations && hasSelection
+                }).length
+              }
             </div>
             <div className="text-sm text-slate-600 dark:text-slate-400">Completed</div>
           </CardContent>
@@ -230,20 +472,713 @@ export default function PredictionsManagement() {
         <Card>
           <CardContent className="p-4">
             <div className="text-2xl font-bold text-yellow-600">
-              {predictions.filter((p) => p.status === "processing").length}
+              {
+                predictions.filter((p) => {
+                  const hasRecommendations = p.recommendedCrops && p.recommendedCrops.length > 0
+                  const hasSelection = getSelectedCropByPredictionId(p._id)
+                  return hasRecommendations && !hasSelection
+                }).length
+              }
             </div>
-            <div className="text-sm text-slate-600 dark:text-slate-400">Processing</div>
+            <div className="text-sm text-slate-600 dark:text-slate-400">Pending Selection</div>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-4">
             <div className="text-2xl font-bold text-emerald-600">
-              {Math.round(predictions.reduce((acc, p) => acc + p.confidence, 0) / predictions.length)}%
+              {predictions.length > 0
+                ? Math.round(
+                  predictions
+                    .filter((p) => p.recommendedCrops?.length > 0)
+                    .reduce((acc, p) => {
+                      const maxSuitability = p.recommendedCrops.reduce(
+                        (max, crop) => (crop.suitability > max ? crop.suitability : max),
+                        0,
+                      )
+                      return acc + maxSuitability
+                    }, 0) / predictions.filter((p) => p.recommendedCrops?.length > 0).length || 0,
+                )
+                : 0}
+              %
             </div>
-            <div className="text-sm text-slate-600 dark:text-slate-400">Avg Confidence</div>
+            <div className="text-sm text-slate-600 dark:text-slate-400">Avg Best Suitability</div>
           </CardContent>
         </Card>
       </div>
+
+      {/* View Prediction Modal */}
+      <Dialog open={isViewModalOpen} onOpenChange={setIsViewModalOpen}>
+        <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Prediction Details</DialogTitle>
+          </DialogHeader>
+          {selectedPrediction && (
+            <div className="space-y-6">
+              {/* User Info */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <User className="w-5 h-5" />
+                    User Information
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <Label>Name</Label>
+                      <p className="font-medium">
+                        {getUserById(selectedPrediction.userId).firstName}{" "}
+                        {getUserById(selectedPrediction.userId).lastName}
+                      </p>
+                    </div>
+                    <div>
+                      <Label>Email</Label>
+                      <p>{getUserById(selectedPrediction.userId).email}</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Selected Crop Info */}
+              {getSelectedCropByPredictionId(selectedPrediction._id) && (
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <CheckCircle className="w-5 h-5 text-green-600" />
+                      Selected Crop
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <Label>Crop Name</Label>
+                        <p className="font-medium capitalize">
+                          {getSelectedCropByPredictionId(selectedPrediction._id).cropName}
+                        </p>
+                      </div>
+                      <div>
+                        <Label>Scientific Name</Label>
+                        <p className="italic">{getSelectedCropByPredictionId(selectedPrediction._id).scientificName}</p>
+                      </div>
+                      <div>
+                        <Label>Selected At</Label>
+                        <p>{formatDate(getSelectedCropByPredictionId(selectedPrediction._id).selectedAt)}</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+
+              {/* Input Data */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <MapPin className="w-5 h-5" />
+                    Farm Input Data
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-3 gap-4">
+                    <div>
+                      <Label>Location</Label>
+                      <p className="font-medium">{selectedPrediction.inputData?.location}</p>
+                    </div>
+                    <div>
+                      <Label>Soil Type</Label>
+                      <p className="capitalize">{selectedPrediction.inputData?.soilType}</p>
+                    </div>
+                    <div>
+                      <Label>Farm Size</Label>
+                      <p>{selectedPrediction.inputData?.farmSize} acres</p>
+                    </div>
+                    <div>
+                      <Label>Climate</Label>
+                      <p className="capitalize">{selectedPrediction.inputData?.climate}</p>
+                    </div>
+                    <div>
+                      <Label>Previous Crop</Label>
+                      <p className="capitalize">{selectedPrediction.inputData?.previousCrop}</p>
+                    </div>
+                    <div>
+                      <Label>Budget</Label>
+                      <p className="capitalize">{selectedPrediction.inputData?.budget}</p>
+                    </div>
+                    <div>
+                      <Label>Experience Level</Label>
+                      <p className="capitalize">{selectedPrediction.inputData?.experience}</p>
+                    </div>
+                  </div>
+                  {selectedPrediction.inputData?.notes && (
+                    <div className="mt-4">
+                      <Label>Notes</Label>
+                      <p className="text-sm text-slate-600">{selectedPrediction.inputData.notes}</p>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+
+              {/* Environmental Data */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Leaf className="w-5 h-5" />
+                      Soil Requirements
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-3">
+                      <div className="flex justify-between">
+                        <span>pH Level:</span>
+                        <span className="font-medium">{selectedPrediction.inputData?.soilpH || "N/A"}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Nitrogen Required:</span>
+                        <span className="font-medium">
+                          {selectedPrediction.inputData?.nitrogenRequired || "N/A"} kg/ha
+                        </span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Phosphorous Required:</span>
+                        <span className="font-medium">
+                          {selectedPrediction.inputData?.phosphorousRequired || "N/A"} kg/ha
+                        </span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Potassium Required:</span>
+                        <span className="font-medium">
+                          {selectedPrediction.inputData?.potassiumRequired || "N/A"} kg/ha
+                        </span>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Thermometer className="w-5 h-5" />
+                      Climate Data
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-3">
+                      <div className="flex justify-between">
+                        <span>Temperature:</span>
+                        <span className="font-medium">{selectedPrediction.inputData?.temperature || "N/A"}°C</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Humidity:</span>
+                        <span className="font-medium">{selectedPrediction.inputData?.humidity || "N/A"}%</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Rainfall:</span>
+                        <span className="font-medium">{selectedPrediction.inputData?.rainfall || "N/A"}mm</span>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* All Recommended Crops */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Brain className="w-5 h-5" />
+                    All Recommended Crops ({selectedPrediction.recommendedCrops?.length || 0})
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  {selectedPrediction.recommendedCrops && selectedPrediction.recommendedCrops.length > 0 ? (
+                    <div className="grid gap-4">
+                      {selectedPrediction.recommendedCrops
+                        .sort((a, b) => b.suitability - a.suitability)
+                        .map((crop, index) => {
+                          const isSelected =
+                            getSelectedCropByPredictionId(selectedPrediction._id)?.cropName === crop.cropName
+                          return (
+                            <div
+                              key={crop._id}
+                              className={`border rounded-lg p-4 ${isSelected ? "border-green-500 bg-green-50" : ""}`}
+                            >
+                              <div className="flex justify-between items-start mb-2">
+                                <div>
+                                  <h4 className="font-semibold text-lg capitalize flex items-center gap-2">
+                                    {crop.cropName}
+                                    {isSelected && <CheckCircle className="w-5 h-5 text-green-600" />}
+                                  </h4>
+                                  <p className="text-sm text-slate-600 italic">{crop.scientificName}</p>
+                                </div>
+                                <div className="text-right">
+                                  <div className="text-2xl font-bold text-emerald-600">{crop.suitability}%</div>
+                                  <div className="text-sm text-slate-500">Suitability</div>
+                                </div>
+                              </div>
+                              <div className="flex justify-between items-center">
+                                <div className="flex gap-2">
+                                  <Badge
+                                    className={`${index === 0 ? "bg-emerald-100 text-emerald-800" : "bg-slate-100 text-slate-800"}`}
+                                  >
+                                    Rank #{index + 1}
+                                  </Badge>
+                                  {isSelected && <Badge className="bg-green-100 text-green-800">Selected</Badge>}
+                                </div>
+                                {getRiskBadge(crop.risk)}
+                              </div>
+                            </div>
+                          )
+                        })}
+                    </div>
+                  ) : (
+                    <p className="text-center text-slate-500 py-8">No crop recommendations available</p>
+                  )}
+                </CardContent>
+              </Card>
+
+              {/* Timestamps */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Calendar className="w-5 h-5" />
+                    Timeline
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-1 gap-4">
+                    <div>
+                      <Label>Predicted At</Label>
+                      <p>{formatDate(selectedPrediction.predictedAt)}</p>
+                    </div>
+                    {getSelectedCropByPredictionId(selectedPrediction._id) && (
+                      <div>
+                        <Label>Crop Selected At</Label>
+                        <p>{formatDate(getSelectedCropByPredictionId(selectedPrediction._id).selectedAt)}</p>
+                      </div>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
+
+      {/* Edit Prediction Modal */}
+      <Dialog open={isEditModalOpen} onOpenChange={setIsEditModalOpen}>
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Edit Prediction</DialogTitle>
+          </DialogHeader>
+          {selectedPrediction && (
+            <EditPredictionForm
+              prediction={selectedPrediction}
+              onSave={handleUpdatePrediction}
+              onCancel={() => setIsEditModalOpen(false)}
+            />
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
+  )
+}
+
+// Enhanced Edit Prediction Form Component
+function EditPredictionForm({ prediction, onSave, onCancel }) {
+  const [formData, setFormData] = useState({
+    // Input Data
+    location: prediction.inputData?.location || "",
+    soilType: prediction.inputData?.soilType || "",
+    nitrogenRequired: prediction.inputData?.nitrogenRequired || "",
+    phosphorousRequired: prediction.inputData?.phosphorousRequired || "",
+    potassiumRequired: prediction.inputData?.potassiumRequired || "",
+    soilpH: prediction.inputData?.soilpH || "",
+    temperature: prediction.inputData?.temperature || "",
+    humidity: prediction.inputData?.humidity || "",
+    rainfall: prediction.inputData?.rainfall || "",
+    farmSize: prediction.inputData?.farmSize || "",
+    climate: prediction.inputData?.climate || "",
+    previousCrop: prediction.inputData?.previousCrop || "",
+    budget: prediction.inputData?.budget || "",
+    experience: prediction.inputData?.experience || "",
+    notes: prediction.inputData?.notes || "",
+
+    // All 3 Recommended Crops
+    crops: prediction.recommendedCrops?.map((crop) => ({
+      cropName: crop.cropName || "",
+      scientificName: crop.scientificName || "",
+      suitability: crop.suitability || 0,
+      risk: crop.risk || "Low",
+      _id: crop._id,
+    })) || [
+        { cropName: "", scientificName: "", suitability: 0, risk: "Low", _id: "" },
+        { cropName: "", scientificName: "", suitability: 0, risk: "Low", _id: "" },
+        { cropName: "", scientificName: "", suitability: 0, risk: "Low", _id: "" },
+      ],
+  })
+
+  const [errors, setErrors] = useState({})
+
+  const validateForm = () => {
+    const newErrors = {}
+
+    // Required field validations
+    if (!formData.location.trim()) newErrors.location = "Location is required"
+    if (!formData.soilType.trim()) newErrors.soilType = "Soil type is required"
+    if (!formData.temperature.trim()) newErrors.temperature = "Temperature is required"
+    if (!formData.humidity.trim()) newErrors.humidity = "Humidity is required"
+    if (!formData.rainfall.trim()) newErrors.rainfall = "Rainfall is required"
+    if (!formData.farmSize.trim()) newErrors.farmSize = "Farm size is required"
+
+    // Validate crops
+    formData.crops.forEach((crop, index) => {
+      if (crop.cropName && (crop.suitability < 0 || crop.suitability > 100)) {
+        newErrors[`crop${index}Suitability`] = "Suitability must be between 0 and 100"
+      }
+    })
+
+    // Numeric validations
+    if (formData.soilpH && (Number.parseFloat(formData.soilpH) < 0 || Number.parseFloat(formData.soilpH) > 14)) {
+      newErrors.soilpH = "pH must be between 0 and 14"
+    }
+
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+
+    if (!validateForm()) {
+      return
+    }
+
+    const updatedData = {
+      inputData: {
+        location: formData.location,
+        soilType: formData.soilType,
+        nitrogenRequired: formData.nitrogenRequired,
+        phosphorousRequired: formData.phosphorousRequired,
+        potassiumRequired: formData.potassiumRequired,
+        soilpH: formData.soilpH,
+        temperature: formData.temperature,
+        humidity: formData.humidity,
+        rainfall: formData.rainfall,
+        farmSize: formData.farmSize,
+        climate: formData.climate,
+        previousCrop: formData.previousCrop,
+        budget: formData.budget,
+        experience: formData.experience,
+        notes: formData.notes,
+      },
+      recommendedCrops: formData.crops
+        .filter((crop) => crop.cropName.trim())
+        .map((crop) => ({
+          cropName: crop.cropName,
+          scientificName: crop.scientificName,
+          suitability: Number.parseInt(crop.suitability),
+          risk: crop.risk,
+          _id: crop._id || new Date().getTime().toString() + Math.random().toString(36).substr(2, 9),
+        })),
+    }
+
+    onSave(updatedData)
+  }
+
+  const updateCrop = (index, field, value) => {
+    const newCrops = [...formData.crops]
+    newCrops[index] = { ...newCrops[index], [field]: value }
+    setFormData({ ...formData, crops: newCrops })
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-6">
+      {/* Farm Information */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Farm Information</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <Label htmlFor="location">Location *</Label>
+              <Input
+                id="location"
+                value={formData.location}
+                onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                className={errors.location ? "border-red-500" : ""}
+              />
+              {errors.location && <p className="text-red-500 text-sm mt-1">{errors.location}</p>}
+            </div>
+            <div>
+              <Label htmlFor="soilType">Soil Type *</Label>
+              <select
+                id="soilType"
+                value={formData.soilType}
+                onChange={(e) => setFormData({ ...formData, soilType: e.target.value })}
+                className={`w-full p-2 border rounded-md ${errors.soilType ? "border-red-500" : ""}`}
+              >
+                <option value="">Select soil type</option>
+                <option value="sandy">Sandy</option>
+                <option value="clay">Clay</option>
+                <option value="loamy">Loamy</option>
+                <option value="silt">Silt</option>
+              </select>
+              {errors.soilType && <p className="text-red-500 text-sm mt-1">{errors.soilType}</p>}
+            </div>
+          </div>
+
+          <div className="grid grid-cols-3 gap-4">
+            <div>
+              <Label htmlFor="farmSize">Farm Size (acres) *</Label>
+              <Input
+                id="farmSize"
+                type="number"
+                value={formData.farmSize}
+                onChange={(e) => setFormData({ ...formData, farmSize: e.target.value })}
+                className={errors.farmSize ? "border-red-500" : ""}
+              />
+              {errors.farmSize && <p className="text-red-500 text-sm mt-1">{errors.farmSize}</p>}
+            </div>
+            <div>
+              <Label htmlFor="climate">Climate</Label>
+              <select
+                id="climate"
+                value={formData.climate}
+                onChange={(e) => setFormData({ ...formData, climate: e.target.value })}
+                className="w-full p-2 border rounded-md"
+              >
+                <option value="">Select climate</option>
+                <option value="tropical">Tropical</option>
+                <option value="subtropical">Subtropical</option>
+                <option value="temperate">Temperate</option>
+                <option value="arid">Arid</option>
+              </select>
+            </div>
+            <div>
+              <Label htmlFor="budget">Budget</Label>
+              <select
+                id="budget"
+                value={formData.budget}
+                onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
+                className="w-full p-2 border rounded-md"
+              >
+                <option value="">Select budget</option>
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <Label htmlFor="previousCrop">Previous Crop</Label>
+              <Input
+                id="previousCrop"
+                value={formData.previousCrop}
+                onChange={(e) => setFormData({ ...formData, previousCrop: e.target.value })}
+              />
+            </div>
+            <div>
+              <Label htmlFor="experience">Experience Level</Label>
+              <select
+                id="experience"
+                value={formData.experience}
+                onChange={(e) => setFormData({ ...formData, experience: e.target.value })}
+                className="w-full p-2 border rounded-md"
+              >
+                <option value="">Select experience</option>
+                <option value="beginner">Beginner</option>
+                <option value="intermediate">Intermediate</option>
+                <option value="expert">Expert</option>
+              </select>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Soil Requirements */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Soil Requirements</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="grid grid-cols-4 gap-4">
+            <div>
+              <Label htmlFor="soilpH">pH Level</Label>
+              <Input
+                id="soilpH"
+                type="number"
+                step="0.1"
+                min="0"
+                max="14"
+                value={formData.soilpH}
+                onChange={(e) => setFormData({ ...formData, soilpH: e.target.value })}
+                className={errors.soilpH ? "border-red-500" : ""}
+              />
+              {errors.soilpH && <p className="text-red-500 text-sm mt-1">{errors.soilpH}</p>}
+            </div>
+            <div>
+              <Label htmlFor="nitrogenRequired">Nitrogen (kg/ha)</Label>
+              <Input
+                id="nitrogenRequired"
+                type="number"
+                value={formData.nitrogenRequired}
+                onChange={(e) => setFormData({ ...formData, nitrogenRequired: e.target.value })}
+              />
+            </div>
+            <div>
+              <Label htmlFor="phosphorousRequired">Phosphorous (kg/ha)</Label>
+              <Input
+                id="phosphorousRequired"
+                type="number"
+                value={formData.phosphorousRequired}
+                onChange={(e) => setFormData({ ...formData, phosphorousRequired: e.target.value })}
+              />
+            </div>
+            <div>
+              <Label htmlFor="potassiumRequired">Potassium (kg/ha)</Label>
+              <Input
+                id="potassiumRequired"
+                type="number"
+                value={formData.potassiumRequired}
+                onChange={(e) => setFormData({ ...formData, potassiumRequired: e.target.value })}
+              />
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Climate Data */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Climate Data</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="grid grid-cols-3 gap-4">
+            <div>
+              <Label htmlFor="temperature">Temperature (°C) *</Label>
+              <Input
+                id="temperature"
+                type="number"
+                value={formData.temperature}
+                onChange={(e) => setFormData({ ...formData, temperature: e.target.value })}
+                className={errors.temperature ? "border-red-500" : ""}
+              />
+              {errors.temperature && <p className="text-red-500 text-sm mt-1">{errors.temperature}</p>}
+            </div>
+            <div>
+              <Label htmlFor="humidity">Humidity (%) *</Label>
+              <Input
+                id="humidity"
+                type="number"
+                min="0"
+                max="100"
+                value={formData.humidity}
+                onChange={(e) => setFormData({ ...formData, humidity: e.target.value })}
+                className={errors.humidity ? "border-red-500" : ""}
+              />
+              {errors.humidity && <p className="text-red-500 text-sm mt-1">{errors.humidity}</p>}
+            </div>
+            <div>
+              <Label htmlFor="rainfall">Rainfall (mm) *</Label>
+              <Input
+                id="rainfall"
+                type="number"
+                value={formData.rainfall}
+                onChange={(e) => setFormData({ ...formData, rainfall: e.target.value })}
+                className={errors.rainfall ? "border-red-500" : ""}
+              />
+              {errors.rainfall && <p className="text-red-500 text-sm mt-1">{errors.rainfall}</p>}
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* All 3 Crop Recommendations */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Crop Recommendations (Up to 3)</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          {formData.crops.map((crop, index) => (
+            <div key={index} className="border rounded-lg p-4 space-y-4">
+              <h4 className="font-semibold text-lg">Crop #{index + 1}</h4>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor={`cropName${index}`}>Crop Name</Label>
+                  <Input
+                    id={`cropName${index}`}
+                    value={crop.cropName}
+                    onChange={(e) => updateCrop(index, "cropName", e.target.value)}
+                  />
+                </div>
+                <div>
+                  <Label htmlFor={`scientificName${index}`}>Scientific Name</Label>
+                  <Input
+                    id={`scientificName${index}`}
+                    value={crop.scientificName}
+                    onChange={(e) => updateCrop(index, "scientificName", e.target.value)}
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor={`suitability${index}`}>Suitability (%)</Label>
+                  <Input
+                    id={`suitability${index}`}
+                    type="number"
+                    min="0"
+                    max="100"
+                    value={crop.suitability}
+                    onChange={(e) => updateCrop(index, "suitability", e.target.value)}
+                    className={errors[`crop${index}Suitability`] ? "border-red-500" : ""}
+                  />
+                  {errors[`crop${index}Suitability`] && (
+                    <p className="text-red-500 text-sm mt-1">{errors[`crop${index}Suitability`]}</p>
+                  )}
+                </div>
+                <div>
+                  <Label htmlFor={`risk${index}`}>Risk Level</Label>
+                  <select
+                    id={`risk${index}`}
+                    value={crop.risk}
+                    onChange={(e) => updateCrop(index, "risk", e.target.value)}
+                    className="w-full p-2 border rounded-md"
+                  >
+                    <option value="Low">Low</option>
+                    <option value="Medium">Medium</option>
+                    <option value="High">High</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          ))}
+        </CardContent>
+      </Card>
+
+      {/* Notes */}
+      <div>
+        <Label htmlFor="notes">Additional Notes</Label>
+        <Textarea
+          id="notes"
+          value={formData.notes}
+          onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
+          rows={3}
+          placeholder="Any additional notes or observations..."
+        />
+      </div>
+
+      <div className="flex justify-end gap-2">
+        <Button type="button" variant="outline" onClick={onCancel}>
+          Cancel
+        </Button>
+        <Button type="submit" className="bg-emerald-600 hover:bg-emerald-700">
+          Save Changes
+        </Button>
+      </div>
+    </form>
   )
 }

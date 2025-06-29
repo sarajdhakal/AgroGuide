@@ -1,20 +1,37 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Check, X, Star, Zap, Crown, BarChart3, ArrowRight, Sparkles } from "lucide-react"
+import { Check, X, Star, Zap, Crown, BarChart3, ArrowRight, Sparkles, Shield } from "lucide-react"
 import Header from "@/components/Header"
 import Footer from "@/components/Footer"
 import { useAuth } from "@/components/AuthProvider"
+import axios from "axios"
 
 export default function PricingPage() {
     const [billingCycle, setBillingCycle] = useState("monthly")
     const [selectedPlan, setSelectedPlan] = useState(null)
     const router = useRouter()
     const { user } = useAuth()
+    const [fullUserData, setFullUserData] = useState(null)
+
+    useEffect(() => {
+        const fetchUser = async () => {
+            if (user?.id) {
+                try {
+                    const res = await axios.get(`http://localhost:8000/api/user/${user.id}`)
+                    setFullUserData(res.data)
+                    console.log("✅ Full user data fetched:", res.data)
+                } catch (error) {
+                    console.error("❌ Failed to fetch user by ID:", error)
+                }
+            }
+        }
+        fetchUser()
+    }, [user])
 
     const plans = [
         {
@@ -22,6 +39,7 @@ export default function PricingPage() {
             name: "Free",
             description: "Perfect for trying out AgroGuide",
             price: { monthly: 0, yearly: 0 },
+            priceNPR: { monthly: 0, yearly: 0 },
             predictions: 3,
             badge: null,
             features: [
@@ -41,6 +59,7 @@ export default function PricingPage() {
             name: "Pro",
             description: "Best for individual farmers and small operations",
             price: { monthly: 29, yearly: 290 },
+            priceNPR: { monthly: 3900, yearly: 39000 },
             predictions: "Unlimited",
             badge: "Most Popular",
             features: [
@@ -60,46 +79,41 @@ export default function PricingPage() {
             popular: true,
             color: "border-emerald-500",
         },
-        {
-            id: "enterprise",
-            name: "Enterprise",
-            description: "For large farms and agricultural businesses",
-            price: { monthly: 99, yearly: 990 },
-            predictions: "Unlimited",
-            badge: "Best Value",
-            features: [
-                "Everything in Pro",
-                "Multi-farm management",
-                "Team collaboration tools",
-                "Advanced analytics dashboard",
-                "Custom reporting",
-                "API access",
-                "Phone & chat support",
-                "Dedicated account manager",
-                "Historical data (10 years)",
-                "White-label options",
-                "Integration support",
-                "Custom ML models",
-            ],
-            limitations: [],
-            cta: "Contact Sales",
-            popular: false,
-            color: "border-purple-500",
-        },
     ]
 
     const handlePlanSelect = (plan) => {
+        console.log("👉 Selected plan:", plan.id)
+        console.log("📦 Fetched user data:", fullUserData)
         setSelectedPlan(plan.id)
 
+        if (!user) {
+            router.push(`/register?plan=${plan.id}`)
+            return
+        }
+
+        if (
+            plan.id === "pro" &&
+            fullUserData?.subscription?.plan === "pro" &&
+            fullUserData.subscription?.status === "active"
+        ) {
+            const expiryDate = new Date(fullUserData.subscription.endDate).toLocaleDateString("en-GB", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+            })
+            alert(`✅ You already have a Pro plan active until ${expiryDate}.`)
+            router.push("/predict")
+            return
+        }
+
         if (plan.id === "free") {
-            // Redirect to signup for free plan
-            router.push("/register?plan=free")
-        } else if (plan.id === "enterprise") {
-            // Redirect to contact sales
-            router.push("/contact?plan=enterprise")
-        } else {
-            // Redirect to payment for pro plan
+            router.push("/predict")
+            return
+        }
+
+        if (plan.id === "pro") {
             router.push(`/checkout?plan=${plan.id}&billing=${billingCycle}`)
+            return
         }
     }
 
@@ -111,7 +125,6 @@ export default function PricingPage() {
     return (
         <div className="min-h-screen bg-slate-900">
             <Header />
-
             <div className="pt-20 pb-16">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     {/* Header Section */}
@@ -126,6 +139,15 @@ export default function PricingPage() {
                             Unlock the power of AI-driven crop recommendations with flexible pricing options designed for every
                             farming operation.
                         </p>
+
+                        {/* Payment Method Badge */}
+                        <div className="flex items-center justify-center mb-8">
+                            <div className="bg-slate-800/50 border border-slate-700 rounded-lg px-6 py-3 flex items-center gap-3">
+                                <Shield className="h-5 w-5 text-emerald-400" />
+                                <span className="text-gray-300 text-sm">Secure payments powered by</span>
+                                <img src="/esewa.jpg" alt="eSewa Logo" className="h-6 opacity-90" />
+                            </div>
+                        </div>
 
                         {/* Billing Toggle */}
                         <div className="flex items-center justify-center mb-12">
@@ -150,7 +172,7 @@ export default function PricingPage() {
                     </div>
 
                     {/* Pricing Cards */}
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16 max-w-4xl mx-auto">
                         {plans.map((plan, index) => (
                             <Card
                                 key={plan.id}
@@ -177,14 +199,33 @@ export default function PricingPage() {
                                     <p className="text-gray-400 mb-6">{plan.description}</p>
 
                                     <div className="mb-6">
-                                        <div className="flex items-baseline justify-center">
-                                            <span className="text-4xl font-bold text-white">${plan.price[billingCycle]}</span>
+                                        {/* NPR Price (Primary) */}
+                                        <div className="flex items-baseline justify-center mb-2">
+                                            <span className="text-4xl font-bold text-white">
+                                                NPR {plan.priceNPR[billingCycle].toLocaleString()}
+                                            </span>
                                             <span className="text-gray-400 ml-2">/{billingCycle === "monthly" ? "month" : "year"}</span>
                                         </div>
+
+                                        {/* USD Price (Secondary) */}
+                                        {plan.price[billingCycle] > 0 && (
+                                            <div className="text-gray-500 text-sm">≈ ${plan.price[billingCycle]} USD</div>
+                                        )}
+
                                         {billingCycle === "yearly" && plan.price.monthly > 0 && (
                                             <p className="text-emerald-400 text-sm mt-2">
                                                 Save {getDiscountPercentage(plan.price.monthly, plan.price.yearly)}% annually
                                             </p>
+                                        )}
+
+                                        {/* eSewa Payment Badge for Pro Plan */}
+                                        {plan.id === "pro" && (
+                                            <div className="mt-3 flex items-center justify-center">
+                                                <div className="bg-emerald-900/20 border border-emerald-500/30 rounded-full px-3 py-1 flex items-center gap-2">
+                                                    <img src="/esewa.jpg" alt="eSewa" className="h-4 opacity-80" />
+                                                    <span className="text-emerald-400 text-xs font-medium">Pay with eSewa</span>
+                                                </div>
+                                            </div>
                                         )}
                                     </div>
 
@@ -240,6 +281,55 @@ export default function PricingPage() {
                         ))}
                     </div>
 
+                    {/* Enhanced eSewa Payment Info Section */}
+                    <div className="mb-16">
+                        <Card className="bg-gradient-to-br from-slate-100 to-slate-200 border-slate-300 text-slate-800 shadow-xl">
+                            <CardHeader className="pb-6">
+                                <CardTitle className="text-center flex items-center justify-center gap-4 text-2xl font-bold">
+                                    <img src="/esewa.jpg" alt="eSewa Logo" className="h-12 w-auto" />
+                                    <span className="text-slate-800">Secure Payment with eSewa</span>
+                                </CardTitle>
+                            </CardHeader>
+                            <CardContent className="pt-0">
+                                <div className="grid md:grid-cols-3 gap-8 text-center mb-8">
+                                    <div>
+                                        <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4 shadow-md">
+                                            <Crown className="h-8 w-8 text-emerald-600" />
+                                        </div>
+                                        <h3 className="font-bold mb-2 text-slate-800 text-lg">Trusted</h3>
+                                        <p className="text-slate-600 text-sm">Nepal's #1 digital wallet</p>
+                                    </div>
+                                    <div>
+                                        <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 shadow-md">
+                                            <Zap className="h-8 w-8 text-blue-600" />
+                                        </div>
+                                        <h3 className="font-bold mb-2 text-slate-800 text-lg">Instant</h3>
+                                        <p className="text-slate-600 text-sm">Immediate payment processing</p>
+                                    </div>
+                                    <div>
+                                        <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4 shadow-md">
+                                            <Shield className="h-8 w-8 text-purple-600" />
+                                        </div>
+                                        <h3 className="font-bold mb-2 text-slate-800 text-lg">Secure</h3>
+                                        <p className="text-slate-600 text-sm">Bank-level security</p>
+                                    </div>
+                                </div>
+
+                                <div className="text-center">
+                                    <div className="bg-slate-600 rounded-lg p-6 max-w-3xl mx-auto">
+                                        <p className="text-slate-100 text-base mb-2">
+                                            <strong className="text-white">For Nepalese customers:</strong> Pay directly in NPR using your
+                                            eSewa account
+                                        </p>
+                                        <p className="text-slate-300 text-sm">
+                                            Supports bank transfers, mobile banking, and eSewa wallet payments
+                                        </p>
+                                    </div>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    </div>
+
                     {/* Feature Comparison Table */}
                     <div className="mb-16">
                         <h2 className="text-3xl font-bold text-white text-center mb-8">Compare All Features</h2>
@@ -250,28 +340,29 @@ export default function PricingPage() {
                                         <tr>
                                             <th className="text-left p-4 text-white font-semibold">Features</th>
                                             <th className="text-center p-4 text-white font-semibold">Free</th>
-                                            <th className="text-center p-4 text-white font-semibold">Pro</th>
-                                            <th className="text-center p-4 text-white font-semibold">Enterprise</th>
+                                            <th className="text-center p-4 text-white font-semibold">
+                                                Pro
+                                                <div className="text-xs text-emerald-400 font-normal mt-1">NPR 3,900/mo</div>
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody className="text-gray-300">
                                         {[
-                                            { feature: "Monthly Predictions", free: "3", pro: "Unlimited", enterprise: "Unlimited" },
-                                            { feature: "Soil Analysis", free: "Basic", pro: "Advanced", enterprise: "Advanced" },
-                                            { feature: "Weather Integration", free: "✓", pro: "✓", enterprise: "✓" },
-                                            { feature: "Market Predictions", free: "✗", pro: "✓", enterprise: "✓" },
-                                            { feature: "Historical Data", free: "6 months", pro: "2 years", enterprise: "10 years" },
-                                            { feature: "API Access", free: "✗", pro: "✗", enterprise: "✓" },
-                                            { feature: "Team Collaboration", free: "✗", pro: "✗", enterprise: "✓" },
-                                            { feature: "Priority Support", free: "✗", pro: "✓", enterprise: "✓" },
-                                            { feature: "Custom Reports", free: "✗", pro: "✓", enterprise: "✓" },
-                                            { feature: "White-label", free: "✗", pro: "✗", enterprise: "✓" },
+                                            { feature: "Monthly Predictions", free: "3", pro: "Unlimited" },
+                                            { feature: "Soil Analysis", free: "Basic", pro: "Advanced" },
+                                            { feature: "Weather Integration", free: "✓", pro: "✓" },
+                                            { feature: "Market Predictions", free: "✗", pro: "✓" },
+                                            { feature: "Historical Data", free: "6 months", pro: "2 years" },
+                                            { feature: "API Access", free: "✗", pro: "✗" },
+                                            { feature: "Team Collaboration", free: "✗", pro: "✗" },
+                                            { feature: "Priority Support", free: "✗", pro: "✓" },
+                                            { feature: "Custom Reports", free: "✗", pro: "✓" },
+                                            { feature: "Export Reports", free: "✗", pro: "✓" },
                                         ].map((row, idx) => (
                                             <tr key={idx} className="border-t border-slate-700">
                                                 <td className="p-4 font-medium">{row.feature}</td>
                                                 <td className="p-4 text-center">{row.free}</td>
                                                 <td className="p-4 text-center">{row.pro}</td>
-                                                <td className="p-4 text-center">{row.enterprise}</td>
                                             </tr>
                                         ))}
                                     </tbody>
@@ -300,7 +391,8 @@ export default function PricingPage() {
                                 },
                                 {
                                     question: "What payment methods do you accept?",
-                                    answer: "We accept all major credit cards, PayPal, and bank transfers for Enterprise plans.",
+                                    answer:
+                                        "We accept eSewa for Nepalese customers (NPR), and major credit cards for international users (USD).",
                                 },
                                 {
                                     question: "Do you offer refunds?",
@@ -327,6 +419,19 @@ export default function PricingPage() {
                         <p className="text-xl text-gray-300 mb-8">
                             Join thousands of farmers who are already using AgroGuide to make smarter decisions.
                         </p>
+
+                        {/* Payment Method Info */}
+                        <div className="flex items-center justify-center gap-4 mb-8">
+                            <div className="flex items-center gap-2 bg-slate-800/50 rounded-lg px-4 py-2">
+                                <img src="/esewa.jpg" alt="eSewa" className="h-5" />
+                                <span className="text-emerald-400 text-sm font-medium">NPR Payments</span>
+                            </div>
+                            <div className="text-gray-400">•</div>
+                            <div className="flex items-center gap-2 bg-slate-800/50 rounded-lg px-4 py-2">
+                                <span className="text-blue-400 text-sm font-medium">💳 International Cards</span>
+                            </div>
+                        </div>
+
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
                             <Button
                                 size="lg"
@@ -338,7 +443,7 @@ export default function PricingPage() {
                             <Button
                                 size="lg"
                                 variant="outline"
-                                className="border-emerald-500 text-emerald-400 hover:bg-emerald-500 hover:text-white px-8 py-3"
+                                className="border-emerald-500 text-emerald-400 hover:bg-emerald-500 hover:text-white px-8 py-3 bg-transparent"
                                 onClick={() => router.push("/contact")}
                             >
                                 Contact Sales
@@ -347,7 +452,6 @@ export default function PricingPage() {
                     </div>
                 </div>
             </div>
-
             <Footer />
         </div>
     )

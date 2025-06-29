@@ -47,7 +47,30 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         default: 'password'
-    }
+    },
+    subscription: {
+        plan: {
+            type: String,
+            enum: ["free", "pro", "enterprise"],
+            default: "free"
+        },
+        billingCycle: {
+            type: String,
+            enum: ["monthly", "yearly"]
+        },
+        status: {
+            type: String,
+            enum: ["active", "expired"],
+            default: "active"
+        },
+        transactionId: String,
+        transactionRef: String,     // ✅ Added
+        paymentMethod: String,      // ✅ Added
+        amount: Number,
+        startDate: Date,
+        endDate: Date,
+        verifiedAt: Date            // ✅ Added
+    },
 });
 
 export default mongoose.model("Users", userSchema);
