@@ -11,21 +11,27 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import {
   Search,
   Filter,
   MoreHorizontal,
-  Brain,
   Download,
   Eye,
   Trash2,
   Edit,
+  MapPin,
+  Plus,
+  CheckCircle,
+  BarChart3,
   User,
   Calendar,
-  MapPin,
   Thermometer,
-  Leaf, Plus,
-  CheckCircle,
+  Leaf,
+  Brain,
+  Star,
+  TrendingUp,
+  AlertTriangle,
 } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 import axios from "axios"
@@ -33,6 +39,8 @@ import axios from "axios"
 export default function PredictionsManagement() {
   const router = useRouter()
   const { toast } = useToast()
+
+  // State management
   const [predictions, setPredictions] = useState([])
   const [users, setUsers] = useState([])
   const [selectedCrops, setSelectedCrops] = useState([])
@@ -40,11 +48,43 @@ export default function PredictionsManagement() {
   const [filterStatus, setFilterStatus] = useState("all")
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
+
+  // Modal states
   const [selectedPrediction, setSelectedPrediction] = useState(null)
   const [isViewModalOpen, setIsViewModalOpen] = useState(false)
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
+  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false)
+  const [isCreating, setIsCreating] = useState(false)
 
+  // Crop selection modal states
+  const [isSelectCropModalOpen, setIsSelectCropModalOpen] = useState(false)
+  const [selectedPredictionForCrop, setSelectedPredictionForCrop] = useState(null)
+  const [selectedCropForSelection, setSelectedCropForSelection] = useState(null)
+  const [isSelectingCrop, setIsSelectingCrop] = useState(false)
+  const [selectionNotes, setSelectionNotes] = useState("")
 
+  // Create prediction form data
+  const [createFormData, setCreateFormData] = useState({
+    userId: "",
+    location: "",
+    locationCoordinates: null,
+    soilType: "",
+    nitrogenRequired: "",
+    phosphorousRequired: "",
+    potassiumRequired: "",
+    soilpH: "",
+    temperature: "",
+    humidity: "",
+    rainfall: "",
+    farmSize: "",
+    climate: "",
+    previousCrop: "",
+    budget: "",
+    experience: "",
+    notes: "",
+  })
+
+  // Load data on component mount
   useEffect(() => {
     const loadData = async () => {
       try {
@@ -57,13 +97,13 @@ export default function PredictionsManagement() {
 
         setPredictions(predictionsRes.data)
         setUsers(usersRes.data)
+
         setSelectedCrops(selectedCropsRes.data)
         setError("")
 
         toast({
           title: "Data Loaded Successfully",
           description: `Loaded ${predictionsRes.data.length} predictions, ${usersRes.data.length} users, and ${selectedCropsRes.data.length} selected crops`,
-          variant: "success",
         })
       } catch (error) {
         console.error("Error loading predictions:", error)
@@ -75,14 +115,14 @@ export default function PredictionsManagement() {
           variant: "destructive",
         })
 
-        // Fallback mock data based on your schema
+        // Fallback mock data
         setPredictions([
           {
             _id: "68600017c4d51a2327538f7",
             userId: "685aba74ad3275a4a39980ab",
             inputData: {
-              location: "Current Location",
-              locationCoordinates: {},
+              location: "Kathmandu Valley",
+              locationCoordinates: { lat: 27.7172, lng: 85.324 },
               soilType: "sandy",
               nitrogenRequired: "90",
               phosphorousRequired: "42",
@@ -96,16 +136,9 @@ export default function PredictionsManagement() {
               previousCrop: "soybeans",
               budget: "medium",
               experience: "intermediate",
-              notes: "saraj dhakal",
+              notes: "Looking for high yield crops",
             },
             recommendedCrops: [
-              {
-                cropName: "papaya",
-                scientificName: "Carica papaya",
-                suitability: 15,
-                risk: "High",
-                _id: "68600017c4d51a2327538f8",
-              },
               {
                 cropName: "rice",
                 scientificName: "Oryza sativa",
@@ -116,26 +149,79 @@ export default function PredictionsManagement() {
               {
                 cropName: "wheat",
                 scientificName: "Triticum aestivum",
-                suitability: 65,
+                suitability: 75,
                 risk: "Medium",
                 _id: "68600017c4d51a2327538fa",
+              },
+              {
+                cropName: "maize",
+                scientificName: "Zea mays",
+                suitability: 65,
+                risk: "Low",
+                _id: "68600017c4d51a2327538fb",
               },
             ],
             predictedAt: "2025-06-28T14:45:21.209+00:00",
             __v: 0,
           },
-        ])
-
-        setSelectedCrops([
           {
-            _id: "68600017c4d51a2327538fb",
-            predictionId: "68600017c4d51a2327538f7",
-            cropName: "rice",
-            scientificName: "Oryza sativa",
-            selectedAt: "2025-06-28T14:45:31.251+00:00",
+            _id: "68600017c4d51a2327538f8",
+            userId: "685aba74ad3275a4a39980ac",
+            inputData: {
+              location: "Pokhara",
+              locationCoordinates: { lat: 28.2096, lng: 83.9856 },
+              soilType: "loamy",
+              nitrogenRequired: "80",
+              phosphorousRequired: "35",
+              potassiumRequired: "45",
+              soilpH: "6.5",
+              temperature: "24",
+              humidity: "75",
+              rainfall: "180",
+              farmSize: "50",
+              climate: "temperate",
+              previousCrop: "potato",
+              budget: "high",
+              experience: "expert",
+              notes: "Organic farming preferred",
+            },
+            recommendedCrops: [
+              {
+                cropName: "potato",
+                scientificName: "Solanum tuberosum",
+                suitability: 92,
+                risk: "Low",
+                _id: "68600017c4d51a2327538fc",
+              },
+              {
+                cropName: "tomato",
+                scientificName: "Solanum lycopersicum",
+                suitability: 88,
+                risk: "Medium",
+                _id: "68600017c4d51a2327538fd",
+              },
+            ],
+            predictedAt: "2025-06-27T10:30:15.123+00:00",
             __v: 0,
           },
         ])
+
+        setUsers([
+          {
+            _id: "685aba74ad3275a4a39980ab",
+            firstName: "Ram",
+            lastName: "Sharma",
+            email: "ram.sharma@example.com",
+          },
+          {
+            _id: "685aba74ad3275a4a39980ac",
+            firstName: "Sita",
+            lastName: "Poudel",
+            email: "sita.poudel@example.com",
+          },
+        ])
+
+        setSelectedCrops([])
       } finally {
         setLoading(false)
       }
@@ -143,10 +229,10 @@ export default function PredictionsManagement() {
     loadData()
   }, [])
 
+  // Helper functions
   const getUserById = (userId) => {
     const id = typeof userId === "object" && userId !== null ? userId._id : userId
     const user = users.find((u) => u._id.toString() === id?.toString())
-    if (!user) console.warn("User not found for ID:", id)
     return user || { firstName: "Unknown", lastName: "User", email: "N/A" }
   }
 
@@ -162,7 +248,6 @@ export default function PredictionsManagement() {
       prediction.inputData?.location?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       prediction.recommendedCrops?.[0]?.cropName?.toLowerCase().includes(searchTerm.toLowerCase())
 
-    // Filter by status based on whether crops are recommended and selected
     const hasRecommendations = prediction.recommendedCrops && prediction.recommendedCrops.length > 0
     const hasSelection = getSelectedCropByPredictionId(prediction._id)
 
@@ -197,6 +282,26 @@ export default function PredictionsManagement() {
     return <Badge className={colors[risk] || "bg-gray-100 text-gray-800"}>{risk} Risk</Badge>
   }
 
+  const getRiskColor = (risk) => {
+    switch (risk) {
+      case "Low":
+        return "text-green-600 bg-green-100"
+      case "Medium":
+        return "text-yellow-600 bg-yellow-100"
+      case "High":
+        return "text-red-600 bg-red-100"
+      default:
+        return "text-gray-600 bg-gray-100"
+    }
+  }
+
+  const getSuitabilityColor = (suitability) => {
+    if (suitability >= 80) return "text-green-600"
+    if (suitability >= 60) return "text-yellow-600"
+    return "text-red-600"
+  }
+
+  // CRUD Operations
   const handleViewPrediction = (prediction) => {
     setSelectedPrediction(prediction)
     setIsViewModalOpen(true)
@@ -210,17 +315,13 @@ export default function PredictionsManagement() {
   const handleUpdatePrediction = async (updatedData) => {
     try {
       await axios.put(`http://localhost:8000/api/predictions/${selectedPrediction._id}`, updatedData)
-
-      // Update local state
       setPredictions((prev) => prev.map((p) => (p._id === selectedPrediction._id ? { ...p, ...updatedData } : p)))
-
       setIsEditModalOpen(false)
       setSelectedPrediction(null)
 
       toast({
-        title: "Prediction Edited Successfully",
-        description: "The prediction has been successfully updated with new information",
-        variant: "success",
+        title: "Prediction Updated Successfully",
+        description: "The prediction has been successfully updated",
       })
     } catch (error) {
       console.error("Error updating prediction:", error)
@@ -242,7 +343,6 @@ export default function PredictionsManagement() {
       toast({
         title: "Prediction Deleted",
         description: "Prediction has been successfully deleted",
-        variant: "success",
       })
     } catch (error) {
       console.error("Error deleting prediction:", error)
@@ -254,6 +354,285 @@ export default function PredictionsManagement() {
     }
   }
 
+  // Crop Selection Functions
+  const handleSelectCrop = (prediction) => {
+    setSelectedPredictionForCrop(prediction)
+    setSelectedCropForSelection(null)
+    setSelectionNotes("")
+    setIsSelectCropModalOpen(true)
+  }
+
+  const handleCropSelection = async (crop) => {
+    setIsSelectingCrop(true)
+
+    try {
+      const selectedCropData = {
+        predictionId: selectedPredictionForCrop._id,
+        cropName: crop.cropName,
+        scientificName: crop.scientificName,
+        suitability: crop.suitability,
+        risk: crop.risk,
+        selectedAt: new Date().toISOString(),
+        notes: selectionNotes,
+      }
+
+      // Save selected crop to backend
+      const response = await axios.post("http://localhost:8000/api/predictions/select", selectedCropData, {
+        headers: { "Content-Type": "application/json" },
+      })
+
+      // Update local state
+      setSelectedCrops((prev) => [...prev, response.data])
+      setIsSelectCropModalOpen(false)
+      setSelectedPredictionForCrop(null)
+      setSelectedCropForSelection(null)
+      setSelectionNotes("")
+
+      toast({
+        title: "Crop Selected Successfully! 🌱",
+        description: `${crop.cropName} has been selected for this prediction. The prediction is now complete.`,
+      })
+      setTimeout(() => {
+        window.location.reload()
+      }, 3000)
+
+    } catch (error) {
+      console.error("Error selecting crop:", error)
+      toast({
+        title: "Selection Failed",
+        description: "Failed to select crop. Please try again.",
+        variant: "destructive",
+      })
+    } finally {
+      setIsSelectingCrop(false)
+    }
+  }
+
+  // Create prediction functionality
+  const handleCreateInputChange = (field, value) => {
+    setCreateFormData((prev) => ({
+      ...prev,
+      [field]: value,
+    }))
+  }
+
+  const handleLocationChange = (location, coordinates) => {
+    setCreateFormData((prev) => ({
+      ...prev,
+      location,
+      locationCoordinates: coordinates || null,
+    }))
+  }
+
+  const getCropScientificName = (cropName) => {
+    const cropMapping = {
+      rice: "Oryza sativa",
+      maize: "Zea mays",
+      wheat: "Triticum aestivum",
+      potato: "Solanum tuberosum",
+      tomato: "Solanum lycopersicum",
+      chickpea: "Cicer arietinum",
+      kidneybeans: "Phaseolus vulgaris",
+      pigeonpeas: "Cajanus cajan",
+      mothbeans: "Vigna aconitifolia",
+      mungbean: "Vigna radiata",
+      blackgram: "Vigna mungo",
+      lentil: "Lens culinaris",
+      pomegranate: "Punica granatum",
+      banana: "Musa spp.",
+      mango: "Mangifera indica",
+      grapes: "Vitis vinifera",
+      watermelon: "Citrullus lanatus",
+      muskmelon: "Cucumis melo",
+      apple: "Malus domestica",
+      orange: "Citrus sinensis",
+      papaya: "Carica papaya",
+      coconut: "Cocos nucifera",
+      cotton: "Gossypium hirsutum",
+      jute: "Corchorus olitorius",
+      coffee: "Coffea arabica",
+    }
+    return cropMapping[cropName.toLowerCase()] || cropName
+  }
+
+  const handleCreatePrediction = async () => {
+    setIsCreating(true)
+
+    const requiredNumericFields = [
+      "nitrogenRequired",
+      "phosphorousRequired",
+      "potassiumRequired",
+      "temperature",
+      "humidity",
+      "soilpH",
+      "rainfall",
+    ]
+
+    const requiredTextFields = [
+      "userId",
+      "location",
+      "soilType",
+      "climate",
+      "previousCrop",
+      "budget",
+      "experience",
+      "farmSize",
+    ]
+
+    // Validate numeric fields
+    for (const field of requiredNumericFields) {
+      if (!createFormData[field] || isNaN(Number(createFormData[field]))) {
+        toast({
+          title: "Validation Error",
+          description: `Please enter a valid number for "${field}"`,
+          variant: "destructive",
+        })
+        setIsCreating(false)
+        return
+      }
+    }
+
+    // Validate text fields
+    for (const field of requiredTextFields) {
+      if (!createFormData[field] || createFormData[field].trim() === "") {
+        toast({
+          title: "Validation Error",
+          description: `Please select or enter a value for "${field}"`,
+          variant: "destructive",
+        })
+        setIsCreating(false)
+        return
+      }
+    }
+
+    // Prepare payload for AI model
+    const aiPayload = {
+      N: Number(createFormData.nitrogenRequired),
+      P: Number(createFormData.phosphorousRequired),
+      K: Number(createFormData.potassiumRequired),
+      temperature: Number(createFormData.temperature),
+      humidity: Number(createFormData.humidity),
+      ph: Number(createFormData.soilpH),
+      rainfall: Number(createFormData.rainfall),
+    }
+
+    try {
+      // Get AI predictions
+      const aiResponse = await axios.post("http://localhost:8000/api/crops/predict", aiPayload, {
+        headers: { "Content-Type": "application/json" },
+        timeout: 30000,
+      })
+
+      const aiData = aiResponse.data
+      console.log("🌱 AI Response:", aiData)
+
+      // Convert AI response to recommended crops format
+      let recommendedCrops = []
+      const riskLevels = Object.keys(aiData)
+
+      if (riskLevels.length > 0) {
+        recommendedCrops = riskLevels
+          .map((riskLabel) => {
+            const value = aiData[riskLabel] || ""
+            const [name, confidenceRaw] = value.split(" (")
+            const confidence = confidenceRaw ? Number.parseFloat(confidenceRaw.replace(")", "")) : 0.8
+
+            return {
+              cropName: name.trim(),
+              scientificName: getCropScientificName(name.trim()),
+              suitability: Math.round(confidence * 100),
+              risk: riskLabel.replace(" Risk", ""),
+            }
+          })
+          .slice(0, 3)
+      } else {
+        recommendedCrops = [
+          {
+            cropName: "Unknown",
+            scientificName: "Unknown",
+            suitability: 90,
+            risk: "Low",
+          },
+        ]
+      }
+
+      // Prepare data for backend API
+      const predictionData = {
+        userId: createFormData.userId,
+        inputData: {
+          location: createFormData.location,
+          locationCoordinates: createFormData.locationCoordinates,
+          soilType: createFormData.soilType,
+          nitrogenRequired: createFormData.nitrogenRequired,
+          phosphorousRequired: createFormData.phosphorousRequired,
+          potassiumRequired: createFormData.potassiumRequired,
+          soilpH: createFormData.soilpH,
+          temperature: createFormData.temperature,
+          humidity: createFormData.humidity,
+          rainfall: createFormData.rainfall,
+          farmSize: createFormData.farmSize,
+          climate: createFormData.climate,
+          previousCrop: createFormData.previousCrop,
+          budget: createFormData.budget,
+          experience: createFormData.experience,
+          notes: createFormData.notes,
+        },
+        recommendedCrops: recommendedCrops.map((crop) => ({
+          cropName: crop.cropName,
+          scientificName: crop.scientificName,
+          suitability: crop.suitability,
+          risk: crop.risk,
+        })),
+      }
+
+      // Save to backend
+      const saveResponse = await axios.post("http://localhost:8000/api/predictions", predictionData, {
+        headers: { "Content-Type": "application/json" },
+      })
+
+      console.log("Saved Prediction:", saveResponse.data)
+
+      // Update local state
+      setPredictions((prev) => [saveResponse.data.prediction, ...prev])
+
+      // Reset form and close dialog
+      setCreateFormData({
+        userId: "",
+        location: "",
+        locationCoordinates: null,
+        soilType: "",
+        nitrogenRequired: "",
+        phosphorousRequired: "",
+        potassiumRequired: "",
+        soilpH: "",
+        temperature: "",
+        humidity: "",
+        rainfall: "",
+        farmSize: "",
+        climate: "",
+        previousCrop: "",
+        budget: "",
+        experience: "",
+        notes: "",
+      })
+      setIsCreateDialogOpen(false)
+
+      toast({
+        title: "Prediction Created Successfully",
+        description: "New prediction has been created and saved",
+      })
+    } catch (err) {
+      console.error("❌ Prediction creation failed:", err)
+      toast({
+        title: "Creation Failed",
+        description: err.response?.data?.message || "Failed to create prediction. Please try again.",
+        variant: "destructive",
+      })
+    } finally {
+      setIsCreating(false)
+    }
+  }
+
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString("en-US", {
       year: "numeric",
@@ -262,6 +641,17 @@ export default function PredictionsManagement() {
       hour: "2-digit",
       minute: "2-digit",
     })
+  }
+
+  // Navigate to Analytics
+  const handleNavigateToAnalytics = () => {
+    // You can navigate to analytics in multiple ways:
+
+    // Option 2: If using separate route
+    router.push("/admin/predictions/analytics")
+
+    // Option 3: If using state management
+    // setActiveView('analytics')
   }
 
   if (loading) {
@@ -276,6 +666,8 @@ export default function PredictionsManagement() {
   }
 
   return (
+
+
     <div className="space-y-6">
       {error && <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">{error}</div>}
 
@@ -306,11 +698,19 @@ export default function PredictionsManagement() {
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
-        <Button onClick={() => setIsCreateDialogOpen(true)} className="bg-emerald-600 hover:bg-emerald-700">
-          <Plus className="h-4 w-4 mr-2" />
-          Create Prediction
-        </Button>
         <div className="flex gap-2">
+          <Button
+            onClick={handleNavigateToAnalytics}
+            variant="outline"
+            className="flex items-center gap-2 bg-transparent"
+          >
+            <BarChart3 className="w-4 h-4" />
+            Analytics
+          </Button>
+          <Button onClick={() => setIsCreateDialogOpen(true)} className="bg-emerald-600 hover:bg-emerald-700">
+            <Plus className="h-4 w-4 mr-2" />
+            Create Prediction
+          </Button>
           <Button variant="outline" className="flex items-center gap-2 bg-transparent">
             <Download className="w-4 h-4" />
             Export
@@ -342,7 +742,6 @@ export default function PredictionsManagement() {
               {filteredPredictions.map((prediction) => {
                 const user = getUserById(prediction.userId)
                 const selectedCrop = getSelectedCropByPredictionId(prediction._id)
-                const topCrop = prediction.recommendedCrops?.[0]
                 const bestSuitability =
                   prediction.recommendedCrops?.reduce(
                     (max, crop) => (crop.suitability > max ? crop.suitability : max),
@@ -367,22 +766,17 @@ export default function PredictionsManagement() {
                     </TableCell>
                     <TableCell className="capitalize">{prediction.inputData?.soilType || "N/A"}</TableCell>
                     <TableCell>
-                      <div className="text-sm">
-                        <td className="p-4">
-                          <div className="space-y-1">
-                            {prediction.recommendedCrops?.map((crop, index) => (
-                              <div key={index} className="flex items-center text-sm">
-                                <span className="font-medium text-gray-900">
-                                  {index + 1}. {crop.cropName}
-                                </span>
-                                <Badge variant="outline" className="ml-2 text-xs">
-                                  {crop.suitability}%
-                                </Badge>
-                              </div>
-                            )) || <span className="text-gray-500">No recommendations</span>}
+                      <div className="space-y-1">
+                        {prediction.recommendedCrops?.map((crop, index) => (
+                          <div key={index} className="flex items-center text-sm">
+                            <span className="font-medium text-gray-900">
+                              {index + 1}. {crop.cropName}
+                            </span>
+                            <Badge variant="outline" className="ml-2 text-xs">
+                              {crop.suitability}%
+                            </Badge>
                           </div>
-                        </td>
-
+                        )) || <span className="text-gray-500">No recommendations</span>}
                       </div>
                     </TableCell>
                     <TableCell>
@@ -425,6 +819,17 @@ export default function PredictionsManagement() {
                             <Edit className="w-4 h-4" />
                             Edit Prediction
                           </DropdownMenuItem>
+                          {!getSelectedCropByPredictionId(prediction._id) &&
+                            prediction.recommendedCrops &&
+                            prediction.recommendedCrops.length > 0 && (
+                              <DropdownMenuItem
+                                onClick={() => handleSelectCrop(prediction)}
+                                className="flex items-center gap-2"
+                              >
+                                <CheckCircle className="w-4 h-4" />
+                                Select Crop
+                              </DropdownMenuItem>
+                            )}
                           <DropdownMenuItem className="flex items-center gap-2">
                             <Download className="w-4 h-4" />
                             Download Report
@@ -505,6 +910,438 @@ export default function PredictionsManagement() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Create Prediction Dialog */}
+      <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
+        <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Create New Prediction</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-6">
+            {/* User Selection */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Select User</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-2">
+                  <Label htmlFor="userId">User *</Label>
+                  <Select onValueChange={(value) => handleCreateInputChange("userId", value)}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select user for this prediction" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {users.map((user) => (
+                        <SelectItem key={user._id} value={user._id}>
+                          {user.firstName} {user.lastName} ({user.email})
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Farm Information */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Farm Information</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="location">Farm Location *</Label>
+                    <Input
+                      placeholder="e.g., Kathmandu Valley"
+                      value={createFormData.location}
+                      onChange={(e) => handleLocationChange(e.target.value, null)}
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="farmSize">Farm Size (katthas) *</Label>
+                    <Input
+                      type="number"
+                      placeholder="e.g., 100"
+                      value={createFormData.farmSize}
+                      onChange={(e) => handleCreateInputChange("farmSize", e.target.value)}
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="soilType">Soil Type *</Label>
+                    <Select onValueChange={(value) => handleCreateInputChange("soilType", value)}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select soil type" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="clay">Clay</SelectItem>
+                        <SelectItem value="sandy">Sandy</SelectItem>
+                        <SelectItem value="loamy">Loamy</SelectItem>
+                        <SelectItem value="silt">Silt</SelectItem>
+                        <SelectItem value="mixed">Mixed</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="climate">Climate Zone *</Label>
+                    <Select onValueChange={(value) => handleCreateInputChange("climate", value)}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select climate zone" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="temperate">Temperate</SelectItem>
+                        <SelectItem value="subtropical">Subtropical</SelectItem>
+                        <SelectItem value="arid">Arid</SelectItem>
+                        <SelectItem value="tropical">Tropical</SelectItem>
+                        <SelectItem value="continental">Continental</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="previousCrop">Previous Crop *</Label>
+                    <Select onValueChange={(value) => handleCreateInputChange("previousCrop", value)}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="What was grown last?" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="corn">Corn</SelectItem>
+                        <SelectItem value="soybeans">Soybeans</SelectItem>
+                        <SelectItem value="wheat">Wheat</SelectItem>
+                        <SelectItem value="cotton">Cotton</SelectItem>
+                        <SelectItem value="rice">Rice</SelectItem>
+                        <SelectItem value="potato">Potato</SelectItem>
+                        <SelectItem value="none">First time farming</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="budget">Budget Range *</Label>
+                    <Select onValueChange={(value) => handleCreateInputChange("budget", value)}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select budget range" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="low">Under NPR 1,000,000</SelectItem>
+                        <SelectItem value="medium">NPR 1,000,000 - NPR 5,000,000</SelectItem>
+                        <SelectItem value="high">NPR 5,000,000 - NPR 10,000,000</SelectItem>
+                        <SelectItem value="enterprise">Over NPR 10,000,000</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="experience">Farming Experience *</Label>
+                  <Select onValueChange={(value) => handleCreateInputChange("experience", value)}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select experience level" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="beginner">0-2 years</SelectItem>
+                      <SelectItem value="intermediate">3-10 years</SelectItem>
+                      <SelectItem value="expert">10+ years</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Soil & Environmental Data */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Soil & Environmental Data</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="nitrogenRequired">Nitrogen Content (N) *</Label>
+                    <Input
+                      type="number"
+                      placeholder="e.g., 100"
+                      value={createFormData.nitrogenRequired}
+                      onChange={(e) => handleCreateInputChange("nitrogenRequired", e.target.value)}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="phosphorousRequired">Phosphorous Content (P) *</Label>
+                    <Input
+                      type="number"
+                      placeholder="e.g., 100"
+                      value={createFormData.phosphorousRequired}
+                      onChange={(e) => handleCreateInputChange("phosphorousRequired", e.target.value)}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="potassiumRequired">Potassium Content (K) *</Label>
+                    <Input
+                      type="number"
+                      placeholder="e.g., 100"
+                      value={createFormData.potassiumRequired}
+                      onChange={(e) => handleCreateInputChange("potassiumRequired", e.target.value)}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="soilpH">Soil pH *</Label>
+                    <Input
+                      type="number"
+                      step="0.1"
+                      placeholder="e.g., 6.5"
+                      value={createFormData.soilpH}
+                      onChange={(e) => handleCreateInputChange("soilpH", e.target.value)}
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="temperature">Temperature (°C) *</Label>
+                    <Input
+                      type="number"
+                      placeholder="e.g., 25"
+                      value={createFormData.temperature}
+                      onChange={(e) => handleCreateInputChange("temperature", e.target.value)}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="humidity">Humidity (%) *</Label>
+                    <Input
+                      type="number"
+                      placeholder="e.g., 70"
+                      value={createFormData.humidity}
+                      onChange={(e) => handleCreateInputChange("humidity", e.target.value)}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="rainfall">Rainfall (mm) *</Label>
+                    <Input
+                      type="number"
+                      placeholder="e.g., 200"
+                      value={createFormData.rainfall}
+                      onChange={(e) => handleCreateInputChange("rainfall", e.target.value)}
+                    />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Additional Notes */}
+            <div className="space-y-2">
+              <Label htmlFor="notes">Additional Notes (Optional)</Label>
+              <Textarea
+                placeholder="Any specific requirements, concerns, or goals..."
+                value={createFormData.notes}
+                onChange={(e) => handleCreateInputChange("notes", e.target.value)}
+              />
+            </div>
+
+            <div className="flex justify-end gap-2">
+              <Button type="button" variant="outline" onClick={() => setIsCreateDialogOpen(false)}>
+                Cancel
+              </Button>
+              <Button
+                onClick={handleCreatePrediction}
+                disabled={isCreating || !createFormData.userId || !createFormData.location}
+                className="bg-emerald-600 hover:bg-emerald-700"
+              >
+                {isCreating ? "Creating Prediction..." : "Create Prediction"}
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Crop Selection Modal */}
+      <Dialog open={isSelectCropModalOpen} onOpenChange={setIsSelectCropModalOpen}>
+        <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Brain className="w-6 h-6 text-emerald-600" />
+              Complete Prediction - Select Final Crop
+            </DialogTitle>
+          </DialogHeader>
+
+          {selectedPredictionForCrop && (
+            <div className="space-y-6">
+              {/* Prediction Summary */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <User className="w-5 h-5" />
+                    Prediction Summary
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div>
+                      <Label className="text-sm text-slate-600">Farmer</Label>
+                      <p className="font-medium">
+                        {getUserById(selectedPredictionForCrop.userId).firstName}{" "}
+                        {getUserById(selectedPredictionForCrop.userId).lastName}
+                      </p>
+                      <p className="text-sm text-slate-500">{getUserById(selectedPredictionForCrop.userId).email}</p>
+                    </div>
+                    <div>
+                      <Label className="text-sm text-slate-600">Location</Label>
+                      <p className="font-medium flex items-center gap-1">
+                        <MapPin className="w-4 h-4" />
+                        {selectedPredictionForCrop.inputData?.location}
+                      </p>
+                    </div>
+                    <div>
+                      <Label className="text-sm text-slate-600">Soil Type</Label>
+                      <p className="font-medium capitalize">{selectedPredictionForCrop.inputData?.soilType}</p>
+                    </div>
+                    <div>
+                      <Label className="text-sm text-slate-600">Farm Size</Label>
+                      <p className="font-medium">{selectedPredictionForCrop.inputData?.farmSize} katthas</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Crop Selection */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Leaf className="w-5 h-5 text-emerald-600" />
+                    Select the Final Recommended Crop ({selectedPredictionForCrop.recommendedCrops?.length || 0}{" "}
+                    options)
+                  </CardTitle>
+                  <p className="text-sm text-slate-600">
+                    Choose the best crop recommendation to complete this prediction
+                  </p>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid gap-4">
+                    {selectedPredictionForCrop.recommendedCrops
+                      ?.sort((a, b) => b.suitability - a.suitability)
+                      .map((crop, index) => (
+                        <div
+                          key={crop._id}
+                          className={`border-2 rounded-lg p-6 transition-all cursor-pointer hover:shadow-lg ${selectedCropForSelection?._id === crop._id
+                            ? "border-emerald-500 bg-emerald-50"
+                            : "border-slate-200 hover:border-emerald-300"
+                            }`}
+                          onClick={() => setSelectedCropForSelection(crop)}
+                        >
+                          <div className="flex justify-between items-start mb-4">
+                            <div className="flex-1">
+                              <div className="flex items-center gap-3 mb-2">
+                                <h3 className="text-xl font-bold capitalize text-slate-900">{crop.cropName}</h3>
+                                {index === 0 && (
+                                  <Badge className="bg-emerald-100 text-emerald-800 flex items-center gap-1">
+                                    <Star className="w-3 h-3" />
+                                    Best Match
+                                  </Badge>
+                                )}
+                                <Badge className={`${getRiskColor(crop.risk)}`}>{crop.risk} Risk</Badge>
+                              </div>
+                              <p className="text-slate-600 italic mb-3">{crop.scientificName}</p>
+
+                              <div className="flex items-center gap-4">
+                                <div className="flex items-center gap-2">
+                                  <TrendingUp className="w-4 h-4 text-slate-500" />
+                                  <span className="text-sm text-slate-600">Rank #{index + 1}</span>
+                                </div>
+                                {crop.risk === "High" && (
+                                  <div className="flex items-center gap-1 text-red-600">
+                                    <AlertTriangle className="w-4 h-4" />
+                                    <span className="text-sm">Higher risk crop</span>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+
+                            <div className="text-right">
+                              <div className={`text-4xl font-bold ${getSuitabilityColor(crop.suitability)}`}>
+                                {crop.suitability}%
+                              </div>
+                              <div className="text-sm text-slate-500">Suitability Score</div>
+                              <div className="mt-2">
+                                {crop.suitability >= 80 && (
+                                  <Badge className="bg-green-100 text-green-800">Excellent</Badge>
+                                )}
+                                {crop.suitability >= 60 && crop.suitability < 80 && (
+                                  <Badge className="bg-yellow-100 text-yellow-800">Good</Badge>
+                                )}
+                                {crop.suitability < 60 && <Badge className="bg-red-100 text-red-800">Fair</Badge>}
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* Selection Indicator */}
+                          {selectedCropForSelection?._id === crop._id && (
+                            <div className="flex items-center justify-center mt-4 p-3 bg-emerald-100 rounded-lg">
+                              <CheckCircle className="w-5 h-5 text-emerald-600 mr-2" />
+                              <span className="text-emerald-800 font-medium">Selected for final recommendation</span>
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Selection Notes */}
+              {selectedCropForSelection && (
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Selection Notes (Optional)</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <Textarea
+                      placeholder="Add any notes about why this crop was selected or additional recommendations for the farmer..."
+                      value={selectionNotes}
+                      onChange={(e) => setSelectionNotes(e.target.value)}
+                      rows={3}
+                    />
+                  </CardContent>
+                </Card>
+              )}
+
+              {/* Action Buttons */}
+              <div className="flex justify-end gap-3 pt-4 border-t">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => {
+                    setIsSelectCropModalOpen(false)
+                    setSelectedPredictionForCrop(null)
+                    setSelectedCropForSelection(null)
+                    setSelectionNotes("")
+                  }}
+                  disabled={isSelectingCrop}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  onClick={() => handleCropSelection(selectedCropForSelection)}
+                  disabled={!selectedCropForSelection || isSelectingCrop}
+                  className="bg-emerald-600 hover:bg-emerald-700 min-w-[140px]"
+                >
+                  {isSelectingCrop ? (
+                    <>
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                      Completing...
+                    </>
+                  ) : (
+                    <>
+                      <CheckCircle className="w-4 h-4 mr-2" />
+                      Complete Prediction
+                    </>
+                  )}
+                </Button>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
 
       {/* View Prediction Modal */}
       <Dialog open={isViewModalOpen} onOpenChange={setIsViewModalOpen}>
@@ -589,7 +1426,7 @@ export default function PredictionsManagement() {
                     </div>
                     <div>
                       <Label>Farm Size</Label>
-                      <p>{selectedPrediction.inputData?.farmSize} acres</p>
+                      <p>{selectedPrediction.inputData?.farmSize} katthas</p>
                     </div>
                     <div>
                       <Label>Climate</Label>
@@ -929,7 +1766,7 @@ function EditPredictionForm({ prediction, onSave, onCancel }) {
 
           <div className="grid grid-cols-3 gap-4">
             <div>
-              <Label htmlFor="farmSize">Farm Size (acres) *</Label>
+              <Label htmlFor="farmSize">Farm Size (katthas) *</Label>
               <Input
                 id="farmSize"
                 type="number"

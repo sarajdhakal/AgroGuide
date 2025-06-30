@@ -103,7 +103,7 @@ export default function AddCropPage() {
         setSidebarOpen={setSidebarOpen}
       />
 
-      <div className={`transition-all duration-300 ${sidebarOpen ? "ml-64" : "ml-16"}`}>
+      <div className={`transition-all duration-300 ${sidebarOpen ? "ml-72" : "ml-16"}`}>
         <AdminHeader sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} activeTab="crops" />
 
         <main className="p-6">

@@ -12,6 +12,8 @@ import predictionRoutes from "./routes/predictionRoutes.js";
 import selectedCropRoutes from "./routes/selectedCropRoutes.js"
 import esewaRoutes from "./routes/esewaroute.js"
 import esewaSignatureRoute from "./routes/esewasignature.js"
+import adminRoutes from "./routes/adminRoutes.js"
+
 
 
 const app = express();
@@ -43,6 +45,7 @@ app.use("/api/predictions", predictionRoutes);
 app.use("/api/selected-crops", selectedCropRoutes)
 app.use("/api/esewa", esewaRoutes)
 app.use("/api/esewa/signature", esewaSignatureRoute)
+app.use("/api/admin", adminRoutes)
 
 
 const PORT2 = process.env.PORT || 5000;

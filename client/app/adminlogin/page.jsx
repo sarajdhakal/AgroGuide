@@ -10,8 +10,10 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Mail, Lock, Eye, EyeOff, ArrowLeft, AlertCircle, Shield } from "lucide-react"
 import Link from "next/link"
+import { useAuth } from "@/components/AuthProvider"
 
 export default function AdminLoginPage() {
+  const { adminLogin } = useAuth()
   const router = useRouter()
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
@@ -28,21 +30,15 @@ export default function AdminLoginPage() {
     setIsLoading(true)
     setError("")
 
-    try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1500))
+    const result = await adminLogin(formData.email, formData.password)
 
-      // Mock validation
-      if (formData.email === "admin@agroguide.com" && formData.password === "admin123") {
-        router.push("/admin")
-      } else {
-        setError("Invalid admin credentials")
-      }
-    } catch (err) {
-      setError("Login failed. Please try again.")
-    } finally {
-      setIsLoading(false)
+    if (result.success) {
+      router.push(result.redirect)
+    } else {
+      setError(result.error)
     }
+
+    setIsLoading(false)
   }
 
   const handleInputChange = (field, value) => {
