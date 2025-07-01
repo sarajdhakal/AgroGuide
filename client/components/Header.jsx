@@ -83,7 +83,6 @@ export default function Header() {
           const res = await axios.get(`http://localhost:8000/api/user/${user.id}`)
           setFullUserData(res.data)
 
-          // Check if user has active Pro subscription
           const hasActivePro = res.data?.subscription?.plan === "pro" && res.data?.subscription?.status === "active"
           setIsProUser(hasActivePro)
 
@@ -227,7 +226,7 @@ export default function Header() {
                     >
                       <div className="relative">
                         <img
-                          src={user.avatar || "/placeholder.svg?height=32&width=32"}
+                          src={"/saraj.jpg"}
                           alt={user.firstName || user.email}
                           className="h-8 w-8 rounded-full border-2 border-gray-600 hover:border-emerald-400 transition-colors"
                         />
@@ -392,7 +391,7 @@ export default function Header() {
                       <div className="flex items-center space-x-3">
                         <div className="relative">
                           <img
-                            src={user.avatar || "/placeholder.svg?height=32&width=32"}
+                            src={user.avatar || "/saraj.jpg"}
                             alt={user.name || user.email}
                             className="h-8 w-8 rounded-full border-2 border-gray-600"
                           />

@@ -228,6 +228,7 @@ export default function DashboardOverview() {
   if (loading) {
     return (
       <div className="space-y-6">
+
         <div className="animate-pulse">
           <div className="h-8 bg-gray-200 rounded w-1/4 mb-4"></div>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
@@ -243,6 +244,13 @@ export default function DashboardOverview() {
 
   return (
     <div className="space-y-6">
+      <div className="flex justify-between items-center">
+        <div>
+          <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Dashboard Overview</h2>
+          <p className="text-slate-600 dark:text-slate-400">.......</p>
+        </div>
+
+      </div>
       {error && <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">{error}</div>}
 
       {/* Header */}

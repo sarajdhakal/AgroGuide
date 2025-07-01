@@ -222,6 +222,13 @@ export default function SubscriptionsManagement() {
 
     return (
         <div className="space-y-6">
+            <div className="flex justify-between items-center">
+                <div>
+                    <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Subscriptions Management</h2>
+                    <p className="text-slate-600 dark:text-slate-400">.......</p>
+                </div>
+
+            </div>
             {error && <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">{error}</div>}
 
             {/* Revenue Stats */}

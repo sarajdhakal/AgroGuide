@@ -102,6 +102,13 @@ export default function CropsManagement() {
 
     return (
         <div className="space-y-6">
+            <div className="flex justify-between items-center">
+                <div>
+                    <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Crops Management</h2>
+                    <p className="text-slate-600 dark:text-slate-400">.......</p>
+                </div>
+
+            </div>
             {/* Header Actions */}
             <div className="flex flex-col sm:flex-row gap-4 justify-between">
                 <div className="flex gap-4">

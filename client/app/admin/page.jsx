@@ -8,11 +8,9 @@ import AdminHeader from "@/components/admin/AdminHeader";
 import DashboardOverview from "@/components/admin/DashboardOverview";
 import UsersManagement from "@/components/admin/UsersManagement";
 import CropsManagement from "@/components/admin/CropsManagement";
-import FeaturesManagement from "@/components/admin/FeaturesManagement";
 import PredictionsManagement from "@/components/admin/PredictionsManagement";
 import AnalyticsManagement from "@/components/admin/AnalyticsManagement";
 import SettingsManagement from "@/components/admin/SettingsManagement";
-import BlogManagement from "@/components/admin/BlogManagement";
 import ContactsManagement from "@/components/admin/ContactsManagement";
 import CropInsightsManagement from "@/components/admin/CropsInsightsManagement";
 import SubscriptionsManagement from "@/components/admin/SubscriptionsManagement";
@@ -41,16 +39,14 @@ export default function AdminDashboard() {
         return <UsersManagement />;
       case "crops":
         return <CropsManagement />;
-      case "features":
-        return <FeaturesManagement />;
+
       case "predictions":
         return <PredictionsManagement />;
       case "analytics":
         return <AnalyticsManagement />;
       case "settings":
         return <SettingsManagement />;
-      case "blog":
-        return <BlogManagement />;
+
       case "contacts":
         return <ContactsManagement />
       case "cropsinsights":

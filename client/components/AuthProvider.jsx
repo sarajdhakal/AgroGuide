@@ -47,7 +47,7 @@ export function AuthProvider({ children }) {
       localStorage.setItem("userData", JSON.stringify(userData))
       setUser(userData)
       setIsAdmin(false)
-      return { success: true, redirect: "/home" }
+      return { success: true, redirect: "/" }
     } catch (err) {
       return { success: false, error: err?.response?.data?.message || "Login failed" }
     }

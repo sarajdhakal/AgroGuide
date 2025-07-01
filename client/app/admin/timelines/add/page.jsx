@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { useRouter, useParams } from "next/navigation"
+import { useRouter } from "next/navigation"
 import AdminSidebar from "@/components/admin/AdminSidebar"
 import AdminHeader from "@/components/admin/AdminHeader"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -10,49 +10,32 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
-import { ArrowLeft, Save, Plus, Trash2, Calendar } from "lucide-react"
+import { ArrowLeft, Plus, Trash2, Calendar, Save } from "lucide-react"
 import axios from "axios"
 
-export default function EditTimeline() {
+export default function AddTimeline() {
     const router = useRouter()
-    const params = useParams()
-    const timelineId = params.id
-
     const [sidebarOpen, setSidebarOpen] = useState(true)
     const [formData, setFormData] = useState({
         scientificName: "",
         tasks: [],
     })
     const [crops, setCrops] = useState([])
-    const [loading, setLoading] = useState(true)
     const [saving, setSaving] = useState(false)
     const [error, setError] = useState("")
 
     useEffect(() => {
-        const fetchData = async () => {
+        const fetchCrops = async () => {
             try {
-                const [timelineRes, cropsRes] = await Promise.all([
-                    axios.get(`http://localhost:8000/api/timeline/${timelineId}`),
-                    axios.get("http://localhost:8000/api/crops"),
-                ])
-
-                setFormData({
-                    scientificName: timelineRes.data.scientificName || "",
-                    tasks: timelineRes.data.tasks || [],
-                })
-                setCrops(cropsRes.data)
-            } catch (error) {
-                console.error("Error fetching data:", error)
-                setError("Failed to load timeline data")
-            } finally {
-                setLoading(false)
+                const res = await axios.get("http://localhost:8000/api/crops")
+                setCrops(res.data)
+            } catch (err) {
+                console.error("Error fetching crops:", err)
+                setError("Failed to load crops list")
             }
         }
-
-        if (timelineId) {
-            fetchData()
-        }
-    }, [timelineId])
+        fetchCrops()
+    }, [])
 
     const handleInputChange = (field, value) => {
         setFormData((prev) => ({
@@ -76,7 +59,7 @@ export default function EditTimeline() {
     const addTask = () => {
         setFormData((prev) => ({
             ...prev,
-            tasks: [...prev.tasks, { day: "", title: "", description: "" }],
+            tasks: [...prev.tasks, { day: "", title: "", details: "" }],
         }))
     }
 
@@ -90,53 +73,15 @@ export default function EditTimeline() {
     const handleSave = async () => {
         setSaving(true)
         try {
-            await axios.put(`http://localhost:8000/api/update/timeline/${timelineId}`, formData)
-            alert("Timeline updated successfully")
+            await axios.post("http://localhost:8000/api/create/timeline", formData)
+            alert("Timeline created successfully")
             router.push("/admin/timelines")
-        } catch (error) {
-            console.error("Error updating timeline:", error)
-            alert("Failed to update timeline")
+        } catch (err) {
+            console.error("Error creating timeline:", err)
+            alert("Failed to create timeline")
         } finally {
             setSaving(false)
         }
-    }
-
-    if (loading) {
-        return (
-            <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
-                <AdminSidebar
-                    activeTab="crops-timelines"
-                    setActiveTab={() => { }}
-                    sidebarOpen={sidebarOpen}
-                    setSidebarOpen={setSidebarOpen}
-                />
-                <div className={`transition-all duration-300 ${sidebarOpen ? "ml-64" : "ml-16"}`}>
-                    <AdminHeader sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} activeTab="crops-timelines" />
-                    <main className="p-6">
-                        <div className="p-4">Loading...</div>
-                    </main>
-                </div>
-            </div>
-        )
-    }
-
-    if (error) {
-        return (
-            <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
-                <AdminSidebar
-                    activeTab="crops-timelines"
-                    setActiveTab={() => { }}
-                    sidebarOpen={sidebarOpen}
-                    setSidebarOpen={setSidebarOpen}
-                />
-                <div className={`transition-all duration-300 ${sidebarOpen ? "ml-64" : "ml-16"}`}>
-                    <AdminHeader sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} activeTab="crops-timelines" />
-                    <main className="p-6">
-                        <div className="p-4 text-red-600">{error}</div>
-                    </main>
-                </div>
-            </div>
-        )
     }
 
     return (
@@ -163,8 +108,8 @@ export default function EditTimeline() {
                                 Back to Timelines
                             </Button>
                             <div>
-                                <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Edit Timeline</h1>
-                                <p className="text-slate-600 dark:text-slate-400">Update timeline information</p>
+                                <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Add Timeline</h1>
+                                <p className="text-slate-600 dark:text-slate-400">Create a new farming timeline</p>
                             </div>
                         </div>
 
@@ -213,7 +158,7 @@ export default function EditTimeline() {
                                                         id={`day-${index}`}
                                                         type="number"
                                                         value={task.day}
-                                                        onChange={(e) => handleTaskChange(index, "day", Number.parseInt(e.target.value))}
+                                                        onChange={(e) => handleTaskChange(index, "day", parseInt(e.target.value))}
                                                         placeholder="Day"
                                                         min="1"
                                                     />
@@ -228,12 +173,12 @@ export default function EditTimeline() {
                                                     />
                                                 </div>
                                                 <div className="md:col-span-5">
-                                                    <Label htmlFor={`description-${index}`}>Description</Label>
+                                                    <Label htmlFor={`details-${index}`}>Details</Label>
                                                     <Textarea
-                                                        id={`description-${index}`}
-                                                        value={task.description || ""}
-                                                        onChange={(e) => handleTaskChange(index, "description", e.target.value)}
-                                                        placeholder="Task description (optional)"
+                                                        id={`details-${index}`}
+                                                        value={task.details || ""}
+                                                        onChange={(e) => handleTaskChange(index, "details", e.target.value)}
+                                                        placeholder="Task description"
                                                         rows={2}
                                                     />
                                                 </div>
@@ -266,11 +211,9 @@ export default function EditTimeline() {
                                         className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700"
                                     >
                                         <Save className="w-4 h-4" />
-                                        {saving ? "Saving..." : "Save Changes"}
+                                        {saving ? "Saving..." : "Save Timeline"}
                                     </Button>
-                                    <Button variant="outline" onClick={() => router.push("/admin/timelines")}>
-                                        Cancel
-                                    </Button>
+                                    <Button variant="outline" onClick={() => router.push("/admin/timelines")}>Cancel</Button>
                                 </div>
                             </CardContent>
                         </Card>

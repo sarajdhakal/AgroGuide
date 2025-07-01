@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import axios from "axios"
 import { Button } from "@/components/ui/button"
@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
+import { Alert, AlertDescription } from "@/components/ui/alert"
 import {
   Play,
   Star,
@@ -21,6 +22,19 @@ import {
   Calendar,
   AlertTriangle,
   ArrowRight,
+  MapPin,
+  Droplets,
+  Wind,
+  Sun,
+  Beaker,
+  Sprout,
+  User,
+  Wallet,
+  FileText,
+  AlertCircle,
+  Crown,
+  Lock,
+  Zap,
 } from "lucide-react"
 import Header from "@/components/Header"
 import Footer from "@/components/Footer"
@@ -30,6 +44,7 @@ import { useAuth } from "@/components/AuthProvider"
 export default function Predict() {
   const router = useRouter()
   const { user } = useAuth()
+
   const [formData, setFormData] = useState({
     location: "",
     locationCoordinates: null,
@@ -52,12 +67,158 @@ export default function Predict() {
   const [predictions, setPredictions] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
   const [predictionId, setPredictionId] = useState(null)
+  const [errors, setErrors] = useState({})
+
+  // Subscription and limits state
+  const [userSubscription, setUserSubscription] = useState(null)
+  const [predictionCount, setPredictionCount] = useState(0)
+  const [isLoadingSubscription, setIsLoadingSubscription] = useState(true)
+
+  // Check user subscription and prediction count
+  useEffect(() => {
+    const checkSubscriptionAndLimits = async () => {
+      if (!user) {
+        setIsLoadingSubscription(false)
+        return
+      }
+
+      try {
+        setIsLoadingSubscription(true)
+
+        // Fetch user details including subscription
+        const userResponse = await axios.get(`http://localhost:8000/api/user/${user.id}`)
+        const userData = userResponse.data
+
+        // Set subscription data (default to free if not specified)
+        const subscription = userData.subscription || { plan: "free", status: "active" }
+        setUserSubscription(subscription)
+
+        // Fetch user's predictions to count them
+        const allPredictionsResponse = await axios.get(`http://localhost:8000/api/predictions`, {
+          headers: { Authorization: `Bearer ${user.token}` }
+        })
+
+        const allPredictions = allPredictionsResponse.data || []
+
+        const userPredictions = allPredictions.filter((prediction) => {
+          const predictionUserId =
+            typeof prediction.userId === "object" && prediction.userId !== null
+              ? prediction.userId._id || prediction.userId.toString()
+              : prediction.userId
+
+          return String(predictionUserId) === String(user.id)
+        })
+
+        setPredictionCount(userPredictions.length)
+        console.log("✅ Matched predictions:", userPredictions.length)
+
+        console.log("User subscription:", subscription)
+      } catch (error) {
+        console.error("Error fetching subscription details:", error)
+        // Default to free plan if error
+        setUserSubscription({ plan: "free", status: "active" })
+        setPredictionCount(0)
+      } finally {
+        setIsLoadingSubscription(false)
+      }
+    }
+
+    checkSubscriptionAndLimits()
+  }, [user])
+
+  // Check if user has exceeded free plan limits
+  const hasExceededLimit = () => {
+    if (!userSubscription) return false
+    if (userSubscription.plan === "pro" || userSubscription.plan === "premium") return false
+    return predictionCount >= 3
+  }
+
+  // Check if user can make predictions
+  const canMakePrediction = () => {
+    if (!user) return false
+    if (isLoadingSubscription) return false
+    return !hasExceededLimit()
+  }
+
+  // Get remaining predictions for free users
+  const getRemainingPredictions = () => {
+    if (!userSubscription || userSubscription.plan === "pro" || userSubscription.plan === "premium") {
+      return "Unlimited"
+    }
+    return Math.max(0, 3 - predictionCount)
+  }
+
+  // Form validation
+  const validateForm = () => {
+    const newErrors = {}
+
+    // Farm Information validation
+    if (!formData.location.trim()) {
+      newErrors.location = "Farm location is required"
+    }
+    if (!formData.farmSize || Number(formData.farmSize) <= 0) {
+      newErrors.farmSize = "Please enter a valid farm size"
+    }
+    if (!formData.soilType) {
+      newErrors.soilType = "Please select a soil type"
+    }
+
+    // Soil Analysis validation
+    if (!formData.nitrogenRequired || Number(formData.nitrogenRequired) < 0) {
+      newErrors.nitrogenRequired = "Please enter a valid nitrogen value (0-300)"
+    }
+    if (!formData.phosphorousRequired || Number(formData.phosphorousRequired) < 0) {
+      newErrors.phosphorousRequired = "Please enter a valid phosphorous value (0-150)"
+    }
+    if (!formData.potassiumRequired || Number(formData.potassiumRequired) < 0) {
+      newErrors.potassiumRequired = "Please enter a valid potassium value (0-300)"
+    }
+    if (!formData.soilpH || Number(formData.soilpH) < 0 || Number(formData.soilpH) > 14) {
+      newErrors.soilpH = "Please enter a valid pH value (0-14)"
+    }
+
+    // Environmental Conditions validation
+    if (!formData.temperature || Number(formData.temperature) < -50 || Number(formData.temperature) > 60) {
+      newErrors.temperature = "Please enter a valid temperature (-50 to 60°C)"
+    }
+    if (!formData.humidity || Number(formData.humidity) < 0 || Number(formData.humidity) > 100) {
+      newErrors.humidity = "Please enter a valid humidity (0-100%)"
+    }
+    if (!formData.rainfall || Number(formData.rainfall) < 0) {
+      newErrors.rainfall = "Please enter a valid rainfall amount"
+    }
+    if (!formData.climate) {
+      newErrors.climate = "Please select a climate zone"
+    }
+
+    // Farming Details validation
+    if (!formData.previousCrop) {
+      newErrors.previousCrop = "Please select previous crop information"
+    }
+    if (!formData.budget) {
+      newErrors.budget = "Please select a budget range"
+    }
+    if (!formData.experience) {
+      newErrors.experience = "Please select your farming experience"
+    }
+
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
+  }
 
   const handleInputChange = (field, value) => {
     setFormData((prev) => ({
       ...prev,
       [field]: value,
     }))
+
+    // Clear error when user starts typing
+    if (errors[field]) {
+      setErrors((prev) => ({
+        ...prev,
+        [field]: "",
+      }))
+    }
   }
 
   const handleLocationChange = (location, coordinates) => {
@@ -66,47 +227,32 @@ export default function Predict() {
       location,
       locationCoordinates: coordinates || null,
     }))
+
+    if (errors.location) {
+      setErrors((prev) => ({
+        ...prev,
+        location: "",
+      }))
+    }
   }
 
   const handlePredict = async () => {
-    setIsLoading(true)
-
-    const requiredNumericFields = [
-      "nitrogenRequired",
-      "phosphorousRequired",
-      "potassiumRequired",
-      "temperature",
-      "humidity",
-      "soilpH",
-      "rainfall",
-    ]
-
-    const requiredTextFields = ["location", "soilType", "climate", "previousCrop", "budget", "experience", "farmSize"]
-
-    // Validate numeric fields
-    for (const field of requiredNumericFields) {
-      if (!formData[field] || isNaN(Number(formData[field]))) {
-        alert(`Please enter a valid number for "${field}"`)
-        setIsLoading(false)
-        return
-      }
-    }
-
-    // Validate text fields
-    for (const field of requiredTextFields) {
-      if (!formData[field] || formData[field].trim() === "") {
-        alert(`Please select or enter a value for "${field}"`)
-        setIsLoading(false)
-        return
-      }
-    }
-
-    // Validate location specifically
-    if (!formData.location.trim()) {
-      alert("Please select a valid location using the location picker")
-      setIsLoading(false)
+    // Check subscription limits first
+    if (!canMakePrediction()) {
       return
     }
+
+    if (!validateForm()) {
+      // Scroll to first error
+      const firstErrorField = Object.keys(errors)[0]
+      const element = document.getElementById(firstErrorField)
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth", block: "center" })
+      }
+      return
+    }
+
+    setIsLoading(true)
 
     // Prepare payload for AI model
     const aiPayload = {
@@ -202,6 +348,9 @@ export default function Predict() {
       console.log("Saved Prediction:", saveResponse.data)
       setPredictionId(saveResponse.data.prediction._id)
 
+      // Update prediction count immediately
+      setPredictionCount((prev) => prev + 1)
+
       // Set predictions for UI display
       setPredictions({
         recommendedCrops,
@@ -214,15 +363,19 @@ export default function Predict() {
       })
 
       console.log("✅ Prediction saved successfully")
+
+      // Scroll to results
+      setTimeout(() => {
+        document.getElementById("prediction-results").scrollIntoView({ behavior: "smooth" })
+      }, 500)
     } catch (err) {
       console.error("❌ Prediction failed:", err)
-
       if (err.response) {
-        alert(`Prediction failed: ${err.response.data?.message || err.response.statusText}`)
+        setErrors({ submit: `Prediction failed: ${err.response.data?.message || err.response.statusText}` })
       } else if (err.request) {
-        alert("No response from server. Please check if the AI service is running.")
+        setErrors({ submit: "No response from server. Please check if the AI service is running." })
       } else {
-        alert(`Prediction failed: ${err.message}`)
+        setErrors({ submit: `Prediction failed: ${err.message}` })
       }
     } finally {
       setIsLoading(false)
@@ -244,7 +397,9 @@ export default function Predict() {
         cropName: crop.cropName,
         scientificName: crop.scientificName,
       }
+
       console.log("✅ Sending crop selection:", selectionData)
+
       await axios.post("http://localhost:8000/api/predictions/select", selectionData, {
         headers: { "Content-Type": "application/json" },
       })
@@ -263,7 +418,6 @@ export default function Predict() {
       // Cereals
       rice: "Oryza sativa",
       maize: "Zea mays",
-
       // Legumes
       chickpea: "Cicer arietinum",
       kidneybeans: "Phaseolus vulgaris",
@@ -272,7 +426,6 @@ export default function Predict() {
       mungbean: "Vigna radiata",
       blackgram: "Vigna mungo",
       lentil: "Lens culinaris",
-
       // Fruits
       pomegranate: "Punica granatum",
       banana: "Musa spp.",
@@ -284,13 +437,32 @@ export default function Predict() {
       orange: "Citrus sinensis",
       papaya: "Carica papaya",
       coconut: "Cocos nucifera",
-
       // Cash crops
       cotton: "Gossypium hirsutum",
       jute: "Corchorus olitorius",
       coffee: "Coffea arabica",
     }
+
     return cropMapping[cropName.toLowerCase()] || cropName
+  }
+
+  const handleUpgradeClick = () => {
+    router.push("/pricing")
+  }
+
+  const handleStartFreeTrial = () => {
+    if (!user) {
+      router.push("/login")
+    } else if (userSubscription?.plan === "pro" || userSubscription?.plan === "premium") {
+      // Already pro user, scroll to form
+      document.getElementById("prediction-form").scrollIntoView({ behavior: "smooth" })
+    } else if (hasExceededLimit()) {
+      // Free user who exceeded limit, redirect to pricing
+      router.push("/pricing")
+    } else {
+      // Free user within limit, scroll to form
+      document.getElementById("prediction-form").scrollIntoView({ behavior: "smooth" })
+    }
   }
 
   const stats = [
@@ -328,19 +500,43 @@ export default function Predict() {
               to provide accurate predictions and maximize your yield potential.
             </p>
 
+            {/* Subscription Status */}
+            {user && !isLoadingSubscription && (
+              <div className="mb-8">
+                <div
+                  className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium ${userSubscription?.plan === "pro" || userSubscription?.plan === "premium"
+                    ? "bg-gradient-to-r from-yellow-500/20 to-orange-500/20 text-yellow-400 border border-yellow-500/30"
+                    : "bg-slate-800 text-gray-300 border border-slate-600"
+                    }`}
+                >
+                  {userSubscription?.plan === "pro" || userSubscription?.plan === "premium" ? (
+                    <>
+                      <Crown className="w-4 h-4" />
+                      Pro Plan - Unlimited Predictions
+                    </>
+                  ) : (
+                    <>
+                      <Zap className="w-4 h-4" />
+                      Free Plan - {getRemainingPredictions()} predictions remaining
+                    </>
+                  )}
+                </div>
+              </div>
+            )}
+
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
               <Button
                 size="lg"
                 className="bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-3 text-lg font-semibold rounded-full"
-                onClick={() => {
-                  if (!user) {
-                    router.push("/login")
-                  } else {
-                    document.getElementById("prediction-form").scrollIntoView({ behavior: "smooth" })
-                  }
-                }}
+                onClick={handleStartFreeTrial}
               >
-                Start Prediction
+                {!user
+                  ? "Start Prediction"
+                  : userSubscription?.plan === "pro" || userSubscription?.plan === "premium"
+                    ? "Start Prediction"
+                    : hasExceededLimit()
+                      ? "Upgrade to Pro"
+                      : "Start Prediction"}
               </Button>
               <Button
                 size="lg"
@@ -374,262 +570,489 @@ export default function Predict() {
 
         {/* Prediction Form */}
         {user ? (
-          <section id="prediction-form" className="py-20 bg-slate-800">
-            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <section id="prediction-form" className="py-20 bg-slate-800 relative">
+            {/* Blur overlay for exceeded limits */}
+            {hasExceededLimit() && (
+              <div className="absolute inset-0 z-10 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center">
+                <Card className="bg-slate-800 border-slate-600 max-w-md mx-4">
+                  <CardContent className="p-8 text-center">
+                    <div className="mb-6">
+                      <div className="w-16 h-16 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <Crown className="w-8 h-8 text-white" />
+                      </div>
+                      <h3 className="text-2xl font-bold text-white mb-2">Upgrade to Pro</h3>
+                      <p className="text-gray-300">
+                        You've reached your free plan limit of 3 predictions. Upgrade to Pro for unlimited predictions
+                        and advanced features.
+                      </p>
+                    </div>
+
+                    <div className="space-y-4">
+                      <div className="bg-slate-700 rounded-lg p-4">
+                        <div className="flex items-center justify-between text-sm">
+                          <span className="text-gray-300">Free Plan</span>
+                          <span className="text-red-400">{predictionCount}/3 used</span>
+                        </div>
+                        <div className="w-full bg-slate-600 rounded-full h-2 mt-2">
+                          <div
+                            className="bg-red-500 h-2 rounded-full transition-all duration-300"
+                            style={{ width: `${(predictionCount / 3) * 100}%` }}
+                          ></div>
+                        </div>
+                      </div>
+
+                      <Button
+                        onClick={handleUpgradeClick}
+                        className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white font-semibold py-3"
+                      >
+                        <Crown className="w-5 h-5 mr-2" />
+                        Upgrade to Pro
+                      </Button>
+
+                      <div className="text-xs text-gray-400">
+                        ✨ Unlimited predictions • Advanced analytics • Priority support
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            )}
+
+            <div className={`max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 ${hasExceededLimit() ? "blur-sm" : ""}`}>
               <div className="text-center mb-12">
                 <h2 className="text-3xl font-bold text-white mb-4">Get Your Crop Predictions</h2>
                 <p className="text-gray-300">Fill in your farming details to receive personalized recommendations</p>
               </div>
 
-              <Card className="bg-slate-700 border-slate-600">
-                <CardHeader>
-                  <CardTitle className="text-white text-xl">Farm Information</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    {/* Enhanced Farm Location Picker */}
-                    <div className="space-y-2">
-                      <Label htmlFor="location" className="text-white">
-                        Farm Location *
-                      </Label>
-                      <FarmLocationPicker value={formData.location} onChange={handleLocationChange} />
-                      {formData.locationCoordinates && (
-                        <p className="text-xs text-gray-400">📍 Coordinates saved for weather data accuracy</p>
-                      )}
+              {/* Error Alert */}
+              {errors.submit && (
+                <Alert className="mb-6 border-red-500 bg-red-500/10">
+                  <AlertCircle className="h-4 w-4 text-red-500" />
+                  <AlertDescription className="text-red-400">{errors.submit}</AlertDescription>
+                </Alert>
+              )}
+
+              <div className="space-y-8">
+                {/* Farm Information Section */}
+                <Card className="bg-slate-700 border-slate-600">
+                  <CardHeader>
+                    <CardTitle className="text-white text-xl flex items-center gap-2">
+                      <MapPin className="w-5 h-5 text-emerald-400" />
+                      Farm Information
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-6">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                      {/* Farm Location */}
+                      <div className="space-y-2">
+                        <Label htmlFor="location" className="text-white flex items-center gap-1">
+                          Farm Location *{errors.location && <AlertCircle className="w-4 h-4 text-red-400" />}
+                        </Label>
+                        <FarmLocationPicker
+                          value={formData.location}
+                          onChange={handleLocationChange}
+                          className={errors.location ? "border-red-500" : ""}
+                          disabled={!canMakePrediction()}
+                        />
+                        {errors.location && <p className="text-red-400 text-sm">{errors.location}</p>}
+                        {formData.locationCoordinates && (
+                          <p className="text-xs text-gray-400">📍 Coordinates saved for weather data accuracy</p>
+                        )}
+                      </div>
+
+                      {/* Farm Size */}
+                      <div className="space-y-2">
+                        <Label htmlFor="farmSize" className="text-white flex items-center gap-1">
+                          Farm Size (katthas) *{errors.farmSize && <AlertCircle className="w-4 h-4 text-red-400" />}
+                        </Label>
+                        <Input
+                          type="number"
+                          id="farmSize"
+                          placeholder="e.g., 100"
+                          min="0.1"
+                          step="0.1"
+                          className={`bg-slate-600 border-slate-500 text-white ${errors.farmSize ? "border-red-500" : ""}`}
+                          value={formData.farmSize}
+                          onChange={(e) => handleInputChange("farmSize", e.target.value)}
+                          disabled={!canMakePrediction()}
+                        />
+                        {errors.farmSize && <p className="text-red-400 text-sm">{errors.farmSize}</p>}
+                      </div>
+
+                      {/* Soil Type */}
+                      <div className="space-y-2">
+                        <Label htmlFor="soilType" className="text-white flex items-center gap-1">
+                          Soil Type *{errors.soilType && <AlertCircle className="w-4 h-4 text-red-400" />}
+                        </Label>
+                        <Select
+                          onValueChange={(value) => handleInputChange("soilType", value)}
+                          disabled={!canMakePrediction()}
+                        >
+                          <SelectTrigger
+                            className={`bg-slate-600 border-slate-500 text-white ${errors.soilType ? "border-red-500" : ""}`}
+                          >
+                            <SelectValue placeholder="Select soil type" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="clay">Clay - Heavy, nutrient-rich</SelectItem>
+                            <SelectItem value="sandy">Sandy - Light, well-draining</SelectItem>
+                            <SelectItem value="loam">Loam - Balanced, fertile</SelectItem>
+                            <SelectItem value="silt">Silt - Fine particles, moisture-retaining</SelectItem>
+                            <SelectItem value="mixed">Mixed - Combination of types</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        {errors.soilType && <p className="text-red-400 text-sm">{errors.soilType}</p>}
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Soil Analysis Section */}
+                <Card className="bg-slate-700 border-slate-600">
+                  <CardHeader>
+                    <CardTitle className="text-white text-xl flex items-center gap-2">
+                      <Beaker className="w-5 h-5 text-emerald-400" />
+                      Soil Analysis
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                      {/* Nitrogen */}
+                      <div className="space-y-2">
+                        <Label htmlFor="nitrogenRequired" className="text-white flex items-center gap-1">
+                          Nitrogen (N) * <span className="text-xs text-gray-400">(0-300 kg/ha)</span>
+                          {errors.nitrogenRequired && <AlertCircle className="w-4 h-4 text-red-400" />}
+                        </Label>
+                        <Input
+                          type="number"
+                          id="nitrogenRequired"
+                          placeholder="e.g., 100"
+                          min="0"
+                          max="300"
+                          className={`bg-slate-600 border-slate-500 text-white ${errors.nitrogenRequired ? "border-red-500" : ""}`}
+                          value={formData.nitrogenRequired}
+                          onChange={(e) => handleInputChange("nitrogenRequired", e.target.value)}
+                          disabled={!canMakePrediction()}
+                        />
+                        {errors.nitrogenRequired && <p className="text-red-400 text-sm">{errors.nitrogenRequired}</p>}
+                      </div>
+
+                      {/* Phosphorous */}
+                      <div className="space-y-2">
+                        <Label htmlFor="phosphorousRequired" className="text-white flex items-center gap-1">
+                          Phosphorous (P) * <span className="text-xs text-gray-400">(0-150 kg/ha)</span>
+                          {errors.phosphorousRequired && <AlertCircle className="w-4 h-4 text-red-400" />}
+                        </Label>
+                        <Input
+                          type="number"
+                          id="phosphorousRequired"
+                          placeholder="e.g., 50"
+                          min="0"
+                          max="150"
+                          className={`bg-slate-600 border-slate-500 text-white ${errors.phosphorousRequired ? "border-red-500" : ""}`}
+                          value={formData.phosphorousRequired}
+                          onChange={(e) => handleInputChange("phosphorousRequired", e.target.value)}
+                          disabled={!canMakePrediction()}
+                        />
+                        {errors.phosphorousRequired && (
+                          <p className="text-red-400 text-sm">{errors.phosphorousRequired}</p>
+                        )}
+                      </div>
+
+                      {/* Potassium */}
+                      <div className="space-y-2">
+                        <Label htmlFor="potassiumRequired" className="text-white flex items-center gap-1">
+                          Potassium (K) * <span className="text-xs text-gray-400">(0-300 kg/ha)</span>
+                          {errors.potassiumRequired && <AlertCircle className="w-4 h-4 text-red-400" />}
+                        </Label>
+                        <Input
+                          type="number"
+                          id="potassiumRequired"
+                          placeholder="e.g., 80"
+                          min="0"
+                          max="300"
+                          className={`bg-slate-600 border-slate-500 text-white ${errors.potassiumRequired ? "border-red-500" : ""}`}
+                          value={formData.potassiumRequired}
+                          onChange={(e) => handleInputChange("potassiumRequired", e.target.value)}
+                          disabled={!canMakePrediction()}
+                        />
+                        {errors.potassiumRequired && <p className="text-red-400 text-sm">{errors.potassiumRequired}</p>}
+                      </div>
+
+                      {/* Soil pH */}
+                      <div className="space-y-2">
+                        <Label htmlFor="soilpH" className="text-white flex items-center gap-1">
+                          Soil pH * <span className="text-xs text-gray-400">(0-14)</span>
+                          {errors.soilpH && <AlertCircle className="w-4 h-4 text-red-400" />}
+                        </Label>
+                        <Input
+                          type="number"
+                          step="0.1"
+                          id="soilpH"
+                          placeholder="e.g., 6.5"
+                          min="0"
+                          max="14"
+                          className={`bg-slate-600 border-slate-500 text-white ${errors.soilpH ? "border-red-500" : ""}`}
+                          value={formData.soilpH}
+                          onChange={(e) => handleInputChange("soilpH", e.target.value)}
+                          disabled={!canMakePrediction()}
+                        />
+                        {errors.soilpH && <p className="text-red-400 text-sm">{errors.soilpH}</p>}
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Environmental Conditions Section */}
+                <Card className="bg-slate-700 border-slate-600">
+                  <CardHeader>
+                    <CardTitle className="text-white text-xl flex items-center gap-2">
+                      <Sun className="w-5 h-5 text-emerald-400" />
+                      Environmental Conditions
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                      {/* Temperature */}
+                      <div className="space-y-2">
+                        <Label htmlFor="temperature" className="text-white flex items-center gap-1">
+                          <Thermometer className="w-4 h-4" />
+                          Temperature (°C) * <span className="text-xs text-gray-400">(-50 to 60)</span>
+                          {errors.temperature && <AlertCircle className="w-4 h-4 text-red-400" />}
+                        </Label>
+                        <Input
+                          type="number"
+                          id="temperature"
+                          placeholder="e.g., 25"
+                          min="-50"
+                          max="60"
+                          className={`bg-slate-600 border-slate-500 text-white ${errors.temperature ? "border-red-500" : ""}`}
+                          value={formData.temperature}
+                          onChange={(e) => handleInputChange("temperature", e.target.value)}
+                          disabled={!canMakePrediction()}
+                        />
+                        {errors.temperature && <p className="text-red-400 text-sm">{errors.temperature}</p>}
+                      </div>
+
+                      {/* Humidity */}
+                      <div className="space-y-2">
+                        <Label htmlFor="humidity" className="text-white flex items-center gap-1">
+                          <Droplets className="w-4 h-4" />
+                          Humidity (%) * <span className="text-xs text-gray-400">(0-100)</span>
+                          {errors.humidity && <AlertCircle className="w-4 h-4 text-red-400" />}
+                        </Label>
+                        <Input
+                          type="number"
+                          id="humidity"
+                          placeholder="e.g., 65"
+                          min="0"
+                          max="100"
+                          className={`bg-slate-600 border-slate-500 text-white ${errors.humidity ? "border-red-500" : ""}`}
+                          value={formData.humidity}
+                          onChange={(e) => handleInputChange("humidity", e.target.value)}
+                          disabled={!canMakePrediction()}
+                        />
+                        {errors.humidity && <p className="text-red-400 text-sm">{errors.humidity}</p>}
+                      </div>
+
+                      {/* Rainfall */}
+                      <div className="space-y-2">
+                        <Label htmlFor="rainfall" className="text-white flex items-center gap-1">
+                          <Droplets className="w-4 h-4" />
+                          Rainfall (mm) * <span className="text-xs text-gray-400">(Annual)</span>
+                          {errors.rainfall && <AlertCircle className="w-4 h-4 text-red-400" />}
+                        </Label>
+                        <Input
+                          type="number"
+                          id="rainfall"
+                          placeholder="e.g., 1200"
+                          min="0"
+                          className={`bg-slate-600 border-slate-500 text-white ${errors.rainfall ? "border-red-500" : ""}`}
+                          value={formData.rainfall}
+                          onChange={(e) => handleInputChange("rainfall", e.target.value)}
+                          disabled={!canMakePrediction()}
+                        />
+                        {errors.rainfall && <p className="text-red-400 text-sm">{errors.rainfall}</p>}
+                      </div>
+
+                      {/* Climate Zone */}
+                      <div className="space-y-2">
+                        <Label htmlFor="climate" className="text-white flex items-center gap-1">
+                          <Wind className="w-4 h-4" />
+                          Climate Zone *{errors.climate && <AlertCircle className="w-4 h-4 text-red-400" />}
+                        </Label>
+                        <Select
+                          onValueChange={(value) => handleInputChange("climate", value)}
+                          disabled={!canMakePrediction()}
+                        >
+                          <SelectTrigger
+                            className={`bg-slate-600 border-slate-500 text-white ${errors.climate ? "border-red-500" : ""}`}
+                          >
+                            <SelectValue placeholder="Select climate zone" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="temperate">Temperate - Moderate seasons</SelectItem>
+                            <SelectItem value="subtropical">Subtropical - Warm, humid</SelectItem>
+                            <SelectItem value="arid">Arid - Dry, low rainfall</SelectItem>
+                            <SelectItem value="tropical">Tropical - Hot, humid</SelectItem>
+                            <SelectItem value="continental">Continental - Extreme seasons</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        {errors.climate && <p className="text-red-400 text-sm">{errors.climate}</p>}
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Farming Details Section */}
+                <Card className="bg-slate-700 border-slate-600">
+                  <CardHeader>
+                    <CardTitle className="text-white text-xl flex items-center gap-2">
+                      <Sprout className="w-5 h-5 text-emerald-400" />
+                      Farming Details
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-6">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                      {/* Previous Crop */}
+                      <div className="space-y-2">
+                        <Label htmlFor="previousCrop" className="text-white flex items-center gap-1">
+                          Previous Crop *{errors.previousCrop && <AlertCircle className="w-4 h-4 text-red-400" />}
+                        </Label>
+                        <Select
+                          onValueChange={(value) => handleInputChange("previousCrop", value)}
+                          disabled={!canMakePrediction()}
+                        >
+                          <SelectTrigger
+                            className={`bg-slate-600 border-slate-500 text-white ${errors.previousCrop ? "border-red-500" : ""}`}
+                          >
+                            <SelectValue placeholder="What did you grow last?" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="corn">Corn/Maize</SelectItem>
+                            <SelectItem value="soybeans">Soybeans</SelectItem>
+                            <SelectItem value="wheat">Wheat</SelectItem>
+                            <SelectItem value="cotton">Cotton</SelectItem>
+                            <SelectItem value="rice">Rice</SelectItem>
+                            <SelectItem value="vegetables">Vegetables</SelectItem>
+                            <SelectItem value="none">First time farming</SelectItem>
+                            <SelectItem value="fallow">Land was fallow</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        {errors.previousCrop && <p className="text-red-400 text-sm">{errors.previousCrop}</p>}
+                      </div>
+
+                      {/* Budget Range */}
+                      <div className="space-y-2">
+                        <Label htmlFor="budget" className="text-white flex items-center gap-1">
+                          <Wallet className="w-4 h-4" />
+                          Budget Range *{errors.budget && <AlertCircle className="w-4 h-4 text-red-400" />}
+                        </Label>
+                        <Select
+                          onValueChange={(value) => handleInputChange("budget", value)}
+                          disabled={!canMakePrediction()}
+                        >
+                          <SelectTrigger
+                            className={`bg-slate-600 border-slate-500 text-white ${errors.budget ? "border-red-500" : ""}`}
+                          >
+                            <SelectValue placeholder="Select budget range" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="low">Under NPR 100,000</SelectItem>
+                            <SelectItem value="medium">NPR 100,000 - NPR 500,000</SelectItem>
+                            <SelectItem value="high">NPR 500,000 - NPR 1,000,000</SelectItem>
+                            <SelectItem value="enterprise">Over NPR 1,000,000</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        {errors.budget && <p className="text-red-400 text-sm">{errors.budget}</p>}
+                      </div>
+
+                      {/* Farming Experience */}
+                      <div className="space-y-2">
+                        <Label htmlFor="experience" className="text-white flex items-center gap-1">
+                          <User className="w-4 h-4" />
+                          Farming Experience *{errors.experience && <AlertCircle className="w-4 h-4 text-red-400" />}
+                        </Label>
+                        <Select
+                          onValueChange={(value) => handleInputChange("experience", value)}
+                          disabled={!canMakePrediction()}
+                        >
+                          <SelectTrigger
+                            className={`bg-slate-600 border-slate-500 text-white ${errors.experience ? "border-red-500" : ""}`}
+                          >
+                            <SelectValue placeholder="Select experience" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="beginner">Beginner (0-2 years)</SelectItem>
+                            <SelectItem value="intermediate">Intermediate (3-10 years)</SelectItem>
+                            <SelectItem value="experienced">Experienced (10+ years)</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        {errors.experience && <p className="text-red-400 text-sm">{errors.experience}</p>}
+                      </div>
                     </div>
 
+                    {/* Additional Notes */}
                     <div className="space-y-2">
-                      <Label htmlFor="farmSize" className="text-white">
-                        Farm Size (katthas)
+                      <Label htmlFor="notes" className="text-white flex items-center gap-1">
+                        <FileText className="w-4 h-4" />
+                        Additional Notes (Optional)
                       </Label>
-                      <Input
-                        type="number"
-                        id="farmSize"
-                        placeholder="e.g., 100"
-                        className="bg-slate-600 border-slate-500 text-white"
-                        value={formData.farmSize}
-                        onChange={(e) => handleInputChange("farmSize", e.target.value)}
+                      <Textarea
+                        id="notes"
+                        placeholder="Any specific requirements, concerns, or goals for your farm..."
+                        className="bg-slate-600 border-slate-500 text-white min-h-[100px]"
+                        value={formData.notes}
+                        onChange={(e) => handleInputChange("notes", e.target.value)}
+                        disabled={!canMakePrediction()}
                       />
                     </div>
+                  </CardContent>
+                </Card>
 
-                    <div className="space-y-2">
-                      <Label htmlFor="soilType" className="text-white">
-                        Soil Type
-                      </Label>
-                      <Select onValueChange={(value) => handleInputChange("soilType", value)}>
-                        <SelectTrigger className="bg-slate-600 border-slate-500 text-white">
-                          <SelectValue placeholder="Select soil type" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="clay">Clay</SelectItem>
-                          <SelectItem value="sandy">Sandy</SelectItem>
-                          <SelectItem value="loam">Loam</SelectItem>
-                          <SelectItem value="silt">Silt</SelectItem>
-                          <SelectItem value="mixed">Mixed</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="nitrogenRequired" className="text-white">
-                        Nitrogen Content (N)
-                      </Label>
-                      <Input
-                        type="number"
-                        id="nitrogenRequired"
-                        placeholder="e.g., 100"
-                        required
-                        className="bg-slate-600 border-slate-500 text-white"
-                        value={formData.nitrogenRequired}
-                        onChange={(e) => handleInputChange("nitrogenRequired", e.target.value)}
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="phosphorousRequired" className="text-white">
-                        Phosphorous Content (P)
-                      </Label>
-                      <Input
-                        type="number"
-                        id="phosphorousRequired"
-                        required
-                        placeholder="e.g., 100"
-                        className="bg-slate-600 border-slate-500 text-white"
-                        value={formData.phosphorousRequired}
-                        onChange={(e) => handleInputChange("phosphorousRequired", e.target.value)}
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="potassiumRequired" className="text-white">
-                        Potassium Content (K)
-                      </Label>
-                      <Input
-                        type="number"
-                        required
-                        id="potassiumRequired"
-                        placeholder="e.g., 100"
-                        className="bg-slate-600 border-slate-500 text-white"
-                        value={formData.potassiumRequired}
-                        onChange={(e) => handleInputChange("potassiumRequired", e.target.value)}
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="rainfall" className="text-white">
-                        Rainfall
-                      </Label>
-                      <Input
-                        type="number"
-                        id="rainfall"
-                        required
-                        placeholder="e.g., 100"
-                        className="bg-slate-600 border-slate-500 text-white"
-                        value={formData.rainfall}
-                        onChange={(e) => handleInputChange("rainfall", e.target.value)}
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="humidity" className="text-white">
-                        Humidity
-                      </Label>
-                      <Input
-                        type="number"
-                        required
-                        id="humidity"
-                        placeholder="e.g., 100"
-                        className="bg-slate-600 border-slate-500 text-white"
-                        value={formData.humidity}
-                        onChange={(e) => handleInputChange("humidity", e.target.value)}
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="temperature" className="text-white">
-                        Temperature (degree C)
-                      </Label>
-                      <Input
-                        type="number"
-                        required
-                        id="temperature"
-                        placeholder="e.g., 25"
-                        className="bg-slate-600 border-slate-500 text-white"
-                        value={formData.temperature}
-                        onChange={(e) => handleInputChange("temperature", e.target.value)}
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="soilpH" className="text-white">
-                        Soil pH
-                      </Label>
-                      <Input
-                        type="number"
-                        step="0.1"
-                        id="soilpH"
-                        placeholder="e.g., 6.5"
-                        className="bg-slate-600 border-slate-500 text-white"
-                        value={formData.soilpH}
-                        onChange={(e) => handleInputChange("soilpH", e.target.value)}
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="climate" className="text-white">
-                        Climate Zone
-                      </Label>
-                      <Select onValueChange={(value) => handleInputChange("climate", value)}>
-                        <SelectTrigger className="bg-slate-600 border-slate-500 text-white">
-                          <SelectValue placeholder="Select climate zone" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="temperate">Temperate</SelectItem>
-                          <SelectItem value="subtropical">Subtropical</SelectItem>
-                          <SelectItem value="arid">Arid</SelectItem>
-                          <SelectItem value="tropical">Tropical</SelectItem>
-                          <SelectItem value="continental">Continental</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="previousCrop" className="text-white">
-                        Previous Crop
-                      </Label>
-                      <Select onValueChange={(value) => handleInputChange("previousCrop", value)}>
-                        <SelectTrigger className="bg-slate-600 border-slate-500 text-white">
-                          <SelectValue placeholder="What did you grow last?" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="corn">Corn</SelectItem>
-                          <SelectItem value="soybeans">Soybeans</SelectItem>
-                          <SelectItem value="wheat">Wheat</SelectItem>
-                          <SelectItem value="cotton">Cotton</SelectItem>
-                          <SelectItem value="rice">Rice</SelectItem>
-                          <SelectItem value="none">First time farming</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="budget" className="text-white">
-                        Budget Range
-                      </Label>
-                      <Select onValueChange={(value) => handleInputChange("budget", value)}>
-                        <SelectTrigger className="bg-slate-600 border-slate-500 text-white">
-                          <SelectValue placeholder="Select budget range" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="low">Under NPR 1000000</SelectItem>
-                          <SelectItem value="medium">NPR 1000000 - NPR 5000000</SelectItem>
-                          <SelectItem value="high">NPR 5000000 - NPR 10000000</SelectItem>
-                          <SelectItem value="enterprise">Over NPR 10000000</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="experience" className="text-white">
-                        Farming Experience
-                      </Label>
-                      <Select onValueChange={(value) => handleInputChange("experience", value)}>
-                        <SelectTrigger className="bg-slate-600 border-slate-500 text-white">
-                          <SelectValue placeholder="Select experience" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="beginner">0-2 years</SelectItem>
-                          <SelectItem value="intermediate">3-10 years</SelectItem>
-                          <SelectItem value="experienced">10+ years</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="notes" className="text-white">
-                      Additional Notes (Optional)
-                    </Label>
-                    <Textarea
-                      id="notes"
-                      placeholder="Any specific requirements, concerns, or goals for your farm..."
-                      className="bg-slate-600 border-slate-500 text-white"
-                      value={formData.notes}
-                      onChange={(e) => handleInputChange("notes", e.target.value)}
-                    />
-                  </div>
-
+                {/* Submit Button */}
+                <div className="text-center">
                   <Button
                     onClick={handlePredict}
-                    disabled={isLoading || !formData.location || !formData.soilType}
-                    className="w-full bg-emerald-500 hover:bg-emerald-600 text-white py-3 text-lg font-semibold"
+                    disabled={isLoading || !canMakePrediction()}
+                    className="bg-emerald-500 hover:bg-emerald-600 text-white px-12 py-4 text-lg font-semibold rounded-full disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    {isLoading ? "Analyzing Your Farm..." : "Get Crop Predictions"}
+                    {isLoading ? (
+                      <>
+                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                        Analyzing Your Farm...
+                      </>
+                    ) : hasExceededLimit() ? (
+                      <>
+                        <Lock className="w-5 h-5 mr-2" />
+                        Upgrade Required
+                      </>
+                    ) : (
+                      "Get Crop Predictions"
+                    )}
                   </Button>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
             </div>
           </section>
         ) : (
-          <></>
+          <section className="py-20 bg-slate-800">
+            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+              <h2 className="text-3xl font-bold text-white mb-6">Sign In Required</h2>
+              <p className="text-gray-300 mb-8">Please sign in to access crop prediction features</p>
+              <Button
+                onClick={() => router.push("/login")}
+                className="bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-3 text-lg font-semibold rounded-full"
+              >
+                Sign In Now
+              </Button>
+            </div>
+          </section>
         )}
 
         {/* Prediction Results */}
         {predictions && (
-          <section className="py-20 bg-slate-900">
+          <section id="prediction-results" className="py-20 bg-slate-900">
             <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center mb-12">
                 <h2 className="text-3xl font-bold text-white mb-4">Your Crop Recommendations</h2>
@@ -659,10 +1082,12 @@ export default function Predict() {
                           <TrendingUp className="w-4 h-4 text-emerald-400" />
                           <span className="text-gray-300 text-sm">Yield: {crop.expectedYield}</span>
                         </div>
+
                         <div className="flex items-center gap-2">
                           <DollarSign className="w-4 h-4 text-emerald-400" />
                           <span className="text-gray-300 text-sm">Profit: {crop.profit}</span>
                         </div>
+
                         <div className="flex items-center gap-2">
                           <AlertTriangle className="w-4 h-4 text-emerald-400" />
                           <span className="text-gray-300 text-sm">Risk: {crop.risk}</span>
@@ -707,6 +1132,7 @@ export default function Predict() {
                         <p className="text-gray-300 text-sm">{predictions.insights.bestPlantingTime}</p>
                       </div>
                     </div>
+
                     <div className="flex items-start gap-3">
                       <Thermometer className="w-5 h-5 text-emerald-400 mt-1" />
                       <div>
@@ -714,6 +1140,7 @@ export default function Predict() {
                         <p className="text-gray-300 text-sm">{predictions.insights.weatherRisk}</p>
                       </div>
                     </div>
+
                     <div className="flex items-start gap-3">
                       <TrendingUp className="w-5 h-5 text-emerald-400 mt-1" />
                       <div>
@@ -721,6 +1148,7 @@ export default function Predict() {
                         <p className="text-gray-300 text-sm">{predictions.insights.marketOutlook}</p>
                       </div>
                     </div>
+
                     <div className="flex items-start gap-3">
                       <Leaf className="w-5 h-5 text-emerald-400 mt-1" />
                       <div>
@@ -742,25 +1170,26 @@ export default function Predict() {
             <p className="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
               Join thousands of farmers who are already using AgroGuide to make smarter, data-driven decisions.
             </p>
+
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Button
                 size="lg"
                 className="bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-3 text-lg font-semibold rounded-full"
-                onClick={() => {
-                  if (!user) {
-                    router.push("/login")
-                  } else {
-                    // Add actual free trial logic or route here
-                    alert("Starting free trial (placeholder)")
-                  }
-                }}
+                onClick={handleStartFreeTrial}
               >
-                Start Free Trial
+                {!user
+                  ? "Start Free Trial"
+                  : userSubscription?.plan === "pro" || userSubscription?.plan === "premium"
+                    ? "Start Free Trial"
+                    : hasExceededLimit()
+                      ? "Upgrade to Pro"
+                      : "Start Free Trial"}
               </Button>
               <Button
                 size="lg"
                 variant="outline"
                 className="border-emerald-500 text-emerald-400 hover:bg-emerald-500 hover:text-white px-8 py-3 text-lg font-semibold rounded-full bg-transparent"
+                onClick={() => router.push("/contact")}
               >
                 Contact Sales
               </Button>

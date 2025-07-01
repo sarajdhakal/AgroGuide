@@ -8,9 +8,9 @@ import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { Search, Filter, MoreHorizontal, UserPlus, Download, Mail, Ban } from "lucide-react"
+import { Search, Filter, MoreHorizontal, UserPlus, Download, Mail, Ban, Edit, Eye, Trash2 } from "lucide-react"
 import axios from "axios"
-import Link from 'next/link';
+import Link from "next/link"
 
 export default function UsersManagement() {
   const router = useRouter()
@@ -34,18 +34,20 @@ export default function UsersManagement() {
         setUsers([
           {
             id: 1,
-            name: "John Farmer",
+            firstName: "John",
+            lastName: "Farmer",
             email: "john@farm.com",
             address: "Iowa, USA",
-            status: "active",
+            status: "Active",
             lastActive: "2 hours ago",
           },
           {
             id: 2,
-            name: "Sarah Green",
+            firstName: "Sarah",
+            lastName: "Green",
             email: "sarah@greenfields.com",
             address: "California, USA",
-            status: "active",
+            status: "Active",
             lastActive: "1 day ago",
           },
         ])
@@ -59,6 +61,7 @@ export default function UsersManagement() {
   const filteredUsers = users.filter((user) => {
     const matchesSearch =
       user.firstName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      user.lastName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       user.email?.toLowerCase().includes(searchTerm.toLowerCase())
     const matchesFilter = filterStatus === "all" || user.status === filterStatus
     return matchesSearch && matchesFilter
@@ -81,9 +84,33 @@ export default function UsersManagement() {
     router.push("/admin/users/add")
   }
 
-  // const handleEditUser = () => {
-  //   router.push("/admin/users/edit:id")
-  // }
+  const handleDeleteUser = async (userId) => {
+    if (confirm("Are you sure you want to delete this user?")) {
+      try {
+        await axios.delete(`http://localhost:8000/api/delete/user/${userId}`)
+        setUsers((prev) => prev.filter((user) => user._id !== userId))
+        alert("User deleted successfully")
+      } catch (error) {
+        console.error("Error deleting user:", error)
+        alert("Failed to delete user")
+      }
+    }
+  }
+
+  const handleSuspendUser = async (userId) => {
+    if (confirm("Are you sure you want to suspend this user?")) {
+      try {
+        await axios.put(`http://localhost:8000/api/update/user/${userId}`, {
+          status: "Suspended",
+        })
+        setUsers((prev) => prev.map((user) => (user._id === userId ? { ...user, status: "Suspended" } : user)))
+        alert("User suspended successfully")
+      } catch (error) {
+        console.error("Error suspending user:", error)
+        alert("Failed to suspend user")
+      }
+    }
+  }
 
   if (loading) {
     return (
@@ -98,6 +125,13 @@ export default function UsersManagement() {
 
   return (
     <div className="space-y-6">
+      <div className="flex justify-between items-center">
+        <div>
+          <h2 className="text-2xl font-bold text-slate-900 dark:text-white">User Management</h2>
+          <p className="text-slate-600 dark:text-slate-400">.......</p>
+        </div>
+
+      </div>
       {error && <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">{error}</div>}
 
       {/* Header Actions */}
@@ -114,7 +148,7 @@ export default function UsersManagement() {
           </div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="flex items-center gap-2">
+              <Button variant="outline" className="flex items-center gap-2 bg-transparent">
                 <Filter className="w-4 h-4" />
                 Filter: {filterStatus === "all" ? "All" : filterStatus}
               </Button>
@@ -128,7 +162,7 @@ export default function UsersManagement() {
           </DropdownMenu>
         </div>
         <div className="flex gap-2">
-          <Button variant="outline" className="flex items-center gap-2">
+          <Button variant="outline" className="flex items-center gap-2 bg-transparent">
             <Download className="w-4 h-4" />
             Export
           </Button>
@@ -159,16 +193,18 @@ export default function UsersManagement() {
             </TableHeader>
             <TableBody>
               {filteredUsers.map((user, index) => (
-                <TableRow key={user.id || index}>
+                <TableRow key={user._id || user.id || index}>
                   <TableCell>
                     <div>
-                      <div className="font-medium text-slate-900 dark:text-white">{user.firstName} {user.lastName}</div>
+                      <div className="font-medium text-slate-900 dark:text-white">
+                        {user.firstName} {user.lastName}
+                      </div>
                       <div className="text-sm text-slate-500">{user.email}</div>
                     </div>
                   </TableCell>
                   <TableCell>{user.address || user.location || "N/A"}</TableCell>
                   <TableCell>{user.joinDate || "2025/06/12"}</TableCell>
-                  <TableCell>{getStatusBadge(user.status || "active")}</TableCell>
+                  <TableCell>{getStatusBadge(user.status || "Active")}</TableCell>
                   <TableCell>{user.predictions || 23}</TableCell>
                   <TableCell>{user.lastActive || "Recently"}</TableCell>
                   <TableCell className="text-right">
@@ -179,18 +215,39 @@ export default function UsersManagement() {
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
+                        {(user._id || user.id) && (
+                          <>
+                            <Link href={`/admin/users/view/${user._id || user.id}`}>
+                              <DropdownMenuItem className="flex items-center gap-2">
+                                <Eye className="w-4 h-4" />
+                                View Profile
+                              </DropdownMenuItem>
+                            </Link>
+                            <Link href={`/admin/users/edit/${user._id || user.id}`}>
+                              <DropdownMenuItem className="flex items-center gap-2">
+                                <Edit className="w-4 h-4" />
+                                Edit User
+                              </DropdownMenuItem>
+                            </Link>
+                          </>
+                        )}
                         <DropdownMenuItem className="flex items-center gap-2">
                           <Mail className="w-4 h-4" />
                           Send Email
                         </DropdownMenuItem>
-                        {user?._id && (
-                          <Link href={`/admin/users/edit/${user._id}`}>
-                            <DropdownMenuItem className="flex items-center gap-2">View Profile</DropdownMenuItem>
-                          </Link>
-                        )}
-                        <DropdownMenuItem className="flex items-center gap-2 text-red-600">
+                        <DropdownMenuItem
+                          onClick={() => handleSuspendUser(user._id || user.id)}
+                          className="flex items-center gap-2 text-orange-600"
+                        >
                           <Ban className="w-4 h-4" />
                           Suspend User
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                          onClick={() => handleDeleteUser(user._id || user.id)}
+                          className="flex items-center gap-2 text-red-600"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                          Delete User
                         </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>

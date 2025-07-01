@@ -16,7 +16,7 @@ export default function AdminLayout({ children }) {
         }
     }, [])
 
-    if (loading) return null // Optional: replace with a loader
+    if (loading) return null
 
     return <>{children}</>
 }
