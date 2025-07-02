@@ -2,7 +2,7 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { LayoutDashboard, Users, CreditCard, Wheat, Brain, Settings, LogOut, ChevronLeft, ChevronRight, ChevronDown, Home, UserPlus, Plus, Clock, Eye } from 'lucide-react'
-
+import { useAuth } from "../AuthProvider.jsx"
 export default function AdminSidebar({ activeTab, setActiveTab, sidebarOpen, setSidebarOpen }) {
   const router = useRouter()
   const [expandedItems, setExpandedItems] = useState({})
@@ -91,11 +91,9 @@ export default function AdminSidebar({ activeTab, setActiveTab, sidebarOpen, set
     setActiveTab(parentId)
     router.push(subItem.path)
   }
-
+  const { logoutAdmin } = useAuth()
   const handleLogout = () => {
-    localStorage.removeItem("adminToken")
-    localStorage.removeItem("adminData")
-    router.push("/adminlogin")
+    logoutAdmin
   }
 
   const handleBackToSite = () => {
@@ -111,8 +109,8 @@ export default function AdminSidebar({ activeTab, setActiveTab, sidebarOpen, set
       <div className="flex items-center justify-between p-4 border-b border-slate-700">
         {sidebarOpen && (
           <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 bg-emerald-500 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-sm">AG</span>
+            <div className="flex items-center cursor-pointer" onClick={() => router.push("/admin")}>
+              <img src="/logo.png" alt="AgroGuide" className="h-16 w-auto" />
             </div>
             <div>
               <h1 className="text-lg font-bold text-white">Admin Panel</h1>

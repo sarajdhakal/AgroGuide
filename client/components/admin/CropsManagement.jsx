@@ -105,7 +105,7 @@ export default function CropsManagement() {
             <div className="flex justify-between items-center">
                 <div>
                     <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Crops Management</h2>
-                    <p className="text-slate-600 dark:text-slate-400">.......</p>
+                    <p className="text-slate-600 dark:text-slate-400">Add, update or delete crop details including names, suitability metrics, and scientific classifications.</p>
                 </div>
 
             </div>

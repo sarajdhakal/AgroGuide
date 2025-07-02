@@ -669,6 +669,13 @@ export default function PredictionsManagement() {
 
 
     <div className="space-y-6">
+      <div className="flex justify-between items-center">
+        <div>
+          <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Predictions (AI Predictions)</h2>
+          <p className="text-slate-600 dark:text-slate-400">Access and analyze all AI-generated crop recommendations. Review prediction history and suitability scores</p>
+        </div>
+
+      </div>
       {error && <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">{error}</div>}
 
       {/* Header Actions */}

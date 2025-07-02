@@ -128,7 +128,7 @@ export default function UsersManagement() {
       <div className="flex justify-between items-center">
         <div>
           <h2 className="text-2xl font-bold text-slate-900 dark:text-white">User Management</h2>
-          <p className="text-slate-600 dark:text-slate-400">.......</p>
+          <p className="text-slate-600 dark:text-slate-400">"View, edit, or remove user accounts. Monitor registrations, user roles, and account statuses."</p>
         </div>
 
       </div>

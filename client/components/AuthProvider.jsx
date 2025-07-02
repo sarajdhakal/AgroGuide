@@ -1,6 +1,7 @@
 "use client"
 
 import { createContext, useContext, useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
 import axios from "axios"
 
 const AuthContext = createContext()
@@ -10,28 +11,33 @@ export function useAuth() {
 }
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null)
-  const [isAdmin, setIsAdmin] = useState(false)
+  const [user, setUser] = useState(null)      // for regular users
+  const [admin, setAdmin] = useState(null)    // for admins
+  const [isAdmin, setIsAdmin] = useState(false)  // controls current view
   const [isLoading, setIsLoading] = useState(true)
+  const router = useRouter()
 
   useEffect(() => {
-    // Restore session from localStorage
     const userToken = localStorage.getItem("userToken")
-    const adminToken = localStorage.getItem("adminToken")
     const userData = localStorage.getItem("userData")
+    const adminToken = localStorage.getItem("adminToken")
     const adminData = localStorage.getItem("adminData")
 
     if (userToken && userData) {
       setUser(JSON.parse(userData))
-    } else if (adminToken && adminData) {
-      setIsAdmin(true)
-      setUser(JSON.parse(adminData))
+    } else {
+      setUser(null)
+    }
+
+    if (adminToken && adminData) {
+      setAdmin(JSON.parse(adminData))
+    } else {
+      setAdmin(null)
     }
 
     setIsLoading(false)
   }, [])
 
-  // 🔐 User login handler
   const userLogin = async (email, password) => {
     try {
       const res = await axios.post("http://localhost:8000/api/login", { email, password })
@@ -45,15 +51,16 @@ export function AuthProvider({ children }) {
 
       localStorage.setItem("userToken", token)
       localStorage.setItem("userData", JSON.stringify(userData))
+
       setUser(userData)
       setIsAdmin(false)
+
       return { success: true, redirect: "/" }
     } catch (err) {
       return { success: false, error: err?.response?.data?.message || "Login failed" }
     }
   }
 
-  // 🔐 Admin login handler
   const adminLogin = async (email, password) => {
     try {
       const res = await axios.post("http://localhost:8000/api/admin/login", { email, password })
@@ -62,12 +69,13 @@ export function AuthProvider({ children }) {
       const adminData = {
         ...admin,
         avatar: "/saraj.jpg",
-        initials: admin.name?.split(" ").map((n) => n[0]).join("").toUpperCase() || "AD",
+        initials: admin.name?.split(" ").map(n => n[0]).join("").toUpperCase() || "AD",
       }
 
       localStorage.setItem("adminToken", token)
       localStorage.setItem("adminData", JSON.stringify(adminData))
-      setUser(adminData)
+
+      setAdmin(adminData)
       setIsAdmin(true)
 
       return { success: true, redirect: "/admin" }
@@ -76,24 +84,42 @@ export function AuthProvider({ children }) {
     }
   }
 
-  const logout = () => {
+  const logoutUser = () => {
     localStorage.removeItem("userToken")
-    localStorage.removeItem("adminToken")
     localStorage.removeItem("userData")
-    localStorage.removeItem("adminData")
     setUser(null)
-    setIsAdmin(false)
+    // only redirect if you're in the user app
+    if (!isAdmin) router.push("/login")
+  }
+
+  const logoutAdmin = () => {
+    localStorage.removeItem("adminToken")
+    localStorage.removeItem("adminData")
+    setAdmin(null)
+    // only redirect if you're in the admin app
+    if (isAdmin) router.push("/adminlogin")
+  }
+
+  const logout = () => {
+    if (isAdmin) {
+      logoutAdmin()
+    } else {
+      logoutUser()
+    }
   }
 
   return (
     <AuthContext.Provider value={{
       user,
+      admin,
       isAdmin,
       isLoading,
+      isAuthenticated: !!user || !!admin,
       userLogin,
       adminLogin,
+      logoutUser,
+      logoutAdmin,
       logout,
-      isAuthenticated: !!user
     }}>
       {children}
     </AuthContext.Provider>

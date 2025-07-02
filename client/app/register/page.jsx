@@ -52,6 +52,13 @@ export default function RegisterPage() {
       setIsLoading(false)
       return
     }
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]).{6,}$/
+
+    if (!passwordRegex.test(user.password)) {
+      setError("Password must include at least one uppercase letter and one special character.")
+      setIsLoading(false)
+      return
+    }
 
     if (!user.agreeToTerms) {
       setError("Please agree to the terms and conditions")
@@ -82,7 +89,7 @@ export default function RegisterPage() {
       setSuccess("Account created successfully! Redirecting to login...")
       setTimeout(() => {
         router.push("/login")
-      }, 2000)
+      }, 3000)
     } catch (err) {
       console.log(err);
       setError("Registration failed. Please try again.")
@@ -131,18 +138,28 @@ export default function RegisterPage() {
           <CardContent>
             <form onSubmit={handleRegister} className="space-y-4">
               {error && (
-                <Alert className="bg-red-500/10 border-red-500/20 text-red-400">
-                  <AlertCircle className="h-4 w-4" />
-                  <AlertDescription>{error}</AlertDescription>
+                <Alert className="flex items-start gap-3 bg-red-500/10 border border-red-500/30 text-red-400 p-4 rounded-lg shadow-md">
+                  <div className="mt-1">
+                    <AlertCircle className="h-5 w-5 text-red-400" />
+                  </div>
+                  <AlertDescription className="text-sm font-medium leading-relaxed text-red-300">
+                    {error}
+                  </AlertDescription>
                 </Alert>
               )}
 
+
               {success && (
-                <Alert className="bg-green-500/10 border-green-500/20 text-green-400">
-                  <AlertCircle className="h-4 w-4" />
-                  <AlertDescription>{success}</AlertDescription>
+                <Alert className="flex items-start gap-3 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 p-4 rounded-lg shadow-md">
+                  <div className="mt-1">
+                    <AlertCircle className="h-5 w-5 text-emerald-400" />
+                  </div>
+                  <AlertDescription className="text-sm font-medium leading-relaxed text-emerald-200">
+                    {success}
+                  </AlertDescription>
                 </Alert>
               )}
+
 
               {/* Name Fields */}
               <div className="grid grid-cols-2 gap-4">

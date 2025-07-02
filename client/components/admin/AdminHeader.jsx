@@ -14,8 +14,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Badge } from "@/components/ui/badge"
+import { useAuth } from "../AuthProvider"
 
 export default function AdminHeader() {
+  const { logoutAdmin } = useAuth()
   const router = useRouter()
   const [searchQuery, setSearchQuery] = useState("")
   const [adminProfile, setAdminProfile] = useState({
@@ -57,43 +59,10 @@ export default function AdminHeader() {
   }
 
   const handleLogout = () => {
-    localStorage.removeItem("adminToken")
-    localStorage.removeItem("adminData")
-    router.push("/adminlogin")
+    logoutAdmin()
   }
 
-  const notifications = [
-    {
-      id: 1,
-      title: "New subscription",
-      message: "John Doe upgraded to Pro plan",
-      time: "2 minutes ago",
-      unread: true,
-    },
-    {
-      id: 2,
-      title: "Payment received",
-      message: "NPR 1,000 from Jane Smith",
-      time: "5 minutes ago",
-      unread: true,
-    },
-    {
-      id: 3,
-      title: "New prediction request",
-      message: "Ram Sharma requested crop prediction",
-      time: "10 minutes ago",
-      unread: true,
-    },
-    {
-      id: 4,
-      title: "System update",
-      message: "Database backup completed successfully",
-      time: "1 hour ago",
-      unread: false,
-    },
-  ]
 
-  const unreadCount = notifications.filter((n) => n.unread).length
 
   return (
     <header className="bg-white border-b border-gray-200 px-6 py-4">
@@ -115,50 +84,7 @@ export default function AdminHeader() {
         {/* Right side */}
         <div className="flex items-center space-x-4">
           {/* Notifications */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="sm" className="relative">
-                <Bell className="h-5 w-5" />
-                {unreadCount > 0 && (
-                  <Badge className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 bg-red-500 text-white text-xs">
-                    {unreadCount}
-                  </Badge>
-                )}
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-96">
-              <DropdownMenuLabel className="flex items-center justify-between">
-                <span>Notifications</span>
-                <Badge variant="secondary" className="text-xs">
-                  {unreadCount} new
-                </Badge>
-              </DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <div className="max-h-80 overflow-y-auto">
-                {notifications.map((notification) => (
-                  <DropdownMenuItem key={notification.id} className="flex flex-col items-start p-4 hover:bg-gray-50">
-                    <div className="flex items-start justify-between w-full">
-                      <div className="flex-1">
-                        <div className="flex items-center space-x-2">
-                          <p className="text-sm font-medium">{notification.title}</p>
-                          {notification.unread && <div className="w-2 h-2 bg-blue-500 rounded-full"></div>}
-                        </div>
-                        <p className="text-xs text-gray-500 mt-1">{notification.message}</p>
-                        <div className="flex items-center text-xs text-gray-400 mt-2">
-                          <Clock className="w-3 h-3 mr-1" />
-                          {notification.time}
-                        </div>
-                      </div>
-                    </div>
-                  </DropdownMenuItem>
-                ))}
-              </div>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem className="text-center text-sm text-blue-600 hover:text-blue-800">
-                View all notifications
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+
 
           {/* User Menu */}
           <DropdownMenu>
@@ -220,10 +146,7 @@ export default function AdminHeader() {
                 <User className="mr-2 h-4 w-4" />
                 <span>Profile Settings</span>
               </DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer">
-                <Settings className="mr-2 h-4 w-4" />
-                <span>Account Settings</span>
-              </DropdownMenuItem>
+
               <DropdownMenuSeparator />
               <DropdownMenuItem
                 className="text-red-600 cursor-pointer hover:text-red-700 hover:bg-red-50"

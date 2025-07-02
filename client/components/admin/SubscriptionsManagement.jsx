@@ -225,7 +225,7 @@ export default function SubscriptionsManagement() {
             <div className="flex justify-between items-center">
                 <div>
                     <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Subscriptions Management</h2>
-                    <p className="text-slate-600 dark:text-slate-400">.......</p>
+                    <p className="text-slate-600 dark:text-slate-400">Manage user subscriptions, track payment statuses, and monitor active plans including Free, Pro, and Enterprise tiers.</p>
                 </div>
 
             </div>

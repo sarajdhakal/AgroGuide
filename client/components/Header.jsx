@@ -19,7 +19,7 @@ import axios from "axios"
 export default function Header() {
   const router = useRouter()
   const pathname = usePathname()
-  const { user, logout } = useAuth()
+  const { user, logoutUser } = useAuth()
   const [fullUserData, setFullUserData] = useState(null)
   const [isProUser, setIsProUser] = useState(false)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
@@ -102,7 +102,7 @@ export default function Header() {
 
   const handleLogout = async () => {
     try {
-      await logout()
+      await logoutUser()
       router.push("/")
     } catch (error) {
       console.error("Logout error:", error)

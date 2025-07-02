@@ -102,6 +102,13 @@ export default function CropsInsightsManagement() {
 
     return (
         <div className="space-y-6">
+            <div className="flex justify-between items-center">
+                <div>
+                    <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Crops Timelines</h2>
+                    <p className="text-slate-600 dark:text-slate-400">Define and manage crop-specific farming timelines. Set up task intervals and track lifecycle events by scientific name.</p>
+                </div>
+
+            </div>
             <div className="flex flex-col sm:flex-row gap-4 justify-between">
                 <div className="flex gap-4">
                     <div className="relative">

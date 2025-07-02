@@ -170,12 +170,8 @@ export default function UserLoginPage() {
                 </Link>
               </div>
 
-              {/* Demo Credentials */}
-              <div className="mt-6 p-3 bg-slate-800/30 rounded-lg border border-slate-700/50">
-                <p className="text-xs text-slate-400 mb-2">Demo Credentials:</p>
-                <p className="text-xs text-slate-300">Email: user@agroguide.com</p>
-                <p className="text-xs text-slate-300">Password: password</p>
-              </div>
+
+
             </form>
           </CardContent>
         </Card>

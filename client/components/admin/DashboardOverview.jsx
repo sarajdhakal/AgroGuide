@@ -246,8 +246,8 @@ export default function DashboardOverview() {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Dashboard Overview</h2>
-          <p className="text-slate-600 dark:text-slate-400">.......</p>
+          <h2 className="text-2xl font-bold text-slate-900 dark:text-white"> Dashboard (Overview & Statistics)</h2>
+          <p className="text-slate-600 dark:text-slate-400">Get a quick overview of total predictions, user activity, crop suitability, and recent trends. Track system usage and performance in real-time</p>
         </div>
 
       </div>

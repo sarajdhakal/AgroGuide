@@ -66,8 +66,8 @@ export default function AdminLoginPage() {
         {/* Logo */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center gap-3 mb-4">
-            <div className="w-12 h-12 bg-emerald-500 rounded-xl flex items-center justify-center">
-              <Shield className="w-7 h-7 text-white" />
+            <div className="flex items-center cursor-pointer" onClick={() => router.push("/")}>
+              <img src="/logo.png" alt="AgroGuide" className="h-16 w-auto" />
             </div>
             <span className="text-2xl font-bold text-white">AgroGuide Admin</span>
           </div>
@@ -162,12 +162,8 @@ export default function AdminLoginPage() {
                 </Link>
               </div>
 
-              {/* Demo Credentials */}
-              <div className="mt-6 p-3 bg-slate-800/30 rounded-lg border border-slate-700/50">
-                <p className="text-xs text-slate-400 mb-2">Demo Admin Credentials:</p>
-                <p className="text-xs text-slate-300">Email: admin@agroguide.com</p>
-                <p className="text-xs text-slate-300">Password: admin123</p>
-              </div>
+
+
             </form>
           </CardContent>
         </Card>

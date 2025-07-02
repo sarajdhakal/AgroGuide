@@ -46,7 +46,6 @@ export default function AdminDashboard() {
         return <AnalyticsManagement />;
       case "settings":
         return <SettingsManagement />;
-
       case "contacts":
         return <ContactsManagement />
       case "cropsinsights":
