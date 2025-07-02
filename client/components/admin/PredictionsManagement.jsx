@@ -643,16 +643,7 @@ export default function PredictionsManagement() {
     })
   }
 
-  // Navigate to Analytics
-  const handleNavigateToAnalytics = () => {
-    // You can navigate to analytics in multiple ways:
 
-    // Option 2: If using separate route
-    router.push("/admin/predictions/analytics")
-
-    // Option 3: If using state management
-    // setActiveView('analytics')
-  }
 
   if (loading) {
     return (
@@ -706,14 +697,7 @@ export default function PredictionsManagement() {
           </DropdownMenu>
         </div>
         <div className="flex gap-2">
-          <Button
-            onClick={handleNavigateToAnalytics}
-            variant="outline"
-            className="flex items-center gap-2 bg-transparent"
-          >
-            <BarChart3 className="w-4 h-4" />
-            Analytics
-          </Button>
+
           <Button onClick={() => setIsCreateDialogOpen(true)} className="bg-emerald-600 hover:bg-emerald-700">
             <Plus className="h-4 w-4 mr-2" />
             Create Prediction

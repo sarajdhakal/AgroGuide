@@ -322,7 +322,7 @@ export default function PredictionsPage() {
                                         <SelectItem value="location">By Location</SelectItem>
                                     </SelectContent>
                                 </Select>
-                                <Button variant="outline" className="border-slate-600 text-gray-300 hover:bg-slate-700">
+                                <Button variant="outline" className="border-slate-600 text-gray-300 hover:bg-slate-700" onClick={() => window.print()}>
                                     <Download className="w-4 h-4 mr-2" />
                                     Export
                                 </Button>

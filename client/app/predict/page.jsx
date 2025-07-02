@@ -721,7 +721,7 @@ export default function Predict() {
                       {/* Nitrogen */}
                       <div className="space-y-2">
                         <Label htmlFor="nitrogenRequired" className="text-white flex items-center gap-1">
-                          Nitrogen (N) * <span className="text-xs text-gray-400">(0-300 kg/ha)</span>
+                          Nitrogen (N) * <span className="text-xs text-gray-400"></span>
                           {errors.nitrogenRequired && <AlertCircle className="w-4 h-4 text-red-400" />}
                         </Label>
                         <Input
@@ -741,7 +741,7 @@ export default function Predict() {
                       {/* Phosphorous */}
                       <div className="space-y-2">
                         <Label htmlFor="phosphorousRequired" className="text-white flex items-center gap-1">
-                          Phosphorous (P) * <span className="text-xs text-gray-400">(0-150 kg/ha)</span>
+                          Phosphorous (P) * <span className="text-xs text-gray-400"></span>
                           {errors.phosphorousRequired && <AlertCircle className="w-4 h-4 text-red-400" />}
                         </Label>
                         <Input
@@ -763,7 +763,7 @@ export default function Predict() {
                       {/* Potassium */}
                       <div className="space-y-2">
                         <Label htmlFor="potassiumRequired" className="text-white flex items-center gap-1">
-                          Potassium (K) * <span className="text-xs text-gray-400">(0-300 kg/ha)</span>
+                          Potassium (K) * <span className="text-xs text-gray-400"></span>
                           {errors.potassiumRequired && <AlertCircle className="w-4 h-4 text-red-400" />}
                         </Label>
                         <Input

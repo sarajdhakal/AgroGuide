@@ -246,7 +246,7 @@ export default function CropDetailsPage() {
                         <div className="flex flex-col md:flex-row md:items-center md:justify-between">
                             <div>
                                 <h1 className="text-4xl font-bold text-white mb-2">{cropData.cropName}</h1>
-                                <p className="text-xl text-gray-300 italic">{scientificName}  {predictionId}</p>
+                                <p className="text-xl text-gray-300 italic">{scientificName.toUpperCase()} </p>
                                 <div className="flex items-center gap-4 mt-4">
                                     <Badge className="bg-emerald-500 text-white">Selected Crop</Badge>
                                     <Badge variant="outline" className="border-emerald-500 text-emerald-400">
@@ -256,11 +256,8 @@ export default function CropDetailsPage() {
                             </div>
 
                             <div className="flex gap-3 mt-6 md:mt-0">
-                                <Button variant="outline" className="border-emerald-500 text-emerald-400">
-                                    <Share2 className="w-4 h-4 mr-2" />
-                                    Share
-                                </Button>
-                                <Button className="bg-emerald-500 hover:bg-emerald-600">
+
+                                <Button className="bg-emerald-500 hover:bg-emerald-600" onClick={() => window.print()}>
                                     <Download className="w-4 h-4 mr-2" />
                                     Download Guide
                                 </Button>

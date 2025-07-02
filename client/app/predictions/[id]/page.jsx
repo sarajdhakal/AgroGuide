@@ -636,7 +636,7 @@ export default function PredictionDetailsPage() {
                                             <Share2 className="w-4 h-4 mr-2" />
                                             Share
                                         </Button>
-                                        <Button variant="outline" className="border-emerald-500 text-emerald-400 bg-transparent">
+                                        <Button variant="outline" className="border-emerald-500 text-emerald-400 bg-transparent" onClick={() => window.print()}>
                                             <Download className="w-4 h-4 mr-2" />
                                             Export
                                         </Button>

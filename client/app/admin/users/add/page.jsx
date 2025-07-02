@@ -184,7 +184,7 @@ export default function AddUserPage() {
                           type="email"
                           value={user.email}
                           onChange={(e) => handleInputChange("email", e.target.value)}
-                          placeholder="john@farm.com"
+                          placeholder="sarajdhakal@gmail.com"
                           className="pl-10"
                           required
                         />
@@ -196,7 +196,7 @@ export default function AddUserPage() {
                         id="phoneNumber" name="phoneNumber"
                         value={user.phoneNumber}
                         onChange={(e) => handleInputChange("phoneNumber", e.target.value)}
-                        placeholder="+1 (555) 123-4567"
+                        placeholder="+977 9866115177"
                       />
                     </div>
                   </div>
@@ -219,9 +219,9 @@ export default function AddUserPage() {
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="user">User</SelectItem>
-                          <SelectItem value="admin">Admin</SelectItem>
-                          <SelectItem value="moderator">Moderator</SelectItem>
+                          <SelectItem value="User">User</SelectItem>
+                          <SelectItem value="Admin">Admin</SelectItem>
+                          <SelectItem value="Moderator">Moderator</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
@@ -234,9 +234,9 @@ export default function AddUserPage() {
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="active">Active</SelectItem>
-                        <SelectItem value="inactive">Inactive</SelectItem>
-                        <SelectItem value="suspended">Suspended</SelectItem>
+                        <SelectItem value="Active">Active</SelectItem>
+                        <SelectItem value="Inactive">Inactive</SelectItem>
+                        <SelectItem value="Suspended">Suspended</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>

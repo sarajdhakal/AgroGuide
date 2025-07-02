@@ -119,10 +119,7 @@ export default function Header() {
     setIsDropdownOpen(false)
   }
 
-  const handleBillingClick = () => {
-    router.push("/billing")
-    setIsDropdownOpen(false)
-  }
+
 
   // Enhanced navigation handler with smooth scrolling and scroll spy
   const handleNavClick = (path, itemId, isSection) => {
@@ -228,13 +225,13 @@ export default function Header() {
                         <img
                           src={"/saraj.jpg"}
                           alt={user.firstName || user.email}
-                          className="h-8 w-8 rounded-full border-2 border-gray-600 hover:border-emerald-400 transition-colors"
+                          className="h-10 w-10 rounded-full border-2 border-gray-600 hover:border-emerald-400 transition-colors"
                         />
 
                         {/* Pro Badge on Avatar */}
                         {isProUser && (
                           <div className="absolute -top-1 -right-1 bg-gradient-to-r from-yellow-400 to-yellow-500 rounded-full p-1 shadow-lg">
-                            <Crown className="h-3 w-3 text-yellow-900" />
+                            <Crown className="h-1 w-1 text-yellow-900" />
                           </div>
                         )}
                       </div>
@@ -304,16 +301,7 @@ export default function Header() {
                       <span>My Predictions</span>
                     </DropdownMenuItem>
 
-                    {/* Pro-specific menu items */}
-                    {isProUser && (
-                      <DropdownMenuItem
-                        onClick={handleBillingClick}
-                        className="text-gray-300 hover:text-white hover:bg-slate-700 cursor-pointer"
-                      >
-                        <CreditCard className="mr-2 h-4 w-4" />
-                        <span>Billing & Subscription</span>
-                      </DropdownMenuItem>
-                    )}
+
 
                     {/* Get Pro for non-Pro users */}
                     {!isProUser && (
@@ -443,15 +431,7 @@ export default function Header() {
                       <BarChart3 className="inline mr-2 h-4 w-4" />
                       My Predictions
                     </button>
-                    {isProUser && (
-                      <button
-                        onClick={handleBillingClick}
-                        className="w-full text-left px-3 py-2 text-gray-300 hover:text-white hover:bg-slate-700 rounded-md text-sm"
-                      >
-                        <CreditCard className="inline mr-2 h-4 w-4" />
-                        Billing & Subscription
-                      </button>
-                    )}
+
                     <button
                       onClick={handleLogout}
                       className="w-full text-left px-3 py-2 text-red-400 hover:text-red-300 hover:bg-red-900/20 rounded-md text-sm"

@@ -35,7 +35,7 @@ export default function CheckoutPage() {
             id: "pro",
             name: "Pro",
             description: "Best for individual farmers and small operations",
-            price: { monthly: 100, yearly: 1000 }, // Using higher amounts for testing
+            price: { monthly: 99, yearly: 999 }, // Using higher amounts for testing
             icon: Crown,
             color: "emerald",
             features: [
