@@ -1,0 +1,336 @@
+[{
+  "_id": {
+    "$oid": "685d005b17c7a30bdc2c47f1"
+  },
+  "predictionId": {
+    "$oid": "685d000417c7a30bdc2c47e8"
+  },
+  "cropName": "Tomato",
+  "scientificName": "Solanum lycopersicum",
+  "selectedAt": {
+    "$date": "2025-06-26T08:10:03.729Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685d13ec17c7a30bdc2c480f"
+  },
+  "predictionId": {
+    "$oid": "665e3f7a17cd1d35e43093af"
+  },
+  "cropName": "Tomato",
+  "scientificName": "Solanum lycopersicum",
+  "selectedAt": {
+    "$date": "2025-06-26T09:33:32.519Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685d476fa479427fe09677f3"
+  },
+  "predictionId": {
+    "$oid": "685d4f4fa0075ce2ea41b3ca"
+  },
+  "cropName": "banana",
+  "scientificName": "Cicer arietinum",
+  "selectedAt": {
+    "$date": "2025-06-26T13:13:19.576Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685d47baa479427fe09677f5"
+  },
+  "predictionId": {
+    "$oid": "685d467aa479427fe09677ee"
+  },
+  "cropName": "chickpea",
+  "scientificName": "Cicer arietinum",
+  "selectedAt": {
+    "$date": "2025-06-26T13:14:34.142Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685d62c6b9a0cc86acc73f92"
+  },
+  "predictionId": {
+    "$oid": "685d62b7b9a0cc86acc73f8d"
+  },
+  "cropName": "rice",
+  "scientificName": "Oryza sativa",
+  "selectedAt": {
+    "$date": "2025-06-26T15:09:58.293Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685e17ade35fbab27c5395b1"
+  },
+  "predictionId": {
+    "$oid": "685e178de35fbab27c5395ac"
+  },
+  "cropName": "rice",
+  "scientificName": "Oryza sativa",
+  "selectedAt": {
+    "$date": "2025-06-27T04:01:49.898Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685f69b12494dbb97d418da0"
+  },
+  "predictionId": {
+    "$oid": "685f699e2494dbb97d418d9b"
+  },
+  "cropName": "maize",
+  "scientificName": "Zea mays",
+  "selectedAt": {
+    "$date": "2025-06-28T04:04:01.969Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686000077c4d51a2327538fc"
+  },
+  "predictionId": {
+    "$oid": "686000017c4d51a2327538f7"
+  },
+  "cropName": "rice",
+  "scientificName": "Oryza sativa",
+  "selectedAt": {
+    "$date": "2025-06-28T14:45:27.262Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686000097c4d51a2327538fe"
+  },
+  "predictionId": {
+    "$oid": "686000017c4d51a2327538f7"
+  },
+  "cropName": "rice",
+  "scientificName": "Oryza sativa",
+  "selectedAt": {
+    "$date": "2025-06-28T14:45:29.456Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6860000b7c4d51a232753900"
+  },
+  "predictionId": {
+    "$oid": "686000017c4d51a2327538f7"
+  },
+  "cropName": "rice",
+  "scientificName": "Oryza sativa",
+  "selectedAt": {
+    "$date": "2025-06-28T14:45:31.251Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6862171dde782a8b8aaa7496"
+  },
+  "predictionId": {
+    "$oid": "68621596de782a8b8aaa7491"
+  },
+  "cropName": "chickpea",
+  "scientificName": "Cicer arietinum",
+  "selectedAt": {
+    "$date": "2025-06-30T04:48:29.607Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6862173fde782a8b8aaa74cb"
+  },
+  "predictionId": {
+    "$oid": "685d08da17c7a30bdc2c47fd"
+  },
+  "cropName": "banana",
+  "scientificName": "banana",
+  "selectedAt": {
+    "$date": "2025-06-30T04:49:03.866Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68621782de782a8b8aaa7500"
+  },
+  "predictionId": {
+    "$oid": "685d138317c7a30bdc2c4807"
+  },
+  "cropName": "coffee",
+  "scientificName": "coffee",
+  "selectedAt": {
+    "$date": "2025-06-30T04:50:10.822Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686217aede782a8b8aaa7568"
+  },
+  "predictionId": {
+    "$oid": "685d126917c7a30bdc2c4802"
+  },
+  "cropName": "banana",
+  "scientificName": "banana",
+  "selectedAt": {
+    "$date": "2025-06-30T04:50:54.156Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686217c7de782a8b8aaa759d"
+  },
+  "predictionId": {
+    "$oid": "685d156fd2bbe1520b450ead"
+  },
+  "cropName": "banana",
+  "scientificName": "banana",
+  "selectedAt": {
+    "$date": "2025-06-30T04:51:19.925Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68621944de782a8b8aaa7605"
+  },
+  "predictionId": {
+    "$oid": "685d431ca0075ce2ea41b3a0"
+  },
+  "cropName": "chickpea",
+  "scientificName": "Cicer arietinum",
+  "selectedAt": {
+    "$date": "2025-06-30T04:57:40.447Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686219f8de782a8b8aaa76a0"
+  },
+  "predictionId": {
+    "$oid": "685e1656b9a0cc86acc743ec"
+  },
+  "cropName": "rice",
+  "scientificName": "Oryza sativa",
+  "selectedAt": {
+    "$date": "2025-06-30T05:00:40.654Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68637b145d64e3d86f6bd4d6"
+  },
+  "predictionId": {
+    "$oid": "68637b0a5d64e3d86f6bd4d1"
+  },
+  "cropName": "coffee",
+  "scientificName": "Coffea arabica",
+  "selectedAt": {
+    "$date": "2025-07-01T06:07:16.058Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686381dd5d64e3d86f6bdce4"
+  },
+  "predictionId": {
+    "$oid": "685d44f4a0075ce2ea41b3ca"
+  },
+  "cropName": "coffee",
+  "scientificName": "Coffea arabica",
+  "selectedAt": {
+    "$date": "2025-07-01T06:36:13.107Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68638a125d64e3d86f6be0bd"
+  },
+  "predictionId": {
+    "$oid": "68638a055d64e3d86f6be0b8"
+  },
+  "cropName": "banana",
+  "scientificName": "Musa spp.",
+  "selectedAt": {
+    "$date": "2025-07-01T07:11:14.772Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68638a785d64e3d86f6be2fb"
+  },
+  "predictionId": {
+    "$oid": "68638a745d64e3d86f6be2f6"
+  },
+  "cropName": "rice",
+  "scientificName": "Oryza sativa",
+  "selectedAt": {
+    "$date": "2025-07-01T07:12:56.199Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68638ab85d64e3d86f6be506"
+  },
+  "predictionId": {
+    "$oid": "68638ab35d64e3d86f6be501"
+  },
+  "cropName": "rice",
+  "scientificName": "Oryza sativa",
+  "selectedAt": {
+    "$date": "2025-07-01T07:14:00.972Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68638b065d64e3d86f6be7ec"
+  },
+  "predictionId": {
+    "$oid": "68638b045d64e3d86f6be7e7"
+  },
+  "cropName": "rice",
+  "scientificName": "Oryza sativa",
+  "selectedAt": {
+    "$date": "2025-07-01T07:15:18.822Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686494472b6275ea46f3f588"
+  },
+  "predictionId": {
+    "$oid": "686494412b6275ea46f3f583"
+  },
+  "cropName": "rice",
+  "scientificName": "Oryza sativa",
+  "selectedAt": {
+    "$date": "2025-07-02T02:07:03.454Z"
+  },
+  "__v": 0
+}]

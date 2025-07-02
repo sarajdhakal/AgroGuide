@@ -1,0 +1,373 @@
+[{
+  "_id": {
+    "$oid": "6849241fc2cf1bdd7c4616d3"
+  },
+  "email": "sarajdhaakl@gmail.com",
+  "address": "Nepal",
+  "__v": 0,
+  "description": "",
+  "experience": "0",
+  "farmLocation": "",
+  "farmSize": "0",
+  "phoneNumber": "000-0000000",
+  "role": "Admin",
+  "status": "Active",
+  "firstName": "Saraj",
+  "lastName": "Dhakal"
+},
+{
+  "_id": {
+    "$oid": "684a85a247f8fd8c91dfa9fe"
+  },
+  "email": "soviyat1@gmail.com",
+  "address": "Nepal",
+  "__v": 0,
+  "description": "",
+  "experience": "0",
+  "farmLocation": "",
+  "farmSize": "0",
+  "phoneNumber": "000-0000000",
+  "role": "User",
+  "status": "Active",
+  "firstName": "Soviyat",
+  "lastName": "Lamsal",
+  "subscription": {
+    "plan": "pro",
+    "status": "active",
+    "billingCycle": "monthly",
+    "amount": 100,
+    "startDate": {
+      "$date": "2025-06-24T00:00:00.000Z"
+    },
+    "endDate": {
+      "$date": "2025-07-24T00:00:00.000Z"
+    },
+    "paymentMethod": "esewa"
+  }
+},
+{
+  "_id": {
+    "$oid": "684a8b1747f8fd8c91dfaa05"
+  },
+  "email": "sarajdhakal1@gmail.com",
+  "address": "Chitwan",
+  "__v": 0,
+  "description": "",
+  "experience": "0",
+  "farmLocation": "",
+  "farmSize": "0",
+  "phoneNumber": "000-0000000",
+  "role": "User",
+  "status": "Active",
+  "firstName": "Saraj",
+  "lastName": "Dhakal",
+  "subscription": {
+    "plan": "pro",
+    "status": "active",
+    "billingCycle": "yearly",
+    "amount": 1000,
+    "startDate": {
+      "$date": "2025-06-29T00:00:00.000Z"
+    },
+    "endDate": {
+      "$date": "2026-06-29T00:00:00.000Z"
+    },
+    "paymentMethod": "esewa"
+  }
+},
+{
+  "_id": {
+    "$oid": "684aac7947f8fd8c91dfaa15"
+  },
+  "email": "nisha1@gmail.com",
+  "address": "Nepal",
+  "__v": 0,
+  "description": "",
+  "experience": "0",
+  "farmLocation": "",
+  "farmSize": "0",
+  "phoneNumber": "000-0000000",
+  "role": "User",
+  "status": "Active",
+  "firstName": "Nisha2",
+  "lastName": "Rai"
+},
+{
+  "_id": {
+    "$oid": "684abf40702116d5cbc9d799"
+  },
+  "email": "samar@gmail.com",
+  "address": "parbatipur",
+  "__v": 0,
+  "description": "",
+  "experience": "0",
+  "farmLocation": "",
+  "farmSize": "0",
+  "phoneNumber": "000-0000000",
+  "role": "User",
+  "status": "Active",
+  "firstName": "samar",
+  "lastName": "bhattarai"
+},
+{
+  "_id": {
+    "$oid": "684d6e00124d54d0387be3c9"
+  },
+  "firstName": "Nisha ",
+  "lastName": "Rai",
+  "email": "nisha334@gmail.com",
+  "address": "Sindhuli",
+  "role": "User",
+  "status": "Active",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "684d7ab0124d54d0387be3d8"
+  },
+  "firstName": "Saraj ",
+  "lastName": "Wagle",
+  "email": "samarbhatjnkjtarai@gmail.com",
+  "address": "jnnklnlk",
+  "role": "Admin",
+  "phoneNumber": "986-6651426",
+  "status": "Inactive",
+  "farmSize": "large",
+  "experience": "beginner",
+  "description": "hello",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "684d7b4b124d54d0387be3dd"
+  },
+  "firstName": "Utsav",
+  "lastName": "Wagle",
+  "email": "utsav@gmail.com",
+  "address": "kjkljl",
+  "role": "Admin",
+  "phoneNumber": "987779879",
+  "status": "Inactive",
+  "farmSize": "medium",
+  "experience": "experienced",
+  "description": "kljkljkk",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "684d7ba4124d54d0387be3e0"
+  },
+  "firstName": "SarazDha",
+  "lastName": "Wa",
+  "email": "samar7333bhattarai@gmail.com",
+  "address": "w3rre",
+  "role": "Admin",
+  "phoneNumber": "986-6651426",
+  "status": "Suspended",
+  "farmSize": "medium",
+  "experience": "intermediate",
+  "description": "afasa",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "684d7bd2124d54d0387be3e3"
+  },
+  "firstName": "sov`",
+  "lastName": "fa",
+  "email": "xzra@gmail.com",
+  "address": "cjskl",
+  "role": "Admin",
+  "phoneNumber": "55324231",
+  "status": "Inactive",
+  "farmSize": "medium",
+  "experience": "intermediate",
+  "description": "jjlksd",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "684d7c1e124d54d0387be3e6"
+  },
+  "firstName": "sov`kljl",
+  "lastName": "Dhakal",
+  "email": "sarajadmin@gmail.com",
+  "address": "kjkljl",
+  "role": "Moderator",
+  "phoneNumber": "987779879",
+  "status": "Inactive",
+  "farmSize": "small",
+  "experience": "intermediate",
+  "description": "nklkl",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "684d7c67124d54d0387be3e9"
+  },
+  "firstName": "Utsav",
+  "lastName": "Wagle",
+  "email": "sarajdhakal1@gmail.com",
+  "address": "Nepal",
+  "role": "Admin",
+  "phoneNumber": "986-6651426",
+  "status": "Suspended",
+  "farmSize": "medium",
+  "experience": "experienced",
+  "description": "hi",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685aba74ad3275a4a39980ab"
+  },
+  "firstName": "Saraj",
+  "lastName": "Dhakal",
+  "email": "sarajdhakal@gmail.com",
+  "address": "Bharatpur-15",
+  "role": "Admin",
+  "phoneNumber": "9866115177",
+  "status": "Active",
+  "farmSize": "",
+  "experience": "",
+  "password": "aaaaa",
+  "__v": 0,
+  "subscription": {
+    "plan": "pro",
+    "status": "active",
+    "billingCycle": "yearly",
+    "amount": 1000,
+    "startDate": {
+      "$date": "2025-06-28T00:00:00.000Z"
+    },
+    "endDate": {
+      "$date": "2027-06-28T00:00:00.000Z"
+    },
+    "paymentMethod": "esewa"
+  }
+},
+{
+  "_id": {
+    "$oid": "685abb3dad3275a4a39980ae"
+  },
+  "firstName": "wdadd",
+  "lastName": "daads",
+  "email": "sarajadmin121@gmail.com",
+  "address": "sadasdada",
+  "role": "User",
+  "phoneNumber": "",
+  "status": "Suspended",
+  "farmSize": "",
+  "experience": "",
+  "password": "aaaaa",
+  "__v": 0,
+  "subscription": {
+    "plan": "free",
+    "status": "active",
+    "billingCycle": "monthly",
+    "amount": 0,
+    "startDate": null,
+    "endDate": null,
+    "paymentMethod": "esewa"
+  }
+},
+{
+  "_id": {
+    "$oid": "685abbb0ad3275a4a39980b1"
+  },
+  "firstName": "sdsad",
+  "lastName": "ddasd",
+  "email": "dssadd@gmail.com",
+  "address": "sdadad",
+  "role": "User",
+  "phoneNumber": "",
+  "status": "Active",
+  "farmSize": "small",
+  "experience": "",
+  "password": "aaaaa",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685abc59ad3275a4a39980b4"
+  },
+  "firstName": "sxssZD",
+  "lastName": "SCC",
+  "email": "sacasd@gmail.com",
+  "address": "sdadassda",
+  "role": "User",
+  "phoneNumber": "",
+  "status": "Active",
+  "farmSize": "small",
+  "experience": "beginner",
+  "password": "aaaaa",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685f97941aa225d3c95aacec"
+  },
+  "firstName": "Nisha",
+  "lastName": "Rai",
+  "email": "nisha1234@gmail.com",
+  "address": "Bharatpur",
+  "role": "User",
+  "phoneNumber": "",
+  "status": "Active",
+  "farmSize": "small",
+  "experience": "beginner",
+  "password": "aaaaa",
+  "subscription": {
+    "plan": "pro",
+    "billingCycle": "monthly",
+    "status": "active",
+    "transactionId": "AGR1751382543494",
+    "transactionRef": "",
+    "paymentMethod": "esewa",
+    "amount": 100,
+    "startDate": {
+      "$date": "2025-07-01T15:10:19.326Z"
+    },
+    "endDate": {
+      "$date": "2025-07-31T15:10:19.326Z"
+    },
+    "verifiedAt": {
+      "$date": "2025-07-01T15:10:19.326Z"
+    }
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686498812b6275ea46f3f7e3"
+  },
+  "firstName": "Saraj ",
+  "lastName": "Dhakal",
+  "email": "dhakalsaraj@gmail.com",
+  "address": "Bharatpur,15 ",
+  "role": "User",
+  "phoneNumber": "",
+  "status": "Active",
+  "farmSize": "medium",
+  "experience": "beginner",
+  "password": "aaaaa",
+  "subscription": {
+    "plan": "pro",
+    "billingCycle": "yearly",
+    "status": "active",
+    "transactionId": "AGR1751423664448",
+    "transactionRef": "",
+    "paymentMethod": "esewa",
+    "amount": 1000,
+    "startDate": {
+      "$date": "2025-07-02T02:35:17.285Z"
+    },
+    "endDate": {
+      "$date": "2026-07-02T02:35:17.285Z"
+    },
+    "verifiedAt": {
+      "$date": "2025-07-02T02:35:17.285Z"
+    }
+  },
+  "__v": 0
+}]

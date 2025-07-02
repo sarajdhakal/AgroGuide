@@ -1,0 +1,15 @@
+[{
+  "_id": {
+    "$oid": "68622cae5d64e3d86f6bbb2f"
+  },
+  "email": "sarajadmin@gmail.com",
+  "password": "admin123",
+  "name": "Saraj Dhakal Admin",
+  "createdAt": {
+    "$date": "2025-06-30T06:20:30.803Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-30T06:20:30.803Z"
+  },
+  "__v": 0
+}]

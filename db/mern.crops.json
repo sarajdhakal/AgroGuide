@@ -1,0 +1,846 @@
+[{
+  "_id": {
+    "$oid": "68511682a8577a8d1b4f452e"
+  },
+  "cropName": "Tomato",
+  "scientificName": "Solanum lycopersicum",
+  "category": "Vegetable",
+  "season": "Summer",
+  "growthPeriod": "70-90 days",
+  "nitrogenRequired": "Medium",
+  "phosphorusRequired": "High",
+  "potassiumRequired": "High",
+  "weather": "Warm and sunny",
+  "temperature": "20-30",
+  "rainfall": "600-800 mm",
+  "humidity": "50-70%",
+  "soilpH": "6.0-6.8",
+  "marketValue": 35,
+  "createdAt": {
+    "$date": "2025-06-17T07:17:22.672Z"
+  },
+  "__v": 0,
+  "climate": "Temperate",
+  "soilType": "Loamy ",
+  "sunlight": "FUll SUn",
+  "spacing": "khkjklj"
+},
+{
+  "_id": {
+    "$oid": "685116a1a8577a8d1b4f4533"
+  },
+  "cropName": "Maize",
+  "scientificName": "Zea mays",
+  "category": "Cereal",
+  "season": "Summer",
+  "growthPeriod": "90-120 days",
+  "nitrogenRequired": "High",
+  "phosphorusRequired": "Medium",
+  "potassiumRequired": "High",
+  "weather": "Warm with moderate rainfall",
+  "temperature": "21-30°C",
+  "rainfall": "500-800 mm",
+  "humidity": "50-60%",
+  "soilpH": "5.5-7.0",
+  "marketValue": 28,
+  "createdAt": {
+    "$date": "2025-06-17T07:17:53.073Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685116a7a8577a8d1b4f4536"
+  },
+  "cropName": "Potato",
+  "scientificName": "Solanum tuberosum",
+  "category": "Vegetable",
+  "season": "Winter",
+  "growthPeriod": "90-120 days",
+  "nitrogenRequired": "Medium",
+  "phosphorusRequired": "High",
+  "potassiumRequired": "High",
+  "weather": "Cool and moist",
+  "temperature": "15-20°C",
+  "rainfall": "700-1000 mm",
+  "humidity": "60-80%",
+  "soilpH": "5.5-6.5",
+  "marketValue": 20,
+  "createdAt": {
+    "$date": "2025-06-17T07:17:59.152Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685116ada8577a8d1b4f4539"
+  },
+  "cropName": "Wheat",
+  "scientificName": "Triticum aestivum",
+  "category": "Cereal",
+  "season": "Winter",
+  "growthPeriod": "110-130 days",
+  "nitrogenRequired": "High",
+  "phosphorusRequired": "Medium",
+  "potassiumRequired": "Medium",
+  "weather": "Cool and dry",
+  "temperature": "15-25°C",
+  "rainfall": "500-600 mm",
+  "humidity": "40-60%",
+  "soilpH": "6.0-7.0",
+  "marketValue": 24,
+  "createdAt": {
+    "$date": "2025-06-17T07:18:05.919Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685116b3a8577a8d1b4f453c"
+  },
+  "cropName": "Mustard",
+  "scientificName": "Brassica juncea",
+  "category": "Oilseed",
+  "season": "Winter",
+  "growthPeriod": "100-120 days",
+  "nitrogenRequired": "Low",
+  "phosphorusRequired": "Medium",
+  "potassiumRequired": "Low",
+  "weather": "Cool and dry",
+  "temperature": "10-25°C",
+  "rainfall": "400-600 mm",
+  "humidity": "30-60%",
+  "soilpH": "6.0-7.5",
+  "marketValue": 38,
+  "createdAt": {
+    "$date": "2025-06-17T07:18:11.862Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685116b9a8577a8d1b4f453f"
+  },
+  "cropName": "Rice",
+  "scientificName": "Oryza sativa",
+  "category": "Cereal",
+  "season": "Monsoon",
+  "growthPeriod": "100-150 days",
+  "nitrogenRequired": "High",
+  "phosphorusRequired": "Medium",
+  "potassiumRequired": "High",
+  "weather": "Hot and humid",
+  "temperature": "24-32°C",
+  "rainfall": "1000-1500 mm",
+  "humidity": "70-90%",
+  "soilpH": "5.0-6.5",
+  "marketValue": 30,
+  "createdAt": {
+    "$date": "2025-06-17T07:18:17.751Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6851283c67e24a5eecd74dcc"
+  },
+  "cropName": "Cauliflower",
+  "scientificName": "Brassica oleracea var. botrytis",
+  "category": "Vegetable",
+  "season": "Winter",
+  "growthPeriod": "80–100 days",
+  "nitrogenRequired": "Medium",
+  "phosphorusRequired": "Medium",
+  "potassiumRequired": "High",
+  "weather": "Cool and dry",
+  "temperature": "15–20°C",
+  "rainfall": "500–700 mm",
+  "humidity": "50–60%",
+  "marketValue": 45,
+  "soilType": "Loamy, well-drained",
+  "climate": "Cool temperate",
+  "fertilizer": "Apply compost during land prep; 60:40:40 NPK per hectare in 3 splits",
+  "pestControl": "Watch for aphids and caterpillars; use neem extract or safe insecticides",
+  "harvesting": "Harvest when heads are firm and compact; cut with 5–8 cm stalk",
+  "storage": "Store at 0–1°C with high humidity (90–95%) for up to 3 weeks",
+  "spacing": "45cm x 60cm",
+  "sunlight": "Full sun (6–8 hours/day)",
+  "description": "Cauliflower is a cool-season crop cultivated for its white edible head. It’s rich in vitamins and antioxidants.",
+  "tips": "Avoid waterlogging, maintain soil moisture, and apply mulch to retain moisture and suppress weeds.",
+  "createdAt": {
+    "$date": "2025-06-17T08:33:00.114Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6851305567e24a5eecd74dd7"
+  },
+  "cropName": "soviyat",
+  "scientificName": "soviyat",
+  "category": "Legume",
+  "season": "Summer",
+  "growthPeriod": "12-112",
+  "nitrogenRequired": "",
+  "phosphorusRequired": "",
+  "potassiumRequired": "",
+  "weather": "",
+  "temperature": "",
+  "rainfall": "",
+  "humidity": "",
+  "marketValue": null,
+  "soilType": "",
+  "climate": "",
+  "fertilizer": "",
+  "pestControl": "",
+  "harvesting": "",
+  "storage": "",
+  "spacing": "",
+  "sunlight": "",
+  "description": "",
+  "tips": "",
+  "createdAt": {
+    "$date": "2025-06-17T09:07:33.796Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685e2784e35fbab27c539622"
+  },
+  "cropName": "Chickpea",
+  "scientificName": "Cicer arietinum",
+  "category": "Vegetable",
+  "season": "Winter",
+  "growthPeriod": "80–100 days",
+  "nitrogenRequired": "40–80 kg/ha",
+  "phosphorusRequired": "40–80 kg/ha",
+  "potassiumRequired": "80–120 kg/ha",
+  "weather": "Cool and dry",
+  "temperature": "15–20°C",
+  "rainfall": "500–700 mm",
+  "humidity": "50–60%",
+  "marketValue": 45,
+  "soilType": "Alluvial soil (Alluvial soil with 30–50% silt, 10–20% clay)",
+  "climate": "Cool temperate",
+  "fertilizer": "Apply compost during land prep; 60:40:40 NPK per hectare in 3 splits",
+  "pestControl": "Watch for aphids and caterpillars; use neem extract or safe insecticides",
+  "harvesting": "Harvest when heads are firm and compact; cut with 5–8 cm stalk",
+  "storage": "Store at 0–1°C with high humidity (90–95%) for up to 3 weeks",
+  "spacing": "45cm x 60cm",
+  "sunlight": "Full sun (6–8 hours/day)",
+  "description": "Chickpea is a rabi pulse crop with high protein content.",
+  "tips": "Avoid waterlogging, maintain soil moisture, and apply mulch to retain moisture",
+  "createdAt": {
+    "$date": "2025-06-27T05:02:40.837Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685e2832e35fbab27c539627"
+  },
+  "cropName": "Coffee",
+  "scientificName": "Coffea arabica",
+  "category": "Vegetable",
+  "season": "Winter",
+  "growthPeriod": "80–100 days",
+  "nitrogenRequired": "1.35–2.7 kg/kattha",
+  "phosphorusRequired": "1.35–2.7 kg/kattha",
+  "potassiumRequired": "2.7–4.05 kg/kattha",
+  "weather": "Cool and dry",
+  "temperature": "15–20°C",
+  "rainfall": "500–700 mm",
+  "humidity": "50–60%",
+  "marketValue": 45,
+  "soilType": "Clayey loam (Clayey loam with 20–30% clay, high water retention)",
+  "climate": "Cool temperate",
+  "fertilizer": "Apply compost during land prep; 60:40:40 NPK per hectare in 3 splits",
+  "pestControl": "Watch for aphids and caterpillars; use neem extract or safe insecticides",
+  "harvesting": "Harvest when heads are firm and compact; cut with 5–8 cm stalk",
+  "storage": "Store at 0–1°C with high humidity (90–95%) for up to 3 weeks",
+  "spacing": "45cm x 60cm",
+  "sunlight": "Full sun (6–8 hours/day)",
+  "description": "Coffee is a beverage crop grown in hilly areas.",
+  "tips": "Avoid waterlogging, maintain soil moisture, and apply mulch to retain moisture",
+  "createdAt": {
+    "$date": "2025-06-27T05:02:40.837Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685e2844e35fbab27c53962a"
+  },
+  "cropName": "Jute",
+  "scientificName": "Corchorus olitorius",
+  "category": "Vegetable",
+  "season": "Winter",
+  "growthPeriod": "80–100 days",
+  "nitrogenRequired": "1.35–2.7 kg/kattha",
+  "phosphorusRequired": "1.35–2.7 kg/kattha",
+  "potassiumRequired": "2.7–4.05 kg/kattha",
+  "weather": "Cool and dry",
+  "temperature": "15–20°C",
+  "rainfall": "500–700 mm",
+  "humidity": "50–60%",
+  "marketValue": 45,
+  "soilType": "Loamy, well-drained (Loamy soil with 25–40% sand, 30–50% silt, 10–30% clay)",
+  "climate": "Cool temperate",
+  "fertilizer": "Apply compost during land prep; 60:40:40 NPK per hectare in 3 splits",
+  "pestControl": "Watch for aphids and caterpillars; use neem extract or safe insecticides",
+  "harvesting": "Harvest when heads are firm and compact; cut with 5–8 cm stalk",
+  "storage": "Store at 0–1°C with high humidity (90–95%) for up to 3 weeks",
+  "spacing": "45cm x 60cm",
+  "sunlight": "Full sun (6–8 hours/day)",
+  "description": "Jute is a long, soft fiber used for making sacks and rope.",
+  "tips": "Avoid waterlogging, maintain soil moisture, and apply mulch to retain moisture",
+  "createdAt": {
+    "$date": "2025-06-27T05:02:40.837Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685e2850e35fbab27c53962d"
+  },
+  "cropName": "Cotton",
+  "scientificName": "Gossypium hirsutum",
+  "category": "Vegetable",
+  "season": "Winter",
+  "growthPeriod": "80–100 days",
+  "nitrogenRequired": "1.35–2.7 kg/kattha",
+  "phosphorusRequired": "1.35–2.7 kg/kattha",
+  "potassiumRequired": "2.7–4.05 kg/kattha",
+  "weather": "Cool and dry",
+  "temperature": "15–20°C",
+  "rainfall": "500–700 mm",
+  "humidity": "50–60%",
+  "marketValue": 45,
+  "soilType": "Alluvial soil (Alluvial soil with 30–50% silt, 10–20% clay)",
+  "climate": "Cool temperate",
+  "fertilizer": "Apply compost during land prep; 60:40:40 NPK per hectare in 3 splits",
+  "pestControl": "Watch for aphids and caterpillars; use neem extract or safe insecticides",
+  "harvesting": "Harvest when heads are firm and compact; cut with 5–8 cm stalk",
+  "storage": "Store at 0–1°C with high humidity (90–95%) for up to 3 weeks",
+  "spacing": "45cm x 60cm",
+  "sunlight": "Full sun (6–8 hours/day)",
+  "description": "Cotton is a fiber crop used in textiles.",
+  "tips": "Avoid waterlogging, maintain soil moisture, and apply mulch to retain moisture",
+  "createdAt": {
+    "$date": "2025-06-27T05:02:40.837Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685e2863e35fbab27c539630"
+  },
+  "cropName": "Coconut",
+  "scientificName": "Cocos nucifera",
+  "category": "Vegetable",
+  "season": "Winter",
+  "growthPeriod": "80–100 days",
+  "nitrogenRequired": "1.35–2.7 kg/kattha",
+  "phosphorusRequired": "1.35–2.7 kg/kattha",
+  "potassiumRequired": "2.7–4.05 kg/kattha",
+  "weather": "Cool and dry",
+  "temperature": "15–20°C",
+  "rainfall": "500–700 mm",
+  "humidity": "50–60%",
+  "marketValue": 45,
+  "soilType": "Black soil (Black soil with 30–60% clay, high nutrient content)",
+  "climate": "Cool temperate",
+  "fertilizer": "Apply compost during land prep; 60:40:40 NPK per hectare in 3 splits",
+  "pestControl": "Watch for aphids and caterpillars; use neem extract or safe insecticides",
+  "harvesting": "Harvest when heads are firm and compact; cut with 5–8 cm stalk",
+  "storage": "Store at 0–1°C with high humidity (90–95%) for up to 3 weeks",
+  "spacing": "45cm x 60cm",
+  "sunlight": "Full sun (6–8 hours/day)",
+  "description": "Coconut is grown in coastal areas for oil and water.",
+  "tips": "Avoid waterlogging, maintain soil moisture, and apply mulch to retain moisture",
+  "createdAt": {
+    "$date": "2025-06-27T05:02:40.837Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685e286de35fbab27c539633"
+  },
+  "cropName": "Papaya",
+  "scientificName": "Carica papaya",
+  "category": "Vegetable",
+  "season": "Winter",
+  "growthPeriod": "80–100 days",
+  "nitrogenRequired": "1.35–2.7 kg/kattha",
+  "phosphorusRequired": "1.35–2.7 kg/kattha",
+  "potassiumRequired": "2.7–4.05 kg/kattha",
+  "weather": "Cool and dry",
+  "temperature": "15–20°C",
+  "rainfall": "500–700 mm",
+  "humidity": "50–60%",
+  "marketValue": 45,
+  "soilType": "Sandy loam (Sandy loam with 60–70% sand, well-drained)",
+  "climate": "Cool temperate",
+  "fertilizer": "Apply compost during land prep; 60:40:40 NPK per hectare in 3 splits",
+  "pestControl": "Watch for aphids and caterpillars; use neem extract or safe insecticides",
+  "harvesting": "Harvest when heads are firm and compact; cut with 5–8 cm stalk",
+  "storage": "Store at 0–1°C with high humidity (90–95%) for up to 3 weeks",
+  "spacing": "45cm x 60cm",
+  "sunlight": "Full sun (6–8 hours/day)",
+  "description": "Papaya is a tropical fruit known for digestive enzymes.",
+  "tips": "Avoid waterlogging, maintain soil moisture, and apply mulch to retain moisture",
+  "createdAt": {
+    "$date": "2025-06-27T05:02:40.837Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685e2877e35fbab27c539636"
+  },
+  "cropName": "Orange",
+  "scientificName": "Citrus sinensis",
+  "category": "Vegetable",
+  "season": "Winter",
+  "growthPeriod": "80–100 days",
+  "nitrogenRequired": "1.35–2.7 kg/kattha",
+  "phosphorusRequired": "1.35–2.7 kg/kattha",
+  "potassiumRequired": "2.7–4.05 kg/kattha",
+  "weather": "Cool and dry",
+  "temperature": "15–20°C",
+  "rainfall": "500–700 mm",
+  "humidity": "50–60%",
+  "marketValue": 45,
+  "soilType": "Loamy, well-drained (Loamy soil with 25–40% sand, 30–50% silt, 10–30% clay)",
+  "climate": "Cool temperate",
+  "fertilizer": "Apply compost during land prep; 60:40:40 NPK per hectare in 3 splits",
+  "pestControl": "Watch for aphids and caterpillars; use neem extract or safe insecticides",
+  "harvesting": "Harvest when heads are firm and compact; cut with 5–8 cm stalk",
+  "storage": "Store at 0–1°C with high humidity (90–95%) for up to 3 weeks",
+  "spacing": "45cm x 60cm",
+  "sunlight": "Full sun (6–8 hours/day)",
+  "description": "Orange is a citrus fruit rich in vitamin C.",
+  "tips": "Avoid waterlogging, maintain soil moisture, and apply mulch to retain moisture",
+  "createdAt": {
+    "$date": "2025-06-27T05:02:40.837Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685e2895e35fbab27c539639"
+  },
+  "cropName": "Apple",
+  "scientificName": "Malus domestica",
+  "category": "Vegetable",
+  "season": "Winter",
+  "growthPeriod": "80–100 days",
+  "nitrogenRequired": "1.35–2.7 kg/kattha",
+  "phosphorusRequired": "1.35–2.7 kg/kattha",
+  "potassiumRequired": "2.7–4.05 kg/kattha",
+  "weather": "Cool and dry",
+  "temperature": "15–20°C",
+  "rainfall": "500–700 mm",
+  "humidity": "50–60%",
+  "marketValue": 45,
+  "soilType": "Black soil (Black soil with 30–60% clay, high nutrient content)",
+  "climate": "Cool temperate",
+  "fertilizer": "Apply compost during land prep; 60:40:40 NPK per hectare in 3 splits",
+  "pestControl": "Watch for aphids and caterpillars; use neem extract or safe insecticides",
+  "harvesting": "Harvest when heads are firm and compact; cut with 5–8 cm stalk",
+  "storage": "Store at 0–1°C with high humidity (90–95%) for up to 3 weeks",
+  "spacing": "45cm x 60cm",
+  "sunlight": "Full sun (6–8 hours/day)",
+  "description": "Apple grows in temperate climates and is rich in fiber.",
+  "tips": "Avoid waterlogging, maintain soil moisture, and apply mulch to retain moisture",
+  "createdAt": {
+    "$date": "2025-06-27T05:02:40.837Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685e28cee35fbab27c53963c"
+  },
+  "cropName": "Muskmelon",
+  "scientificName": "Cucumis melo",
+  "category": "Vegetable",
+  "season": "Winter",
+  "growthPeriod": "80–100 days",
+  "nitrogenRequired": "1.35–2.7 kg/kattha",
+  "phosphorusRequired": "1.35–2.7 kg/kattha",
+  "potassiumRequired": "2.7–4.05 kg/kattha",
+  "weather": "Cool and dry",
+  "temperature": "15–20°C",
+  "rainfall": "500–700 mm",
+  "humidity": "50–60%",
+  "marketValue": 45,
+  "soilType": "Clayey loam (Clayey loam with 20–30% clay, high water retention)",
+  "climate": "Cool temperate",
+  "fertilizer": "Apply compost during land prep; 60:40:40 NPK per hectare in 3 splits",
+  "pestControl": "Watch for aphids and caterpillars; use neem extract or safe insecticides",
+  "harvesting": "Harvest when heads are firm and compact; cut with 5–8 cm stalk",
+  "storage": "Store at 0–1°C with high humidity (90–95%) for up to 3 weeks",
+  "spacing": "45cm x 60cm",
+  "sunlight": "Full sun (6–8 hours/day)",
+  "description": "Muskmelon is a sweet fruit grown in warm climates.",
+  "tips": "Avoid waterlogging, maintain soil moisture, and apply mulch to retain moisture",
+  "createdAt": {
+    "$date": "2025-06-27T05:02:40.837Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685e28dae35fbab27c53963f"
+  },
+  "cropName": "Watermelon",
+  "scientificName": "Citrullus lanatus",
+  "category": "Vegetable",
+  "season": "Winter",
+  "growthPeriod": "80–100 days",
+  "nitrogenRequired": "1.35–2.7 kg/kattha",
+  "phosphorusRequired": "1.35–2.7 kg/kattha",
+  "potassiumRequired": "2.7–4.05 kg/kattha",
+  "weather": "Cool and dry",
+  "temperature": "15–20°C",
+  "rainfall": "500–700 mm",
+  "humidity": "50–60%",
+  "marketValue": 45,
+  "soilType": "Clayey loam (Clayey loam with 20–30% clay, high water retention)",
+  "climate": "Cool temperate",
+  "fertilizer": "Apply compost during land prep; 60:40:40 NPK per hectare in 3 splits",
+  "pestControl": "Watch for aphids and caterpillars; use neem extract or safe insecticides",
+  "harvesting": "Harvest when heads are firm and compact; cut with 5–8 cm stalk",
+  "storage": "Store at 0–1°C with high humidity (90–95%) for up to 3 weeks",
+  "spacing": "45cm x 60cm",
+  "sunlight": "Full sun (6–8 hours/day)",
+  "description": "Watermelon is a summer fruit with high water content.",
+  "tips": "Avoid waterlogging, maintain soil moisture, and apply mulch to retain moisture",
+  "createdAt": {
+    "$date": "2025-06-27T05:02:40.837Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685e28e5e35fbab27c539642"
+  },
+  "cropName": "Grapes",
+  "scientificName": "Vitis vinifera",
+  "category": "Vegetable",
+  "season": "Winter",
+  "growthPeriod": "80–100 days",
+  "nitrogenRequired": "1.35–2.7 kg/kattha",
+  "phosphorusRequired": "1.35–2.7 kg/kattha",
+  "potassiumRequired": "2.7–4.05 kg/kattha",
+  "weather": "Cool and dry",
+  "temperature": "15–20°C",
+  "rainfall": "500–700 mm",
+  "humidity": "50–60%",
+  "marketValue": 45,
+  "soilType": "Black soil (Black soil with 30–60% clay, high nutrient content)",
+  "climate": "Cool temperate",
+  "fertilizer": "Apply compost during land prep; 60:40:40 NPK per hectare in 3 splits",
+  "pestControl": "Watch for aphids and caterpillars; use neem extract or safe insecticides",
+  "harvesting": "Harvest when heads are firm and compact; cut with 5–8 cm stalk",
+  "storage": "Store at 0–1°C with high humidity (90–95%) for up to 3 weeks",
+  "spacing": "45cm x 60cm",
+  "sunlight": "Full sun (6–8 hours/day)",
+  "description": "Grapes are grown in temperate regions for fruit and wine.",
+  "tips": "Avoid waterlogging, maintain soil moisture, and apply mulch to retain moisture",
+  "createdAt": {
+    "$date": "2025-06-27T05:02:40.837Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685e28efe35fbab27c539645"
+  },
+  "cropName": "Mango",
+  "scientificName": "Mangifera indica",
+  "category": "Vegetable",
+  "season": "Winter",
+  "growthPeriod": "80–100 days",
+  "nitrogenRequired": "1.35–2.7 kg/kattha",
+  "phosphorusRequired": "1.35–2.7 kg/kattha",
+  "potassiumRequired": "2.7–4.05 kg/kattha",
+  "weather": "Cool and dry",
+  "temperature": "15–20°C",
+  "rainfall": "500–700 mm",
+  "humidity": "50–60%",
+  "marketValue": 45,
+  "soilType": "Sandy loam (Sandy loam with 60–70% sand, well-drained)",
+  "climate": "Cool temperate",
+  "fertilizer": "Apply compost during land prep; 60:40:40 NPK per hectare in 3 splits",
+  "pestControl": "Watch for aphids and caterpillars; use neem extract or safe insecticides",
+  "harvesting": "Harvest when heads are firm and compact; cut with 5–8 cm stalk",
+  "storage": "Store at 0–1°C with high humidity (90–95%) for up to 3 weeks",
+  "spacing": "45cm x 60cm",
+  "sunlight": "Full sun (6–8 hours/day)",
+  "description": "Mango is a popular summer fruit rich in vitamins.",
+  "tips": "Avoid waterlogging, maintain soil moisture, and apply mulch to retain moisture",
+  "createdAt": {
+    "$date": "2025-06-27T05:02:40.837Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685e28f8e35fbab27c539648"
+  },
+  "cropName": "Banana",
+  "scientificName": "Musa spp.",
+  "category": "Vegetable",
+  "season": "Winter",
+  "growthPeriod": "80–100 days",
+  "nitrogenRequired": "1.35–2.7 kg/kattha",
+  "phosphorusRequired": "1.35–2.7 kg/kattha",
+  "potassiumRequired": "2.7–4.05 kg/kattha",
+  "weather": "Cool and dry",
+  "temperature": "15–20°C",
+  "rainfall": "500–700 mm",
+  "humidity": "50–60%",
+  "marketValue": 45,
+  "soilType": "Black soil (Black soil with 30–60% clay, high nutrient content)",
+  "climate": "Cool temperate",
+  "fertilizer": "Apply compost during land prep; 60:40:40 NPK per hectare in 3 splits",
+  "pestControl": "Watch for aphids and caterpillars; use neem extract or safe insecticides",
+  "harvesting": "Harvest when heads are firm and compact; cut with 5–8 cm stalk",
+  "storage": "Store at 0–1°C with high humidity (90–95%) for up to 3 weeks",
+  "spacing": "45cm x 60cm",
+  "sunlight": "Full sun (6–8 hours/day)",
+  "description": "Banana is a tropical fruit grown in humid regions.",
+  "tips": "Avoid waterlogging, maintain soil moisture, and apply mulch to retain moisture",
+  "createdAt": {
+    "$date": "2025-06-27T05:02:40.837Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685e2903e35fbab27c53964b"
+  },
+  "cropName": "Pomegranate",
+  "scientificName": "Punica granatum",
+  "category": "Vegetable",
+  "season": "Winter",
+  "growthPeriod": "80–100 days",
+  "nitrogenRequired": "1.35–2.7 kg/kattha",
+  "phosphorusRequired": "1.35–2.7 kg/kattha",
+  "potassiumRequired": "2.7–4.05 kg/kattha",
+  "weather": "Cool and dry",
+  "temperature": "15–20°C",
+  "rainfall": "500–700 mm",
+  "humidity": "50–60%",
+  "marketValue": 45,
+  "soilType": "Sandy loam (Sandy loam with 60–70% sand, well-drained)",
+  "climate": "Cool temperate",
+  "fertilizer": "Apply compost during land prep; 60:40:40 NPK per hectare in 3 splits",
+  "pestControl": "Watch for aphids and caterpillars; use neem extract or safe insecticides",
+  "harvesting": "Harvest when heads are firm and compact; cut with 5–8 cm stalk",
+  "storage": "Store at 0–1°C with high humidity (90–95%) for up to 3 weeks",
+  "spacing": "45cm x 60cm",
+  "sunlight": "Full sun (6–8 hours/day)",
+  "description": "Pomegranate is a drought-tolerant fruit with red arils.",
+  "tips": "Avoid waterlogging, maintain soil moisture, and apply mulch to retain moisture",
+  "createdAt": {
+    "$date": "2025-06-27T05:02:40.837Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685e290ee35fbab27c53964e"
+  },
+  "cropName": "Lentil",
+  "scientificName": "Lens culinaris",
+  "category": "Vegetable",
+  "season": "Winter",
+  "growthPeriod": "80–100 days",
+  "nitrogenRequired": "1.35–2.7 kg/kattha",
+  "phosphorusRequired": "1.35–2.7 kg/kattha",
+  "potassiumRequired": "2.7–4.05 kg/kattha",
+  "weather": "Cool and dry",
+  "temperature": "15–20°C",
+  "rainfall": "500–700 mm",
+  "humidity": "50–60%",
+  "marketValue": 45,
+  "soilType": "Clayey loam (Clayey loam with 20–30% clay, high water retention)",
+  "climate": "Cool temperate",
+  "fertilizer": "Apply compost during land prep; 60:40:40 NPK per hectare in 3 splits",
+  "pestControl": "Watch for aphids and caterpillars; use neem extract or safe insecticides",
+  "harvesting": "Harvest when heads are firm and compact; cut with 5–8 cm stalk",
+  "storage": "Store at 0–1°C with high humidity (90–95%) for up to 3 weeks",
+  "spacing": "45cm x 60cm",
+  "sunlight": "Full sun (6–8 hours/day)",
+  "description": "Lentils are high in protein and grow in cooler climates.",
+  "tips": "Avoid waterlogging, maintain soil moisture, and apply mulch to retain moisture",
+  "createdAt": {
+    "$date": "2025-06-27T05:02:40.837Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685e2917e35fbab27c539651"
+  },
+  "cropName": "Blackgram",
+  "scientificName": "Vigna mungo",
+  "category": "Vegetable",
+  "season": "Winter",
+  "growthPeriod": "80–100 days",
+  "nitrogenRequired": "1.35–2.7 kg/kattha",
+  "phosphorusRequired": "1.35–2.7 kg/kattha",
+  "potassiumRequired": "2.7–4.05 kg/kattha",
+  "weather": "Cool and dry",
+  "temperature": "15–20°C",
+  "rainfall": "500–700 mm",
+  "humidity": "50–60%",
+  "marketValue": 45,
+  "soilType": "Black soil (Black soil with 30–60% clay, high nutrient content)",
+  "climate": "Cool temperate",
+  "fertilizer": "Apply compost during land prep; 60:40:40 NPK per hectare in 3 splits",
+  "pestControl": "Watch for aphids and caterpillars; use neem extract or safe insecticides",
+  "harvesting": "Harvest when heads are firm and compact; cut with 5–8 cm stalk",
+  "storage": "Store at 0–1°C with high humidity (90–95%) for up to 3 weeks",
+  "spacing": "45cm x 60cm",
+  "sunlight": "Full sun (6–8 hours/day)",
+  "description": "Blackgram is widely used in Indian cuisine.",
+  "tips": "Avoid waterlogging, maintain soil moisture, and apply mulch to retain moisture",
+  "createdAt": {
+    "$date": "2025-06-27T05:02:40.837Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685e2921e35fbab27c539654"
+  },
+  "cropName": "Mungbean",
+  "scientificName": "Vigna radiata",
+  "category": "Vegetable",
+  "season": "Winter",
+  "growthPeriod": "80–100 days",
+  "nitrogenRequired": "1.35–2.7 kg/kattha",
+  "phosphorusRequired": "1.35–2.7 kg/kattha",
+  "potassiumRequired": "2.7–4.05 kg/kattha",
+  "weather": "Cool and dry",
+  "temperature": "15–20°C",
+  "rainfall": "500–700 mm",
+  "humidity": "50–60%",
+  "marketValue": 45,
+  "soilType": "Loamy, well-drained (Loamy soil with 25–40% sand, 30–50% silt, 10–30% clay)",
+  "climate": "Cool temperate",
+  "fertilizer": "Apply compost during land prep; 60:40:40 NPK per hectare in 3 splits",
+  "pestControl": "Watch for aphids and caterpillars; use neem extract or safe insecticides",
+  "harvesting": "Harvest when heads are firm and compact; cut with 5–8 cm stalk",
+  "storage": "Store at 0–1°C with high humidity (90–95%) for up to 3 weeks",
+  "spacing": "45cm x 60cm",
+  "sunlight": "Full sun (6–8 hours/day)",
+  "description": "Mungbean is a short-duration legume rich in protein.",
+  "tips": "Avoid waterlogging, maintain soil moisture, and apply mulch to retain moisture",
+  "createdAt": {
+    "$date": "2025-06-27T05:02:40.837Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685e292be35fbab27c539657"
+  },
+  "cropName": "Mothbeans",
+  "scientificName": "Vigna aconitifolia",
+  "category": "Vegetable",
+  "season": "Winter",
+  "growthPeriod": "80–100 days",
+  "nitrogenRequired": "1.35–2.7 kg/kattha",
+  "phosphorusRequired": "1.35–2.7 kg/kattha",
+  "potassiumRequired": "2.7–4.05 kg/kattha",
+  "weather": "Cool and dry",
+  "temperature": "15–20°C",
+  "rainfall": "500–700 mm",
+  "humidity": "50–60%",
+  "marketValue": 45,
+  "soilType": "Loamy, well-drained (Loamy soil with 25–40% sand, 30–50% silt, 10–30% clay)",
+  "climate": "Cool temperate",
+  "fertilizer": "Apply compost during land prep; 60:40:40 NPK per hectare in 3 splits",
+  "pestControl": "Watch for aphids and caterpillars; use neem extract or safe insecticides",
+  "harvesting": "Harvest when heads are firm and compact; cut with 5–8 cm stalk",
+  "storage": "Store at 0–1°C with high humidity (90–95%) for up to 3 weeks",
+  "spacing": "45cm x 60cm",
+  "sunlight": "Full sun (6–8 hours/day)",
+  "description": "Mothbeans are drought-resistant and grown in arid regions.",
+  "tips": "Avoid waterlogging, maintain soil moisture, and apply mulch to retain moisture",
+  "createdAt": {
+    "$date": "2025-06-27T05:02:40.837Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685e2938e35fbab27c53965a"
+  },
+  "cropName": "Pigeonpeas",
+  "scientificName": "Cajanus cajan",
+  "category": "Vegetable",
+  "season": "Winter",
+  "growthPeriod": "80–100 days",
+  "nitrogenRequired": "1.35–2.7 kg/kattha",
+  "phosphorusRequired": "1.35–2.7 kg/kattha",
+  "potassiumRequired": "2.7–4.05 kg/kattha",
+  "weather": "Cool and dry",
+  "temperature": "15–20°C",
+  "rainfall": "500–700 mm",
+  "humidity": "50–60%",
+  "marketValue": 45,
+  "soilType": "Black soil (Black soil with 30–60% clay, high nutrient content)",
+  "climate": "Cool temperate",
+  "fertilizer": "Apply compost during land prep; 60:40:40 NPK per hectare in 3 splits",
+  "pestControl": "Watch for aphids and caterpillars; use neem extract or safe insecticides",
+  "harvesting": "Harvest when heads are firm and compact; cut with 5–8 cm stalk",
+  "storage": "Store at 0–1°C with high humidity (90–95%) for up to 3 weeks",
+  "spacing": "45cm x 60cm",
+  "sunlight": "Full sun (6–8 hours/day)",
+  "description": "Pigeonpeas are grown for dry seeds and used in dal.",
+  "tips": "Avoid waterlogging, maintain soil moisture, and apply mulch to retain moisture",
+  "createdAt": {
+    "$date": "2025-06-27T05:02:40.837Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685e2952e35fbab27c53965d"
+  },
+  "cropName": "Kidneybeans",
+  "scientificName": "Phaseolus vulgaris",
+  "category": "Vegetable",
+  "season": "Winter",
+  "growthPeriod": "80–100 days",
+  "nitrogenRequired": "1.35–2.7 kg/kattha",
+  "phosphorusRequired": "1.35–2.7 kg/kattha",
+  "potassiumRequired": "2.7–4.05 kg/kattha",
+  "weather": "Cool and dry",
+  "temperature": "15–20°C",
+  "rainfall": "500–700 mm",
+  "humidity": "50–60%",
+  "marketValue": 45,
+  "soilType": "Sandy loam (Sandy loam with 60–70% sand, well-drained)",
+  "climate": "Cool temperate",
+  "fertilizer": "Apply compost during land prep; 60:40:40 NPK per hectare in 3 splits",
+  "pestControl": "Watch for aphids and caterpillars; use neem extract or safe insecticides",
+  "harvesting": "Harvest when heads are firm and compact; cut with 5–8 cm stalk",
+  "storage": "Store at 0–1°C with high humidity (90–95%) for up to 3 weeks",
+  "spacing": "45cm x 60cm",
+  "sunlight": "Full sun (6–8 hours/day)",
+  "description": "Kidney beans are grown for their edible seeds.",
+  "tips": "Avoid waterlogging, maintain soil moisture, and apply mulch to retain moisture",
+  "createdAt": {
+    "$date": "2025-06-27T05:02:40.837Z"
+  },
+  "__v": 0
+}]

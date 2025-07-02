@@ -1,0 +1,1852 @@
+[{
+  "_id": {
+    "$oid": "685166d4ab5b7a7daf7c50e3"
+  },
+  "scientificName": "Brassica oleracea var. botrytis",
+  "tasks": [
+    {
+      "day": 0,
+      "title": "Land Preparation",
+      "details": "Apply 100kg compost per kattha and plough the soil thoroughly. Ensure proper drainage to prevent waterlogging.",
+      "_id": {
+        "$oid": "685166d4ab5b7a7daf7c50e4"
+      }
+    },
+    {
+      "day": 5,
+      "title": "Sowing",
+      "details": "Sow seeds at 1.5 cm depth with spacing of 45 cm x 60 cm. Water lightly after sowing.",
+      "_id": {
+        "$oid": "685166d4ab5b7a7daf7c50e5"
+      }
+    },
+    {
+      "day": 15,
+      "title": "First Fertilizer Application",
+      "details": "Apply 20kg Urea, 10kg DAP per kattha. Irrigate with approx. 1800 liters of water per kattha.",
+      "_id": {
+        "$oid": "685166d4ab5b7a7daf7c50e6"
+      }
+    },
+    {
+      "day": 25,
+      "title": "First Weeding",
+      "details": "Remove weeds manually or use pre-emergent herbicide like Pendimethalin at 1L/kattha.",
+      "_id": {
+        "$oid": "685166d4ab5b7a7daf7c50e7"
+      }
+    },
+    {
+      "day": 30,
+      "title": "Pest Control",
+      "details": "Monitor for aphids and caterpillars. Apply neem extract (300ml/kattha) or organic insecticide.",
+      "_id": {
+        "$oid": "685166d4ab5b7a7daf7c50e8"
+      }
+    },
+    {
+      "day": 40,
+      "title": "Second Fertilizer Application",
+      "details": "Apply remaining 20kg Urea and 10kg Potash per kattha. Ensure moist soil conditions.",
+      "_id": {
+        "$oid": "685166d4ab5b7a7daf7c50e9"
+      }
+    },
+    {
+      "day": 50,
+      "title": "Mulching",
+      "details": "Add dry mulch (straw/leaves) around the plants to retain moisture and reduce weeds.",
+      "_id": {
+        "$oid": "685166d4ab5b7a7daf7c50ea"
+      }
+    },
+    {
+      "day": 60,
+      "title": "Final Growth Boost",
+      "details": "Optional: Apply micronutrient mix (as per label) or compost tea to enhance head formation.",
+      "_id": {
+        "$oid": "685166d4ab5b7a7daf7c50eb"
+      }
+    },
+    {
+      "day": 90,
+      "title": "Stop Irrigation",
+      "details": "Stop watering 7–10 days before harvest to promote firm curds and ease of harvesting.",
+      "_id": {
+        "$oid": "685166d4ab5b7a7daf7c50ec"
+      }
+    },
+    {
+      "day": 100,
+      "title": "Harvest",
+      "details": "Harvest cauliflower when heads are compact, white, and fully developed. Cut with 5–8cm stalk.",
+      "_id": {
+        "$oid": "685166d4ab5b7a7daf7c50ed"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-06-17T13:00:04.688Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6851684d832c3e7bc6793959"
+  },
+  "scientificName": "Triticum aestivum",
+  "tasks": [
+    {
+      "day": 0,
+      "title": "Land Preparation",
+      "details": "Plough the field and apply 100kg compost per kattha.",
+      "_id": {
+        "$oid": "6851684d832c3e7bc679395a"
+      }
+    },
+    {
+      "day": 5,
+      "title": "Sowing",
+      "details": "Sow seeds with 20cm row spacing. Maintain proper seed depth (4–5cm).",
+      "_id": {
+        "$oid": "6851684d832c3e7bc679395b"
+      }
+    },
+    {
+      "day": 15,
+      "title": "First Irrigation",
+      "details": "Irrigate 1500L/kattha if no rainfall.",
+      "_id": {
+        "$oid": "6851684d832c3e7bc679395c"
+      }
+    },
+    {
+      "day": 20,
+      "title": "First Fertilizer Split",
+      "details": "Apply 15kg Urea and 8kg DAP per kattha.",
+      "_id": {
+        "$oid": "6851684d832c3e7bc679395d"
+      }
+    },
+    {
+      "day": 40,
+      "title": "Weeding",
+      "details": "Manually weed or use 2,4-D at 500ml/kattha.",
+      "_id": {
+        "$oid": "6851684d832c3e7bc679395e"
+      }
+    },
+    {
+      "day": 60,
+      "title": "Second Fertilizer Split",
+      "details": "Apply 10kg Urea and 5kg MOP per kattha.",
+      "_id": {
+        "$oid": "6851684d832c3e7bc679395f"
+      }
+    },
+    {
+      "day": 90,
+      "title": "Pest Inspection",
+      "details": "Check for rust or aphids; use suitable fungicide if needed.",
+      "_id": {
+        "$oid": "6851684d832c3e7bc6793960"
+      }
+    },
+    {
+      "day": 120,
+      "title": "Harvest",
+      "details": "Harvest when grains are hard and golden brown.",
+      "_id": {
+        "$oid": "6851684d832c3e7bc6793961"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-06-17T13:06:21.281Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6851685b832c3e7bc6793964"
+  },
+  "scientificName": "Zea mays",
+  "tasks": [
+    {
+      "day": 0,
+      "title": "Field Prep",
+      "details": "Apply 120kg compost per kattha. Create raised beds if needed.",
+      "_id": {
+        "$oid": "6851685b832c3e7bc6793965"
+      }
+    },
+    {
+      "day": 5,
+      "title": "Seed Sowing",
+      "details": "Sow at 25cm x 75cm spacing; use 10kg seed per kattha.",
+      "_id": {
+        "$oid": "6851685b832c3e7bc6793966"
+      }
+    },
+    {
+      "day": 15,
+      "title": "Urea Application (Split 1)",
+      "details": "Apply 20kg Urea/kattha.",
+      "_id": {
+        "$oid": "6851685b832c3e7bc6793967"
+      }
+    },
+    {
+      "day": 20,
+      "title": "Irrigation",
+      "details": "Irrigate 1800–2000L per kattha.",
+      "_id": {
+        "$oid": "6851685b832c3e7bc6793968"
+      }
+    },
+    {
+      "day": 30,
+      "title": "Weeding",
+      "details": "Weed around plants manually or chemically.",
+      "_id": {
+        "$oid": "6851685b832c3e7bc6793969"
+      }
+    },
+    {
+      "day": 45,
+      "title": "Fertilizer Boost",
+      "details": "Apply 15kg DAP and 10kg MOP per kattha.",
+      "_id": {
+        "$oid": "6851685b832c3e7bc679396a"
+      }
+    },
+    {
+      "day": 60,
+      "title": "Pest Check",
+      "details": "Spray neem or carbaryl for stem borers.",
+      "_id": {
+        "$oid": "6851685b832c3e7bc679396b"
+      }
+    },
+    {
+      "day": 90,
+      "title": "Harvest",
+      "details": "Harvest when cobs are mature, husks dry, and kernels firm.",
+      "_id": {
+        "$oid": "6851685b832c3e7bc679396c"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-06-17T13:06:35.938Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6851686a832c3e7bc679396f"
+  },
+  "scientificName": "Solanum tuberosum",
+  "tasks": [
+    {
+      "day": 0,
+      "title": "Soil Prep",
+      "details": "Plough soil and mix 100kg compost per kattha. Make ridges.",
+      "_id": {
+        "$oid": "6851686a832c3e7bc6793970"
+      }
+    },
+    {
+      "day": 3,
+      "title": "Planting",
+      "details": "Plant healthy tubers at 20cm spacing along ridges.",
+      "_id": {
+        "$oid": "6851686a832c3e7bc6793971"
+      }
+    },
+    {
+      "day": 15,
+      "title": "Irrigation",
+      "details": "Light irrigation (1200L/kattha) if soil is dry.",
+      "_id": {
+        "$oid": "6851686a832c3e7bc6793972"
+      }
+    },
+    {
+      "day": 20,
+      "title": "Fertilizer Application",
+      "details": "Apply 15kg Urea, 10kg DAP, and 5kg Potash per kattha.",
+      "_id": {
+        "$oid": "6851686a832c3e7bc6793973"
+      }
+    },
+    {
+      "day": 30,
+      "title": "Earthing Up",
+      "details": "Pull soil around plants to prevent greening of tubers.",
+      "_id": {
+        "$oid": "6851686a832c3e7bc6793974"
+      }
+    },
+    {
+      "day": 40,
+      "title": "Pest Control",
+      "details": "Spray neem oil for early pests or blight prevention.",
+      "_id": {
+        "$oid": "6851686a832c3e7bc6793975"
+      }
+    },
+    {
+      "day": 80,
+      "title": "Final Irrigation",
+      "details": "Stop watering after foliage yellows.",
+      "_id": {
+        "$oid": "6851686a832c3e7bc6793976"
+      }
+    },
+    {
+      "day": 90,
+      "title": "Harvest",
+      "details": "Harvest carefully using spade; avoid bruising tubers.",
+      "_id": {
+        "$oid": "6851686a832c3e7bc6793977"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-06-17T13:06:50.592Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68516874832c3e7bc679397a"
+  },
+  "scientificName": "Solanum lycopersicum",
+  "tasks": [
+    {
+      "day": 0,
+      "title": "Nursery Bed Preparation",
+      "details": "Sow seeds in trays or raised beds. Use compost-rich soil.",
+      "_id": {
+        "$oid": "68516874832c3e7bc679397b"
+      }
+    },
+    {
+      "day": 20,
+      "title": "Transplanting",
+      "details": "Transplant healthy seedlings with 60cm x 45cm spacing.",
+      "_id": {
+        "$oid": "68516874832c3e7bc679397c"
+      }
+    },
+    {
+      "day": 25,
+      "title": "First Fertilizer Dose",
+      "details": "Apply 20kg Urea, 8kg DAP per kattha.",
+      "_id": {
+        "$oid": "68516874832c3e7bc679397d"
+      }
+    },
+    {
+      "day": 30,
+      "title": "Irrigation",
+      "details": "Water deeply every 7–10 days (1500L/kattha).",
+      "_id": {
+        "$oid": "68516874832c3e7bc679397e"
+      }
+    },
+    {
+      "day": 40,
+      "title": "Staking",
+      "details": "Use bamboo or sticks to support plants and prevent drooping.",
+      "_id": {
+        "$oid": "68516874832c3e7bc679397f"
+      }
+    },
+    {
+      "day": 50,
+      "title": "Pest Check",
+      "details": "Use neem oil or biological control against fruit borer or blight.",
+      "_id": {
+        "$oid": "68516874832c3e7bc6793980"
+      }
+    },
+    {
+      "day": 60,
+      "title": "Harvest Start",
+      "details": "Pick fruits when fully red and firm.",
+      "_id": {
+        "$oid": "68516874832c3e7bc6793981"
+      }
+    },
+    {
+      "day": 90,
+      "title": "Final Harvest",
+      "details": "Complete harvest; remove plants and prepare for next crop.",
+      "_id": {
+        "$oid": "68516874832c3e7bc6793982"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-06-17T13:07:00.048Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68516879832c3e7bc6793985"
+  },
+  "scientificName": "Solanum lycopersicum",
+  "tasks": [
+    {
+      "day": 0,
+      "title": "Nursery Bed Preparation",
+      "details": "Sow seeds in trays or raised beds. Use compost-rich soil.",
+      "_id": {
+        "$oid": "68516879832c3e7bc6793986"
+      }
+    },
+    {
+      "day": 20,
+      "title": "Transplanting",
+      "details": "Transplant healthy seedlings with 60cm x 45cm spacing.",
+      "_id": {
+        "$oid": "68516879832c3e7bc6793987"
+      }
+    },
+    {
+      "day": 25,
+      "title": "First Fertilizer Dose",
+      "details": "Apply 20kg Urea, 8kg DAP per kattha.",
+      "_id": {
+        "$oid": "68516879832c3e7bc6793988"
+      }
+    },
+    {
+      "day": 30,
+      "title": "Irrigation",
+      "details": "Water deeply every 7–10 days (1500L/kattha).",
+      "_id": {
+        "$oid": "68516879832c3e7bc6793989"
+      }
+    },
+    {
+      "day": 40,
+      "title": "Staking",
+      "details": "Use bamboo or sticks to support plants and prevent drooping.",
+      "_id": {
+        "$oid": "68516879832c3e7bc679398a"
+      }
+    },
+    {
+      "day": 50,
+      "title": "Pest Check",
+      "details": "Use neem oil or biological control against fruit borer or blight.",
+      "_id": {
+        "$oid": "68516879832c3e7bc679398b"
+      }
+    },
+    {
+      "day": 60,
+      "title": "Harvest Start",
+      "details": "Pick fruits when fully red and firm.",
+      "_id": {
+        "$oid": "68516879832c3e7bc679398c"
+      }
+    },
+    {
+      "day": 90,
+      "title": "Final Harvest",
+      "details": "Complete harvest; remove plants and prepare for next crop.",
+      "_id": {
+        "$oid": "68516879832c3e7bc679398d"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-06-17T13:07:05.961Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685e8ce3c79e53c2592e0242"
+  },
+  "scientificName": "Oryza sativa",
+  "tasks": [
+    {
+      "day": 0,
+      "title": "Land Preparation",
+      "details": "Flood field, plough thoroughly; apply 330 kg compost per kattha.",
+      "_id": {
+        "$oid": "685e8ce3c79e53c2592e0243"
+      }
+    },
+    {
+      "day": 7,
+      "title": "Sowing",
+      "details": "Broadcast pre-germinated seeds evenly across the puddled field.",
+      "_id": {
+        "$oid": "685e8ce3c79e53c2592e0244"
+      }
+    },
+    {
+      "day": 14,
+      "title": "Weeding",
+      "details": "Manual weed removal or apply pre-emergent herbicide.",
+      "_id": {
+        "$oid": "685e8ce3c79e53c2592e0245"
+      }
+    },
+    {
+      "day": 21,
+      "title": "Fertilizer Split 1",
+      "details": "Apply 1 kg N + 0.5 kg P per kattha.",
+      "_id": {
+        "$oid": "685e8ce3c79e53c2592e0246"
+      }
+    },
+    {
+      "day": 35,
+      "title": "Irrigation",
+      "details": "Maintain 2–5 cm water layer.",
+      "_id": {
+        "$oid": "685e8ce3c79e53c2592e0247"
+      }
+    },
+    {
+      "day": 45,
+      "title": "Fertilizer Split 2",
+      "details": "Apply another 1 kg N per kattha.",
+      "_id": {
+        "$oid": "685e8ce3c79e53c2592e0248"
+      }
+    },
+    {
+      "day": 60,
+      "title": "Pest Check",
+      "details": "Inspect for stem borer; apply bio-pesticide if present.",
+      "_id": {
+        "$oid": "685e8ce3c79e53c2592e0249"
+      }
+    },
+    {
+      "day": 90,
+      "title": "Drain Field",
+      "details": "Stop irrigation 7 days before harvest.",
+      "_id": {
+        "$oid": "685e8ce3c79e53c2592e024a"
+      }
+    },
+    {
+      "day": 95,
+      "title": "Harvest",
+      "details": "Cut when grains are golden and hard.",
+      "_id": {
+        "$oid": "685e8ce3c79e53c2592e024b"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-06-27T12:21:55.194Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685e8cf2c79e53c2592e024f"
+  },
+  "scientificName": "Coffea arabica",
+  "tasks": [
+    {
+      "day": 0,
+      "title": "Planting",
+      "details": "Plant seedling; apply 200 kg compost.",
+      "_id": {
+        "$oid": "685e8cf2c79e53c2592e0250"
+      }
+    },
+    {
+      "day": 30,
+      "title": "Irrigation",
+      "details": "Apply ~20 L water weekly.",
+      "_id": {
+        "$oid": "685e8cf2c79e53c2592e0251"
+      }
+    },
+    {
+      "day": 90,
+      "title": "Fertilizer",
+      "details": "Apply 1 kg NPK mix.",
+      "_id": {
+        "$oid": "685e8cf2c79e53c2592e0252"
+      }
+    },
+    {
+      "day": 120,
+      "title": "Pruning",
+      "details": "Remove low branches.",
+      "_id": {
+        "$oid": "685e8cf2c79e53c2592e0253"
+      }
+    },
+    {
+      "day": 180,
+      "title": "Pest Monitoring",
+      "details": "Check for thrips.",
+      "_id": {
+        "$oid": "685e8cf2c79e53c2592e0254"
+      }
+    },
+    {
+      "day": 240,
+      "title": "Harvest",
+      "details": "Pick cherries when red.",
+      "_id": {
+        "$oid": "685e8cf2c79e53c2592e0255"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-06-27T12:22:10.351Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685e8d03c79e53c2592e0259"
+  },
+  "scientificName": "Corchorus olitorius",
+  "tasks": [
+    {
+      "day": 0,
+      "title": "Land Prep & Sowing",
+      "details": "Broadcast seeds over levelled field.",
+      "_id": {
+        "$oid": "685e8d03c79e53c2592e025a"
+      }
+    },
+    {
+      "day": 7,
+      "title": "Irrigation",
+      "details": "Apply ~15 L water weekly.",
+      "_id": {
+        "$oid": "685e8d03c79e53c2592e025b"
+      }
+    },
+    {
+      "day": 14,
+      "title": "Weeding",
+      "details": "Manual removal.",
+      "_id": {
+        "$oid": "685e8d03c79e53c2592e025c"
+      }
+    },
+    {
+      "day": 21,
+      "title": "Fertilizer",
+      "details": "Apply 1 kg NPK mix.",
+      "_id": {
+        "$oid": "685e8d03c79e53c2592e025d"
+      }
+    },
+    {
+      "day": 28,
+      "title": "Second Irrigation",
+      "details": "Apply ~15 L water.",
+      "_id": {
+        "$oid": "685e8d03c79e53c2592e025e"
+      }
+    },
+    {
+      "day": 35,
+      "title": "Pest Monitoring",
+      "details": "Check for jassids.",
+      "_id": {
+        "$oid": "685e8d03c79e53c2592e025f"
+      }
+    },
+    {
+      "day": 45,
+      "title": "Harvest",
+      "details": "Cut leaves when plants ~30 cm tall.",
+      "_id": {
+        "$oid": "685e8d03c79e53c2592e0260"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-06-27T12:22:27.871Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685e8d1bc79e53c2592e0264"
+  },
+  "scientificName": "Gossypium hirsutum",
+  "tasks": [
+    {
+      "day": 0,
+      "title": "Land Prep & Planting",
+      "details": "Plough; sow seeds at 3 cm depth.",
+      "_id": {
+        "$oid": "685e8d1bc79e53c2592e0265"
+      }
+    },
+    {
+      "day": 10,
+      "title": "First Irrigation",
+      "details": "Apply ~20 L water.",
+      "_id": {
+        "$oid": "685e8d1bc79e53c2592e0266"
+      }
+    },
+    {
+      "day": 25,
+      "title": "Thinning",
+      "details": "Thin to 3 plants per hill.",
+      "_id": {
+        "$oid": "685e8d1bc79e53c2592e0267"
+      }
+    },
+    {
+      "day": 40,
+      "title": "Fertilizer",
+      "details": "Apply 1 kg NPK mix.",
+      "_id": {
+        "$oid": "685e8d1bc79e53c2592e0268"
+      }
+    },
+    {
+      "day": 60,
+      "title": "Weeding",
+      "details": "Manual or herbicide removal.",
+      "_id": {
+        "$oid": "685e8d1bc79e53c2592e0269"
+      }
+    },
+    {
+      "day": 80,
+      "title": "Pest Monitoring",
+      "details": "Check for bollworm; spray Bt.",
+      "_id": {
+        "$oid": "685e8d1bc79e53c2592e026a"
+      }
+    },
+    {
+      "day": 120,
+      "title": "Harvest",
+      "details": "Pick when bolls open.",
+      "_id": {
+        "$oid": "685e8d1bc79e53c2592e026b"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-06-27T12:22:51.870Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685e8d3ac79e53c2592e0279"
+  },
+  "scientificName": "Cicer arietinum",
+  "tasks": [
+    {
+      "day": 0,
+      "title": "Land Prep",
+      "details": "Plough; apply 200 kg compost per kattha.",
+      "_id": {
+        "$oid": "685e8d3ac79e53c2592e027a"
+      }
+    },
+    {
+      "day": 7,
+      "title": "Sowing",
+      "details": "Sow seeds at 5 cm depth with 30 cm spacing.",
+      "_id": {
+        "$oid": "685e8d3ac79e53c2592e027b"
+      }
+    },
+    {
+      "day": 14,
+      "title": "First Irrigation",
+      "details": "Apply ~15 L water per kattha.",
+      "_id": {
+        "$oid": "685e8d3ac79e53c2592e027c"
+      }
+    },
+    {
+      "day": 21,
+      "title": "Fertilizer",
+      "details": "Apply 0.5 kg N + 0.5 kg P per kattha.",
+      "_id": {
+        "$oid": "685e8d3ac79e53c2592e027d"
+      }
+    },
+    {
+      "day": 30,
+      "title": "Weeding",
+      "details": "Manual weeding.",
+      "_id": {
+        "$oid": "685e8d3ac79e53c2592e027e"
+      }
+    },
+    {
+      "day": 45,
+      "title": "Second Irrigation",
+      "details": "Apply ~15 L water.",
+      "_id": {
+        "$oid": "685e8d3ac79e53c2592e027f"
+      }
+    },
+    {
+      "day": 60,
+      "title": "Pest Check",
+      "details": "Inspect for pod borers; apply neem if seen.",
+      "_id": {
+        "$oid": "685e8d3ac79e53c2592e0280"
+      }
+    },
+    {
+      "day": 80,
+      "title": "Harvest",
+      "details": "Harvest when pods mature and dry.",
+      "_id": {
+        "$oid": "685e8d3ac79e53c2592e0281"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-06-27T12:23:22.376Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685e8d59c79e53c2592e0298"
+  },
+  "scientificName": "Cocos nucifera",
+  "tasks": [
+    {
+      "day": 0,
+      "title": "Planting",
+      "details": "Plant nut or seedling; apply 330 kg compost.",
+      "_id": {
+        "$oid": "685e8d59c79e53c2592e0299"
+      }
+    },
+    {
+      "day": 90,
+      "title": "Irrigation",
+      "details": "Apply ~30 L water weekly.",
+      "_id": {
+        "$oid": "685e8d59c79e53c2592e029a"
+      }
+    },
+    {
+      "day": 180,
+      "title": "Fertilizer",
+      "details": "Apply 1 kg NPK mix.",
+      "_id": {
+        "$oid": "685e8d59c79e53c2592e029b"
+      }
+    },
+    {
+      "day": 365,
+      "title": "Pest Check",
+      "details": "Inspect for rhinoceros beetle.",
+      "_id": {
+        "$oid": "685e8d59c79e53c2592e029c"
+      }
+    },
+    {
+      "day": 450,
+      "title": "Harvest",
+      "details": "Harvest mature coconuts.",
+      "_id": {
+        "$oid": "685e8d59c79e53c2592e029d"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-06-27T12:23:53.141Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685e8d75c79e53c2592e02ab"
+  },
+  "scientificName": "Carica papaya",
+  "tasks": [
+    {
+      "day": 0,
+      "title": "Planting",
+      "details": "Plant seedling; apply 200 kg compost.",
+      "_id": {
+        "$oid": "685e8d75c79e53c2592e02ac"
+      }
+    },
+    {
+      "day": 30,
+      "title": "Irrigation",
+      "details": "Apply ~25 L water weekly.",
+      "_id": {
+        "$oid": "685e8d75c79e53c2592e02ad"
+      }
+    },
+    {
+      "day": 60,
+      "title": "Fertilizer",
+      "details": "Apply 1 kg NPK mix.",
+      "_id": {
+        "$oid": "685e8d75c79e53c2592e02ae"
+      }
+    },
+    {
+      "day": 90,
+      "title": "Flower Induction",
+      "details": "Apply potassium nitrate spray.",
+      "_id": {
+        "$oid": "685e8d75c79e53c2592e02af"
+      }
+    },
+    {
+      "day": 120,
+      "title": "Pest Monitoring",
+      "details": "Check for fruit fly.",
+      "_id": {
+        "$oid": "685e8d75c79e53c2592e02b0"
+      }
+    },
+    {
+      "day": 150,
+      "title": "Harvest",
+      "details": "Harvest when fruits yellow.",
+      "_id": {
+        "$oid": "685e8d75c79e53c2592e02b1"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-06-27T12:24:21.149Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685e8d83c79e53c2592e02b5"
+  },
+  "scientificName": "Phaseolus vulgaris",
+  "tasks": [
+    {
+      "day": 0,
+      "title": "Land Prep",
+      "details": "Plough; apply 200 kg compost.",
+      "_id": {
+        "$oid": "685e8d83c79e53c2592e02b6"
+      }
+    },
+    {
+      "day": 5,
+      "title": "Sowing",
+      "details": "Sow seeds at 3 cm depth, 30 cm spacing.",
+      "_id": {
+        "$oid": "685e8d83c79e53c2592e02b7"
+      }
+    },
+    {
+      "day": 10,
+      "title": "First Irrigation",
+      "details": "Apply ~20 L water.",
+      "_id": {
+        "$oid": "685e8d83c79e53c2592e02b8"
+      }
+    },
+    {
+      "day": 20,
+      "title": "Fertilizer",
+      "details": "Apply 0.5 kg N + 0.5 kg K.",
+      "_id": {
+        "$oid": "685e8d83c79e53c2592e02b9"
+      }
+    },
+    {
+      "day": 30,
+      "title": "Weeding",
+      "details": "Manual removal.",
+      "_id": {
+        "$oid": "685e8d83c79e53c2592e02ba"
+      }
+    },
+    {
+      "day": 50,
+      "title": "Second Irrigation",
+      "details": "Apply ~20 L water.",
+      "_id": {
+        "$oid": "685e8d83c79e53c2592e02bb"
+      }
+    },
+    {
+      "day": 60,
+      "title": "Pest Monitoring",
+      "details": "Check for aphids; spray organic insecticide.",
+      "_id": {
+        "$oid": "685e8d83c79e53c2592e02bc"
+      }
+    },
+    {
+      "day": 90,
+      "title": "Harvest",
+      "details": "Pick when pods mature.",
+      "_id": {
+        "$oid": "685e8d83c79e53c2592e02bd"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-06-27T12:24:35.311Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685e8d9ec79e53c2592e02c9"
+  },
+  "scientificName": "Cajanus cajan",
+  "tasks": [
+    {
+      "day": 0,
+      "title": "Land Prep",
+      "details": "Apply 200 kg compost.",
+      "_id": {
+        "$oid": "685e8d9ec79e53c2592e02ca"
+      }
+    },
+    {
+      "day": 7,
+      "title": "Sowing",
+      "details": "Plant seeds 5 cm deep, 30 cm spacing.",
+      "_id": {
+        "$oid": "685e8d9ec79e53c2592e02cb"
+      }
+    },
+    {
+      "day": 14,
+      "title": "First Irrigation",
+      "details": "Apply ~20 L water.",
+      "_id": {
+        "$oid": "685e8d9ec79e53c2592e02cc"
+      }
+    },
+    {
+      "day": 21,
+      "title": "Fertilizer",
+      "details": "Apply 0.5 kg N + 0.5 kg P.",
+      "_id": {
+        "$oid": "685e8d9ec79e53c2592e02cd"
+      }
+    },
+    {
+      "day": 30,
+      "title": "Weeding",
+      "details": "Manual.",
+      "_id": {
+        "$oid": "685e8d9ec79e53c2592e02ce"
+      }
+    },
+    {
+      "day": 50,
+      "title": "Second Irrigation",
+      "details": "Apply ~20 L water.",
+      "_id": {
+        "$oid": "685e8d9ec79e53c2592e02cf"
+      }
+    },
+    {
+      "day": 60,
+      "title": "Pest Check",
+      "details": "Check for pod borers.",
+      "_id": {
+        "$oid": "685e8d9ec79e53c2592e02d0"
+      }
+    },
+    {
+      "day": 90,
+      "title": "Harvest",
+      "details": "Harvest pods when dry.",
+      "_id": {
+        "$oid": "685e8d9ec79e53c2592e02d1"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-06-27T12:25:02.959Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685e8dadc79e53c2592e02d5"
+  },
+  "scientificName": "Citrus sinensis",
+  "tasks": [
+    {
+      "day": 0,
+      "title": "Planting",
+      "details": "Plant sapling; apply 200 kg compost.",
+      "_id": {
+        "$oid": "685e8dadc79e53c2592e02d6"
+      }
+    },
+    {
+      "day": 30,
+      "title": "Irrigation",
+      "details": "Apply ~20 L water.",
+      "_id": {
+        "$oid": "685e8dadc79e53c2592e02d7"
+      }
+    },
+    {
+      "day": 60,
+      "title": "Fertilizer",
+      "details": "Apply 1 kg NPK.",
+      "_id": {
+        "$oid": "685e8dadc79e53c2592e02d8"
+      }
+    },
+    {
+      "day": 90,
+      "title": "Flower Thinning",
+      "details": "Remove excess flowers.",
+      "_id": {
+        "$oid": "685e8dadc79e53c2592e02d9"
+      }
+    },
+    {
+      "day": 120,
+      "title": "Pest Monitoring",
+      "details": "Check for fruit fly.",
+      "_id": {
+        "$oid": "685e8dadc79e53c2592e02da"
+      }
+    },
+    {
+      "day": 240,
+      "title": "Harvest",
+      "details": "Harvest when peel color.",
+      "_id": {
+        "$oid": "685e8dadc79e53c2592e02db"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-06-27T12:25:17.241Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685e8dc4c79e53c2592e02e9"
+  },
+  "scientificName": "Malus domestica",
+  "tasks": [
+    {
+      "day": 0,
+      "title": "Planting",
+      "details": "Plant sapling; apply 200 kg compost.",
+      "_id": {
+        "$oid": "685e8dc4c79e53c2592e02ea"
+      }
+    },
+    {
+      "day": 30,
+      "title": "Irrigation",
+      "details": "Apply ~20 L water.",
+      "_id": {
+        "$oid": "685e8dc4c79e53c2592e02eb"
+      }
+    },
+    {
+      "day": 60,
+      "title": "Fertilizer",
+      "details": "Apply 1 kg NPK mix.",
+      "_id": {
+        "$oid": "685e8dc4c79e53c2592e02ec"
+      }
+    },
+    {
+      "day": 90,
+      "title": "Thinning",
+      "details": "Remove some blossoms.",
+      "_id": {
+        "$oid": "685e8dc4c79e53c2592e02ed"
+      }
+    },
+    {
+      "day": 120,
+      "title": "Pest Check",
+      "details": "Inspect for codling moth.",
+      "_id": {
+        "$oid": "685e8dc4c79e53c2592e02ee"
+      }
+    },
+    {
+      "day": 180,
+      "title": "Harvest",
+      "details": "Harvest when color develops.",
+      "_id": {
+        "$oid": "685e8dc4c79e53c2592e02ef"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-06-27T12:25:40.177Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685e8dd1c79e53c2592e02f3"
+  },
+  "scientificName": "Vigna aconitifolia",
+  "tasks": [
+    {
+      "day": 0,
+      "title": "Land Prep",
+      "details": "Plough; apply 200 kg compost.",
+      "_id": {
+        "$oid": "685e8dd1c79e53c2592e02f4"
+      }
+    },
+    {
+      "day": 5,
+      "title": "Sowing",
+      "details": "Plant seeds 5 cm deep, 20 cm spacing.",
+      "_id": {
+        "$oid": "685e8dd1c79e53c2592e02f5"
+      }
+    },
+    {
+      "day": 10,
+      "title": "Irrigation",
+      "details": "Apply ~15 L water.",
+      "_id": {
+        "$oid": "685e8dd1c79e53c2592e02f6"
+      }
+    },
+    {
+      "day": 20,
+      "title": "Weeding",
+      "details": "Manual removal.",
+      "_id": {
+        "$oid": "685e8dd1c79e53c2592e02f7"
+      }
+    },
+    {
+      "day": 30,
+      "title": "Fertilizer",
+      "details": "Apply 0.5 kg N + 0.5 kg K.",
+      "_id": {
+        "$oid": "685e8dd1c79e53c2592e02f8"
+      }
+    },
+    {
+      "day": 45,
+      "title": "Pest Monitoring",
+      "details": "Check for aphids.",
+      "_id": {
+        "$oid": "685e8dd1c79e53c2592e02f9"
+      }
+    },
+    {
+      "day": 80,
+      "title": "Harvest",
+      "details": "Pods mature and dry.",
+      "_id": {
+        "$oid": "685e8dd1c79e53c2592e02fa"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-06-27T12:25:53.112Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685e8dd9c79e53c2592e02fe"
+  },
+  "scientificName": "Cucumis melo",
+  "tasks": [
+    {
+      "day": 0,
+      "title": "Land Prep",
+      "details": "Apply 200 kg compost.",
+      "_id": {
+        "$oid": "685e8dd9c79e53c2592e02ff"
+      }
+    },
+    {
+      "day": 5,
+      "title": "Planting",
+      "details": "Sow seeds 3 cm deep, 2 m row distance.",
+      "_id": {
+        "$oid": "685e8dd9c79e53c2592e0300"
+      }
+    },
+    {
+      "day": 15,
+      "title": "Irrigation",
+      "details": "Apply ~30 L water.",
+      "_id": {
+        "$oid": "685e8dd9c79e53c2592e0301"
+      }
+    },
+    {
+      "day": 30,
+      "title": "Fertilizer",
+      "details": "Apply 1 kg NPK.",
+      "_id": {
+        "$oid": "685e8dd9c79e53c2592e0302"
+      }
+    },
+    {
+      "day": 45,
+      "title": "Weeding",
+      "details": "Manual.",
+      "_id": {
+        "$oid": "685e8dd9c79e53c2592e0303"
+      }
+    },
+    {
+      "day": 60,
+      "title": "Pest Monitoring",
+      "details": "Check for aphids.",
+      "_id": {
+        "$oid": "685e8dd9c79e53c2592e0304"
+      }
+    },
+    {
+      "day": 80,
+      "title": "Harvest",
+      "details": "Harvest when rind softens.",
+      "_id": {
+        "$oid": "685e8dd9c79e53c2592e0305"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-06-27T12:26:01.718Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685e8de3c79e53c2592e0309"
+  },
+  "scientificName": "Vigna radiata",
+  "tasks": [
+    {
+      "day": 0,
+      "title": "Land Prep",
+      "details": "Apply 200 kg compost.",
+      "_id": {
+        "$oid": "685e8de3c79e53c2592e030a"
+      }
+    },
+    {
+      "day": 5,
+      "title": "Sowing",
+      "details": "Sow seeds 5 cm deep at 30 cm spacing.",
+      "_id": {
+        "$oid": "685e8de3c79e53c2592e030b"
+      }
+    },
+    {
+      "day": 10,
+      "title": "Irrigation",
+      "details": "Apply ~15 L water.",
+      "_id": {
+        "$oid": "685e8de3c79e53c2592e030c"
+      }
+    },
+    {
+      "day": 20,
+      "title": "Weeding",
+      "details": "Manual.",
+      "_id": {
+        "$oid": "685e8de3c79e53c2592e030d"
+      }
+    },
+    {
+      "day": 30,
+      "title": "Fertilizer",
+      "details": "Apply 0.5 kg N + 0.5 kg K.",
+      "_id": {
+        "$oid": "685e8de3c79e53c2592e030e"
+      }
+    },
+    {
+      "day": 45,
+      "title": "Pest Check",
+      "details": "Check for aphids.",
+      "_id": {
+        "$oid": "685e8de3c79e53c2592e030f"
+      }
+    },
+    {
+      "day": 75,
+      "title": "Harvest",
+      "details": "Pods mature and dry.",
+      "_id": {
+        "$oid": "685e8de3c79e53c2592e0310"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-06-27T12:26:11.988Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685e8df1c79e53c2592e0314"
+  },
+  "scientificName": "Citrullus lanatus",
+  "tasks": [
+    {
+      "day": 0,
+      "title": "Land Prep",
+      "details": "Plough; apply 200 kg compost.",
+      "_id": {
+        "$oid": "685e8df1c79e53c2592e0315"
+      }
+    },
+    {
+      "day": 5,
+      "title": "Planting",
+      "details": "Sow seeds 3 cm deep, 2 m between rows.",
+      "_id": {
+        "$oid": "685e8df1c79e53c2592e0316"
+      }
+    },
+    {
+      "day": 15,
+      "title": "Irrigation",
+      "details": "Apply ~30 L water.",
+      "_id": {
+        "$oid": "685e8df1c79e53c2592e0317"
+      }
+    },
+    {
+      "day": 30,
+      "title": "Fertilizer",
+      "details": "Apply 1 kg NPK.",
+      "_id": {
+        "$oid": "685e8df1c79e53c2592e0318"
+      }
+    },
+    {
+      "day": 45,
+      "title": "Weeding",
+      "details": "Manual removal.",
+      "_id": {
+        "$oid": "685e8df1c79e53c2592e0319"
+      }
+    },
+    {
+      "day": 60,
+      "title": "Pest Monitoring",
+      "details": "Check for fruit fly.",
+      "_id": {
+        "$oid": "685e8df1c79e53c2592e031a"
+      }
+    },
+    {
+      "day": 90,
+      "title": "Harvest",
+      "details": "Harvest when rind resounds hollow.",
+      "_id": {
+        "$oid": "685e8df1c79e53c2592e031b"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-06-27T12:26:25.748Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685e8dfdc79e53c2592e031f"
+  },
+  "scientificName": "Vigna mungo",
+  "tasks": [
+    {
+      "day": 0,
+      "title": "Land Prep",
+      "details": "Apply 200 kg compost.",
+      "_id": {
+        "$oid": "685e8dfdc79e53c2592e0320"
+      }
+    },
+    {
+      "day": 5,
+      "title": "Sowing",
+      "details": "Plant seeds 5 cm deep at 30 cm spacing.",
+      "_id": {
+        "$oid": "685e8dfdc79e53c2592e0321"
+      }
+    },
+    {
+      "day": 10,
+      "title": "Irrigation",
+      "details": "Apply ~15 L water.",
+      "_id": {
+        "$oid": "685e8dfdc79e53c2592e0322"
+      }
+    },
+    {
+      "day": 20,
+      "title": "Weeding",
+      "details": "Manual.",
+      "_id": {
+        "$oid": "685e8dfdc79e53c2592e0323"
+      }
+    },
+    {
+      "day": 30,
+      "title": "Fertilizer",
+      "details": "Apply 0.5 kg N + 0.5 kg P.",
+      "_id": {
+        "$oid": "685e8dfdc79e53c2592e0324"
+      }
+    },
+    {
+      "day": 45,
+      "title": "Pest Monitoring",
+      "details": "Check for aphids.",
+      "_id": {
+        "$oid": "685e8dfdc79e53c2592e0325"
+      }
+    },
+    {
+      "day": 80,
+      "title": "Harvest",
+      "details": "Pods mature.",
+      "_id": {
+        "$oid": "685e8dfdc79e53c2592e0326"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-06-27T12:26:37.374Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685e8e07c79e53c2592e032a"
+  },
+  "scientificName": "Vitis vinifera",
+  "tasks": [
+    {
+      "day": 0,
+      "title": "Planting",
+      "details": "Plant vine; apply 100 kg compost per kattha.",
+      "_id": {
+        "$oid": "685e8e07c79e53c2592e032b"
+      }
+    },
+    {
+      "day": 30,
+      "title": "Training",
+      "details": "Tie vine to trellis.",
+      "_id": {
+        "$oid": "685e8e07c79e53c2592e032c"
+      }
+    },
+    {
+      "day": 60,
+      "title": "Fertilizer",
+      "details": "Apply 1 kg NPK.",
+      "_id": {
+        "$oid": "685e8e07c79e53c2592e032d"
+      }
+    },
+    {
+      "day": 90,
+      "title": "Pest Check",
+      "details": "Check for powdery mildew.",
+      "_id": {
+        "$oid": "685e8e07c79e53c2592e032e"
+      }
+    },
+    {
+      "day": 120,
+      "title": "Cluster Thinning",
+      "details": "Remove excess flower clusters.",
+      "_id": {
+        "$oid": "685e8e07c79e53c2592e032f"
+      }
+    },
+    {
+      "day": 150,
+      "title": "Harvest",
+      "details": "Pick when berries are sweet.",
+      "_id": {
+        "$oid": "685e8e07c79e53c2592e0330"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-06-27T12:26:47.606Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685e8e12c79e53c2592e0334"
+  },
+  "scientificName": "Lens culinaris",
+  "tasks": [
+    {
+      "day": 0,
+      "title": "Land Prep",
+      "details": "Apply 200 kg compost.",
+      "_id": {
+        "$oid": "685e8e12c79e53c2592e0335"
+      }
+    },
+    {
+      "day": 7,
+      "title": "Sowing",
+      "details": "Sow seeds 3 cm deep at 20 cm spacing.",
+      "_id": {
+        "$oid": "685e8e12c79e53c2592e0336"
+      }
+    },
+    {
+      "day": 14,
+      "title": "Irrigation",
+      "details": "Apply ~15 L water.",
+      "_id": {
+        "$oid": "685e8e12c79e53c2592e0337"
+      }
+    },
+    {
+      "day": 21,
+      "title": "Fertilizer",
+      "details": "Apply 0.5 kg N + 0.5 kg P.",
+      "_id": {
+        "$oid": "685e8e12c79e53c2592e0338"
+      }
+    },
+    {
+      "day": 30,
+      "title": "Weeding",
+      "details": "Manual.",
+      "_id": {
+        "$oid": "685e8e12c79e53c2592e0339"
+      }
+    },
+    {
+      "day": 60,
+      "title": "Harvest",
+      "details": "Pods dryness indicates readiness.",
+      "_id": {
+        "$oid": "685e8e12c79e53c2592e033a"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-06-27T12:26:58.747Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685e8e1dc79e53c2592e033e"
+  },
+  "scientificName": "Mangifera indica",
+  "tasks": [
+    {
+      "day": 0,
+      "title": "Land Prep & Planting",
+      "details": "Plant sapling with 100 kg compost.",
+      "_id": {
+        "$oid": "685e8e1dc79e53c2592e033f"
+      }
+    },
+    {
+      "day": 30,
+      "title": "Irrigation",
+      "details": "Apply ~25 L water weekly.",
+      "_id": {
+        "$oid": "685e8e1dc79e53c2592e0340"
+      }
+    },
+    {
+      "day": 60,
+      "title": "Flower Induction",
+      "details": "Apply potassium nitrate spray.",
+      "_id": {
+        "$oid": "685e8e1dc79e53c2592e0341"
+      }
+    },
+    {
+      "day": 90,
+      "title": "Fertilizer",
+      "details": "Apply 1 kg NPK mix.",
+      "_id": {
+        "$oid": "685e8e1dc79e53c2592e0342"
+      }
+    },
+    {
+      "day": 120,
+      "title": "Pest & Disease Check",
+      "details": "Inspect for mealy bugs.",
+      "_id": {
+        "$oid": "685e8e1dc79e53c2592e0343"
+      }
+    },
+    {
+      "day": 180,
+      "title": "Harvest",
+      "details": "Harvest when fruits color develops.",
+      "_id": {
+        "$oid": "685e8e1dc79e53c2592e0344"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-06-27T12:27:09.604Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685e8e25c79e53c2592e0348"
+  },
+  "scientificName": "Punica granatum",
+  "tasks": [
+    {
+      "day": 0,
+      "title": "Land Prep & Planting",
+      "details": "Prepare pit; plant seedling with 100 kg compost.",
+      "_id": {
+        "$oid": "685e8e25c79e53c2592e0349"
+      }
+    },
+    {
+      "day": 30,
+      "title": "First Irrigation",
+      "details": "Apply ~20 L water.",
+      "_id": {
+        "$oid": "685e8e25c79e53c2592e034a"
+      }
+    },
+    {
+      "day": 60,
+      "title": "Fertilization",
+      "details": "Apply 0.5 kg NPK mix.",
+      "_id": {
+        "$oid": "685e8e25c79e53c2592e034b"
+      }
+    },
+    {
+      "day": 90,
+      "title": "Pest Monitoring",
+      "details": "Check for fruit fly; apply pheromone trap.",
+      "_id": {
+        "$oid": "685e8e25c79e53c2592e034c"
+      }
+    },
+    {
+      "day": 120,
+      "title": "Fruit Thinning",
+      "details": "Remove small/damaged fruits.",
+      "_id": {
+        "$oid": "685e8e25c79e53c2592e034d"
+      }
+    },
+    {
+      "day": 150,
+      "title": "Harvest",
+      "details": "Pick mature fruits.",
+      "_id": {
+        "$oid": "685e8e25c79e53c2592e034e"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-06-27T12:27:17.598Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685e8e2dc79e53c2592e0352"
+  },
+  "scientificName": "Musa spp.",
+  "tasks": [
+    {
+      "day": 0,
+      "title": "Land Prep & Planting",
+      "details": "Plant suckers; mix 100 kg compost per kattha.",
+      "_id": {
+        "$oid": "685e8e2dc79e53c2592e0353"
+      }
+    },
+    {
+      "day": 30,
+      "title": "Irrigation",
+      "details": "Apply ~30 L water weekly.",
+      "_id": {
+        "$oid": "685e8e2dc79e53c2592e0354"
+      }
+    },
+    {
+      "day": 60,
+      "title": "Fertilizer",
+      "details": "Apply 1 kg NPK mix.",
+      "_id": {
+        "$oid": "685e8e2dc79e53c2592e0355"
+      }
+    },
+    {
+      "day": 90,
+      "title": "Weeding",
+      "details": "Remove weeds.",
+      "_id": {
+        "$oid": "685e8e2dc79e53c2592e0356"
+      }
+    },
+    {
+      "day": 120,
+      "title": "Bunch Banding",
+      "details": "Support bunches if heavy.",
+      "_id": {
+        "$oid": "685e8e2dc79e53c2592e0357"
+      }
+    },
+    {
+      "day": 150,
+      "title": "Harvest",
+      "details": "Harvest when fruits mature.",
+      "_id": {
+        "$oid": "685e8e2dc79e53c2592e0358"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-06-27T12:27:25.549Z"
+  },
+  "__v": 0
+}]

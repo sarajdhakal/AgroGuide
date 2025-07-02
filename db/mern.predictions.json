@@ -1,0 +1,1286 @@
+[{
+  "_id": {
+    "$oid": "685d000417c7a30bdc2c47e8"
+  },
+  "userId": {
+    "$oid": "6849241fc2cf1bdd7c4616d3"
+  },
+  "inputData": {
+    "location": "Chitwan",
+    "soilType": "clay",
+    "nitrogenRequired": "90",
+    "phosphorousRequired": "55",
+    "potassiumRequired": "45",
+    "soilpH": "6.8",
+    "temperature": "27",
+    "humidity": "68",
+    "rainfall": "110",
+    "farmSize": "60",
+    "climate": "subtropical",
+    "previousCrop": "rice",
+    "budget": "medium",
+    "experience": "2",
+    "notes": ""
+  },
+  "recommendedCrops": [
+    {
+      "cropName": "Tomato",
+      "scientificName": "solanum-lycopersicum",
+      "suitability": 0,
+      "risk": "Low",
+      "_id": {
+        "$oid": "685d000417c7a30bdc2c47e9"
+      }
+    },
+    {
+      "cropName": "Chili",
+      "scientificName": "capsicum-annuum",
+      "suitability": 82,
+      "risk": "Low",
+      "_id": {
+        "$oid": "685d000417c7a30bdc2c47ea"
+      }
+    },
+    {
+      "cropName": "Okra",
+      "scientificName": "abelmoschus-esculentus",
+      "suitability": 0,
+      "risk": "Medium",
+      "_id": {
+        "$oid": "685d000417c7a30bdc2c47eb"
+      }
+    }
+  ],
+  "predictedAt": {
+    "$date": "2025-06-26T08:08:36.046Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685d05bb17c7a30bdc2c47f7"
+  },
+  "userId": {
+    "$oid": "685aba74ad3275a4a39980ab"
+  },
+  "inputData": {
+    "location": "Office",
+    "soilType": "clay",
+    "nitrogenRequired": "90",
+    "phosphorousRequired": "90",
+    "potassiumRequired": "90",
+    "soilpH": "6.5",
+    "temperature": "23",
+    "humidity": "89",
+    "rainfall": "200",
+    "farmSize": "20",
+    "climate": "subtropical",
+    "previousCrop": "corn",
+    "budget": "low",
+    "experience": "intermediate",
+    "notes": "hello"
+  },
+  "recommendedCrops": [
+    {
+      "cropName": "Recommended Crop",
+      "scientificName": "Recommended Crop",
+      "suitability": 20,
+      "risk": "Low",
+      "_id": {
+        "$oid": "685d05bb17c7a30bdc2c47f8"
+      }
+    }
+  ],
+  "predictedAt": {
+    "$date": "2025-06-26T08:32:59.407Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685d080217c7a30bdc2c47fa"
+  },
+  "userId": {
+    "$oid": "685aba74ad3275a4a39980ab"
+  },
+  "inputData": {
+    "location": "Bharatpur-12",
+    "soilType": "clay",
+    "nitrogenRequired": "90",
+    "phosphorousRequired": "43",
+    "potassiumRequired": "43",
+    "soilpH": "6.5",
+    "temperature": "26",
+    "humidity": "89",
+    "rainfall": "100",
+    "farmSize": "55",
+    "climate": "temperate",
+    "previousCrop": "soybeans",
+    "budget": "low",
+    "experience": "beginner",
+    "notes": "daa"
+  },
+  "recommendedCrops": [
+    {
+      "cropName": "Unknown",
+      "scientificName": "Unknown",
+      "suitability": 20,
+      "risk": "Low",
+      "_id": {
+        "$oid": "685d080217c7a30bdc2c47fb"
+      }
+    }
+  ],
+  "predictedAt": {
+    "$date": "2025-06-26T08:42:42.098Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685d08da17c7a30bdc2c47fd"
+  },
+  "userId": {
+    "$oid": "685aba74ad3275a4a39980ab"
+  },
+  "inputData": {
+    "location": "Office",
+    "soilType": "sandy",
+    "nitrogenRequired": "88",
+    "phosphorousRequired": "89",
+    "potassiumRequired": "88",
+    "soilpH": "6.0",
+    "temperature": "25",
+    "humidity": "88",
+    "rainfall": "100",
+    "farmSize": "55",
+    "climate": "subtropical",
+    "previousCrop": "soybeans",
+    "budget": "medium",
+    "experience": "beginner",
+    "notes": "sasasa"
+  },
+  "recommendedCrops": [
+    {
+      "cropName": "apple",
+      "scientificName": "apple",
+      "suitability": 0,
+      "risk": "Low",
+      "_id": {
+        "$oid": "685d08da17c7a30bdc2c47fe"
+      }
+    },
+    {
+      "cropName": "banana",
+      "scientificName": "Musa spp.",
+      "suitability": 0,
+      "risk": "Low",
+      "_id": {
+        "$oid": "685d08da17c7a30bdc2c47ff"
+      }
+    },
+    {
+      "cropName": "chickpea",
+      "scientificName": "Cicer arietinum",
+      "suitability": 0,
+      "risk": "Low",
+      "_id": {
+        "$oid": "685d08da17c7a30bdc2c4800"
+      }
+    }
+  ],
+  "predictedAt": {
+    "$date": "2025-06-26T08:46:18.517Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685d126917c7a30bdc2c4802"
+  },
+  "userId": {
+    "$oid": "685aba74ad3275a4a39980ab"
+  },
+  "inputData": {
+    "location": "Office",
+    "soilType": "sandy",
+    "nitrogenRequired": "90",
+    "phosphorousRequired": "90",
+    "potassiumRequired": "90",
+    "soilpH": "6.5",
+    "temperature": "23",
+    "humidity": "78",
+    "rainfall": "100",
+    "farmSize": "55",
+    "climate": "temperate",
+    "previousCrop": "soybeans",
+    "budget": "medium",
+    "experience": "intermediate",
+    "notes": "hihi"
+  },
+  "recommendedCrops": [
+    {
+      "cropName": "papaya",
+      "scientificName": "papaya",
+      "_id": {
+        "$oid": "685d126917c7a30bdc2c4803"
+      }
+    },
+    {
+      "cropName": "banana",
+      "scientificName": "banana",
+      "_id": {
+        "$oid": "685d126917c7a30bdc2c4804"
+      }
+    },
+    {
+      "cropName": "chickpea",
+      "scientificName": "Cicer arietinum",
+      "_id": {
+        "$oid": "685d126917c7a30bdc2c4805"
+      }
+    }
+  ],
+  "predictedAt": {
+    "$date": "2025-06-26T09:27:05.324Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685d138317c7a30bdc2c4807"
+  },
+  "userId": {
+    "$oid": "685aba74ad3275a4a39980ab"
+  },
+  "inputData": {
+    "location": "Office",
+    "soilType": "sandy",
+    "nitrogenRequired": "90",
+    "phosphorousRequired": "90",
+    "potassiumRequired": "90",
+    "soilpH": "6.7",
+    "temperature": "32",
+    "humidity": "67",
+    "rainfall": "230",
+    "farmSize": "23",
+    "climate": "temperate",
+    "previousCrop": "cotton",
+    "budget": "medium",
+    "experience": "intermediate",
+    "notes": "SXADA"
+  },
+  "recommendedCrops": [
+    {
+      "cropName": "banana",
+      "scientificName": "banana",
+      "_id": {
+        "$oid": "685d138317c7a30bdc2c4808"
+      }
+    },
+    {
+      "cropName": "coffee",
+      "scientificName": "coffee",
+      "_id": {
+        "$oid": "685d138317c7a30bdc2c4809"
+      }
+    },
+    {
+      "cropName": "chickpea",
+      "scientificName": "Cicer arietinum",
+      "_id": {
+        "$oid": "685d138317c7a30bdc2c480a"
+      }
+    }
+  ],
+  "predictedAt": {
+    "$date": "2025-06-26T09:31:47.390Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685d156fd2bbe1520b450ead"
+  },
+  "userId": {
+    "$oid": "685aba74ad3275a4a39980ab"
+  },
+  "inputData": {
+    "location": "Office",
+    "soilType": "sandy",
+    "nitrogenRequired": "90",
+    "phosphorousRequired": "90",
+    "potassiumRequired": "90",
+    "soilpH": "6.7",
+    "temperature": "23",
+    "humidity": "78",
+    "rainfall": "299",
+    "farmSize": "222",
+    "climate": "subtropical",
+    "previousCrop": "soybeans",
+    "budget": "medium",
+    "experience": "intermediate",
+    "notes": "saasa"
+  },
+  "recommendedCrops": [
+    {
+      "cropName": "chickpea",
+      "scientificName": "Cicer arietinum",
+      "_id": {
+        "$oid": "685d156fd2bbe1520b450eae"
+      }
+    },
+    {
+      "cropName": "banana",
+      "scientificName": "banana",
+      "_id": {
+        "$oid": "685d156fd2bbe1520b450eaf"
+      }
+    },
+    {
+      "cropName": "rice",
+      "scientificName": "Oryza sativa",
+      "_id": {
+        "$oid": "685d156fd2bbe1520b450eb0"
+      }
+    }
+  ],
+  "predictedAt": {
+    "$date": "2025-06-26T09:39:59.639Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685d431ca0075ce2ea41b3a0"
+  },
+  "userId": {
+    "$oid": "685aba74ad3275a4a39980ab"
+  },
+  "inputData": {
+    "location": "Chitwan",
+    "soilType": "sandy",
+    "nitrogenRequired": "90",
+    "phosphorousRequired": "90",
+    "potassiumRequired": "90",
+    "soilpH": "6",
+    "temperature": "23",
+    "humidity": "34",
+    "rainfall": "299",
+    "farmSize": "12",
+    "climate": "tropical",
+    "previousCrop": "rice",
+    "budget": "low",
+    "experience": "beginner",
+    "notes": "dad"
+  },
+  "recommendedCrops": [
+    {
+      "cropName": "banana",
+      "scientificName": "banana",
+      "_id": {
+        "$oid": "685d431ca0075ce2ea41b3a1"
+      }
+    },
+    {
+      "cropName": "chickpea",
+      "scientificName": "Cicer arietinum",
+      "_id": {
+        "$oid": "685d431ca0075ce2ea41b3a2"
+      }
+    },
+    {
+      "cropName": "coffee",
+      "scientificName": "coffee",
+      "_id": {
+        "$oid": "685d431ca0075ce2ea41b3a3"
+      }
+    }
+  ],
+  "predictedAt": {
+    "$date": "2025-06-26T12:54:52.546Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685d44f4a0075ce2ea41b3ca"
+  },
+  "userId": {
+    "$oid": "685aba74ad3275a4a39980ab"
+  },
+  "inputData": {
+    "location": "Office",
+    "soilType": "sandy",
+    "nitrogenRequired": "90",
+    "phosphorousRequired": "76",
+    "potassiumRequired": "45",
+    "soilpH": "5.9",
+    "temperature": "22",
+    "humidity": "45",
+    "rainfall": "200",
+    "farmSize": "232",
+    "climate": "subtropical",
+    "previousCrop": "soybeans",
+    "budget": "medium",
+    "experience": "intermediate",
+    "notes": "sas"
+  },
+  "recommendedCrops": [
+    {
+      "cropName": "banana",
+      "scientificName": "Musa spp.",
+      "suitability": 15,
+      "risk": "High",
+      "_id": {
+        "$oid": "686381e55d64e3d86f6bdced"
+      }
+    },
+    {
+      "cropName": "coffee",
+      "scientificName": "Coffea arabica",
+      "suitability": 30,
+      "risk": "Low",
+      "_id": {
+        "$oid": "686381e55d64e3d86f6bdcee"
+      }
+    },
+    {
+      "cropName": "rice",
+      "scientificName": "Oryza sativa",
+      "suitability": 25,
+      "risk": "Medium",
+      "_id": {
+        "$oid": "686381e55d64e3d86f6bdcef"
+      }
+    }
+  ],
+  "predictedAt": {
+    "$date": "2025-06-26T13:02:44.798Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685d467aa479427fe09677ee"
+  },
+  "userId": {
+    "$oid": "685aba74ad3275a4a39980ab"
+  },
+  "inputData": {
+    "location": "here",
+    "soilType": "sandy",
+    "nitrogenRequired": "90",
+    "phosphorousRequired": "90",
+    "potassiumRequired": "78",
+    "soilpH": "6",
+    "temperature": "21",
+    "humidity": "67",
+    "rainfall": "345",
+    "farmSize": "34",
+    "climate": "subtropical",
+    "previousCrop": "corn",
+    "budget": "medium",
+    "experience": "beginner",
+    "notes": "XASDDDA"
+  },
+  "recommendedCrops": [
+    {
+      "cropName": "banana",
+      "scientificName": "banana",
+      "_id": {
+        "$oid": "685d467aa479427fe09677ef"
+      }
+    },
+    {
+      "cropName": "chickpea",
+      "scientificName": "Cicer arietinum",
+      "_id": {
+        "$oid": "685d467aa479427fe09677f0"
+      }
+    },
+    {
+      "cropName": "coffee",
+      "scientificName": "coffee",
+      "_id": {
+        "$oid": "685d467aa479427fe09677f1"
+      }
+    }
+  ],
+  "predictedAt": {
+    "$date": "2025-06-26T13:09:14.057Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685d62b7b9a0cc86acc73f8d"
+  },
+  "userId": {
+    "$oid": "685aba74ad3275a4a39980ab"
+  },
+  "inputData": {
+    "location": "Bharatpur",
+    "soilType": "sandy",
+    "nitrogenRequired": "90",
+    "phosphorousRequired": "45",
+    "potassiumRequired": "34",
+    "soilpH": "6.7",
+    "temperature": "32",
+    "humidity": "87",
+    "rainfall": "200",
+    "farmSize": "45",
+    "climate": "subtropical",
+    "previousCrop": "soybeans",
+    "budget": "medium",
+    "experience": "intermediate",
+    "notes": "sdaas\n"
+  },
+  "recommendedCrops": [
+    {
+      "cropName": "coffee",
+      "scientificName": "coffee",
+      "_id": {
+        "$oid": "685d62b7b9a0cc86acc73f8e"
+      }
+    },
+    {
+      "cropName": "rice",
+      "scientificName": "Oryza sativa",
+      "_id": {
+        "$oid": "685d62b7b9a0cc86acc73f8f"
+      }
+    },
+    {
+      "cropName": "jute",
+      "scientificName": "jute",
+      "_id": {
+        "$oid": "685d62b7b9a0cc86acc73f90"
+      }
+    }
+  ],
+  "predictedAt": {
+    "$date": "2025-06-26T15:09:43.879Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685e1656b9a0cc86acc743ec"
+  },
+  "userId": {
+    "$oid": "685aba74ad3275a4a39980ab"
+  },
+  "inputData": {
+    "location": "Bharatpur-15",
+    "soilType": "sandy",
+    "nitrogenRequired": "90",
+    "phosphorousRequired": "42",
+    "potassiumRequired": "43",
+    "soilpH": "7.0",
+    "temperature": "20",
+    "humidity": "82",
+    "rainfall": "202",
+    "farmSize": "34",
+    "climate": "subtropical",
+    "previousCrop": "soybeans",
+    "budget": "medium",
+    "experience": "intermediate",
+    "notes": "hhihi"
+  },
+  "recommendedCrops": [
+    {
+      "cropName": "pomegranate",
+      "scientificName": "pomegranate",
+      "_id": {
+        "$oid": "685e1656b9a0cc86acc743ed"
+      }
+    },
+    {
+      "cropName": "rice",
+      "scientificName": "Oryza sativa",
+      "_id": {
+        "$oid": "685e1656b9a0cc86acc743ee"
+      }
+    },
+    {
+      "cropName": "jute",
+      "scientificName": "jute",
+      "_id": {
+        "$oid": "685e1656b9a0cc86acc743ef"
+      }
+    }
+  ],
+  "predictedAt": {
+    "$date": "2025-06-27T03:56:06.245Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685e178de35fbab27c5395ac"
+  },
+  "userId": {
+    "$oid": "685aba74ad3275a4a39980ab"
+  },
+  "inputData": {
+    "location": "Bharatpur-15",
+    "soilType": "sandy",
+    "nitrogenRequired": "90",
+    "phosphorousRequired": "42",
+    "potassiumRequired": "43",
+    "soilpH": "7.0",
+    "temperature": "20",
+    "humidity": "82",
+    "rainfall": "202",
+    "farmSize": "34",
+    "climate": "subtropical",
+    "previousCrop": "soybeans",
+    "budget": "medium",
+    "experience": "intermediate",
+    "notes": "hhihi"
+  },
+  "recommendedCrops": [
+    {
+      "cropName": "pomegranate",
+      "scientificName": "pomegranate",
+      "suitability": 0,
+      "_id": {
+        "$oid": "685e178de35fbab27c5395ad"
+      }
+    },
+    {
+      "cropName": "rice",
+      "scientificName": "Oryza sativa",
+      "suitability": 95,
+      "_id": {
+        "$oid": "685e178de35fbab27c5395ae"
+      }
+    },
+    {
+      "cropName": "jute",
+      "scientificName": "jute",
+      "suitability": 5,
+      "_id": {
+        "$oid": "685e178de35fbab27c5395af"
+      }
+    }
+  ],
+  "predictedAt": {
+    "$date": "2025-06-27T04:01:17.920Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685f699e2494dbb97d418d9b"
+  },
+  "userId": {
+    "$oid": "685aba74ad3275a4a39980ab"
+  },
+  "inputData": {
+    "location": "Current Location",
+    "locationCoordinates": {
+      "lat": 27.64174550519751,
+      "lng": 84.367439
+    },
+    "soilType": "loam",
+    "nitrogenRequired": "90",
+    "phosphorousRequired": "43",
+    "potassiumRequired": "23",
+    "soilpH": "6.5",
+    "temperature": "23",
+    "humidity": "87",
+    "rainfall": "202",
+    "farmSize": "55",
+    "climate": "temperate",
+    "previousCrop": "soybeans",
+    "budget": "high",
+    "experience": "beginner",
+    "notes": "saraj"
+  },
+  "recommendedCrops": [
+    {
+      "cropName": "cotton",
+      "scientificName": "Gossypium hirsutum",
+      "suitability": 25,
+      "risk": "High",
+      "_id": {
+        "$oid": "685f699e2494dbb97d418d9c"
+      }
+    },
+    {
+      "cropName": "maize",
+      "scientificName": "Zea mays",
+      "suitability": 30,
+      "risk": "Low",
+      "_id": {
+        "$oid": "685f699e2494dbb97d418d9d"
+      }
+    },
+    {
+      "cropName": "rice",
+      "scientificName": "Oryza sativa",
+      "suitability": 25,
+      "risk": "Medium",
+      "_id": {
+        "$oid": "685f699e2494dbb97d418d9e"
+      }
+    }
+  ],
+  "predictedAt": {
+    "$date": "2025-06-28T04:03:42.552Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686000017c4d51a2327538f7"
+  },
+  "userId": {
+    "$oid": "685aba74ad3275a4a39980ab"
+  },
+  "inputData": {
+    "location": "Current Location",
+    "locationCoordinates": {
+      "lat": 27.6417505,
+      "lng": 84.367439
+    },
+    "soilType": "sandy",
+    "nitrogenRequired": "90",
+    "phosphorousRequired": "42",
+    "potassiumRequired": "38",
+    "soilpH": "7",
+    "temperature": "26",
+    "humidity": "89",
+    "rainfall": "202",
+    "farmSize": "34",
+    "climate": "subtropical",
+    "previousCrop": "soybeans",
+    "budget": "medium",
+    "experience": "intermediate",
+    "notes": "saraj dhakal\n"
+  },
+  "recommendedCrops": [
+    {
+      "cropName": "papaya",
+      "scientificName": "Carica papaya",
+      "suitability": 15,
+      "risk": "High",
+      "_id": {
+        "$oid": "686000017c4d51a2327538f8"
+      }
+    },
+    {
+      "cropName": "rice",
+      "scientificName": "Oryza sativa",
+      "suitability": 50,
+      "risk": "Low",
+      "_id": {
+        "$oid": "686000017c4d51a2327538f9"
+      }
+    },
+    {
+      "cropName": "jute",
+      "scientificName": "Corchorus olitorius",
+      "suitability": 35,
+      "risk": "Medium",
+      "_id": {
+        "$oid": "686000017c4d51a2327538fa"
+      }
+    }
+  ],
+  "predictedAt": {
+    "$date": "2025-06-28T14:45:21.209Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68620e62de782a8b8aaa741e"
+  },
+  "userId": {
+    "$oid": "6849241fc2cf1bdd7c4616d3"
+  },
+  "inputData": {
+    "location": "ktm",
+    "soilType": "sandy",
+    "nitrogenRequired": "90",
+    "phosphorousRequired": "45",
+    "potassiumRequired": "45",
+    "soilpH": "7",
+    "temperature": "32",
+    "humidity": "65",
+    "rainfall": "100",
+    "farmSize": "100",
+    "climate": "subtropical",
+    "previousCrop": "wheat",
+    "budget": "high",
+    "experience": "intermediate",
+    "notes": "sas"
+  },
+  "recommendedCrops": [
+    {
+      "cropName": "maize",
+      "scientificName": "Zea mays",
+      "suitability": 30,
+      "risk": "Low",
+      "_id": {
+        "$oid": "68620e62de782a8b8aaa7420"
+      }
+    },
+    {
+      "cropName": "coffee",
+      "scientificName": "Coffea arabica",
+      "suitability": 20,
+      "risk": "High",
+      "_id": {
+        "$oid": "68620e62de782a8b8aaa741f"
+      }
+    },
+    {
+      "cropName": "papaya",
+      "scientificName": "Carica papaya",
+      "suitability": 20,
+      "risk": "Medium",
+      "_id": {
+        "$oid": "68620e62de782a8b8aaa7421"
+      }
+    }
+  ],
+  "predictedAt": {
+    "$date": "2025-06-30T04:11:14.246Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68621596de782a8b8aaa7491"
+  },
+  "userId": {
+    "$oid": "6849241fc2cf1bdd7c4616d3"
+  },
+  "inputData": {
+    "location": "kathmandu",
+    "locationCoordinates": null,
+    "soilType": "sandy",
+    "nitrogenRequired": "100",
+    "phosphorousRequired": "100",
+    "potassiumRequired": "100",
+    "soilpH": "9",
+    "temperature": "24",
+    "humidity": "70",
+    "rainfall": "200",
+    "farmSize": "100",
+    "climate": "arid",
+    "previousCrop": "soybeans",
+    "budget": "medium",
+    "experience": "intermediate",
+    "notes": "asjkdjsad"
+  },
+  "recommendedCrops": [
+    {
+      "cropName": "chickpea",
+      "scientificName": "Cicer arietinum",
+      "suitability": 20,
+      "risk": "High",
+      "_id": {
+        "$oid": "68621596de782a8b8aaa7492"
+      }
+    },
+    {
+      "cropName": "banana",
+      "scientificName": "Musa spp.",
+      "suitability": 30,
+      "risk": "Low",
+      "_id": {
+        "$oid": "68621596de782a8b8aaa7493"
+      }
+    },
+    {
+      "cropName": "coffee",
+      "scientificName": "Coffea arabica",
+      "suitability": 20,
+      "risk": "Medium",
+      "_id": {
+        "$oid": "68621596de782a8b8aaa7494"
+      }
+    }
+  ],
+  "predictedAt": {
+    "$date": "2025-06-30T04:41:58.697Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68637b0a5d64e3d86f6bd4d1"
+  },
+  "userId": {
+    "$oid": "685aba74ad3275a4a39980ab"
+  },
+  "inputData": {
+    "location": "Bhaktapur, Bhaktapur",
+    "locationCoordinates": {
+      "lat": 27.671,
+      "lng": 85.4298
+    },
+    "soilType": "loam",
+    "nitrogenRequired": "90",
+    "phosphorousRequired": "43",
+    "potassiumRequired": "34",
+    "soilpH": "7",
+    "temperature": "23",
+    "humidity": "67",
+    "rainfall": "210",
+    "farmSize": "123",
+    "climate": "temperate",
+    "previousCrop": "soybeans",
+    "budget": "medium",
+    "experience": "intermediate",
+    "notes": "saraj"
+  },
+  "recommendedCrops": [
+    {
+      "cropName": "jute",
+      "scientificName": "Corchorus olitorius",
+      "suitability": 15,
+      "risk": "High",
+      "_id": {
+        "$oid": "68637b0a5d64e3d86f6bd4d2"
+      }
+    },
+    {
+      "cropName": "coffee",
+      "scientificName": "Coffea arabica",
+      "suitability": 60,
+      "risk": "Low",
+      "_id": {
+        "$oid": "68637b0a5d64e3d86f6bd4d3"
+      }
+    },
+    {
+      "cropName": "rice",
+      "scientificName": "Oryza sativa",
+      "suitability": 25,
+      "risk": "Medium",
+      "_id": {
+        "$oid": "68637b0a5d64e3d86f6bd4d4"
+      }
+    }
+  ],
+  "predictedAt": {
+    "$date": "2025-07-01T06:07:06.547Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68638a055d64e3d86f6be0b8"
+  },
+  "userId": {
+    "$oid": "685f97941aa225d3c95aacec"
+  },
+  "inputData": {
+    "location": "Pokhara, Kaski",
+    "locationCoordinates": {
+      "lat": 28.2096,
+      "lng": 83.9856
+    },
+    "soilType": "clay",
+    "nitrogenRequired": "90",
+    "phosphorousRequired": "90",
+    "potassiumRequired": "90",
+    "soilpH": "5",
+    "temperature": "40",
+    "humidity": "54",
+    "rainfall": "101",
+    "farmSize": "34",
+    "climate": "subtropical",
+    "previousCrop": "fallow",
+    "budget": "low",
+    "experience": "beginner",
+    "notes": "hihihi"
+  },
+  "recommendedCrops": [
+    {
+      "cropName": "chickpea",
+      "scientificName": "Cicer arietinum",
+      "suitability": 20,
+      "risk": "High",
+      "_id": {
+        "$oid": "68638a055d64e3d86f6be0b9"
+      }
+    },
+    {
+      "cropName": "banana",
+      "scientificName": "Musa spp.",
+      "suitability": 35,
+      "risk": "Low",
+      "_id": {
+        "$oid": "68638a055d64e3d86f6be0ba"
+      }
+    },
+    {
+      "cropName": "maize",
+      "scientificName": "Zea mays",
+      "suitability": 20,
+      "risk": "Medium",
+      "_id": {
+        "$oid": "68638a055d64e3d86f6be0bb"
+      }
+    }
+  ],
+  "predictedAt": {
+    "$date": "2025-07-01T07:11:01.998Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68638a745d64e3d86f6be2f6"
+  },
+  "userId": {
+    "$oid": "685f97941aa225d3c95aacec"
+  },
+  "inputData": {
+    "location": "Kathmandu, Kathmandu",
+    "locationCoordinates": {
+      "lat": 27.7172,
+      "lng": 85.324
+    },
+    "soilType": "sandy",
+    "nitrogenRequired": "90",
+    "phosphorousRequired": "45",
+    "potassiumRequired": "46",
+    "soilpH": "6",
+    "temperature": "23",
+    "humidity": "87",
+    "rainfall": "202",
+    "farmSize": "56",
+    "climate": "subtropical",
+    "previousCrop": "soybeans",
+    "budget": "medium",
+    "experience": "intermediate",
+    "notes": "ksaak"
+  },
+  "recommendedCrops": [
+    {
+      "cropName": "jute",
+      "scientificName": "Corchorus olitorius",
+      "suitability": 20,
+      "risk": "High",
+      "_id": {
+        "$oid": "68638a745d64e3d86f6be2f7"
+      }
+    },
+    {
+      "cropName": "rice",
+      "scientificName": "Oryza sativa",
+      "suitability": 45,
+      "risk": "Low",
+      "_id": {
+        "$oid": "68638a745d64e3d86f6be2f8"
+      }
+    },
+    {
+      "cropName": "papaya",
+      "scientificName": "Carica papaya",
+      "suitability": 30,
+      "risk": "Medium",
+      "_id": {
+        "$oid": "68638a745d64e3d86f6be2f9"
+      }
+    }
+  ],
+  "predictedAt": {
+    "$date": "2025-07-01T07:12:52.543Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68638ab35d64e3d86f6be501"
+  },
+  "userId": {
+    "$oid": "685f97941aa225d3c95aacec"
+  },
+  "inputData": {
+    "location": "Lalitpur, Lalitpur",
+    "locationCoordinates": {
+      "lat": 27.6588,
+      "lng": 85.3247
+    },
+    "soilType": "sandy",
+    "nitrogenRequired": "90",
+    "phosphorousRequired": "45",
+    "potassiumRequired": "46",
+    "soilpH": "7",
+    "temperature": "20",
+    "humidity": "87",
+    "rainfall": "215",
+    "farmSize": "78",
+    "climate": "subtropical",
+    "previousCrop": "soybeans",
+    "budget": "medium",
+    "experience": "intermediate",
+    "notes": "12kndal\n"
+  },
+  "recommendedCrops": [
+    {
+      "cropName": "jute",
+      "scientificName": "Corchorus olitorius",
+      "suitability": 10,
+      "risk": "High",
+      "_id": {
+        "$oid": "68638ab35d64e3d86f6be502"
+      }
+    },
+    {
+      "cropName": "rice",
+      "scientificName": "Oryza sativa",
+      "suitability": 50,
+      "risk": "Low",
+      "_id": {
+        "$oid": "68638ab35d64e3d86f6be503"
+      }
+    },
+    {
+      "cropName": "papaya",
+      "scientificName": "Carica papaya",
+      "suitability": 35,
+      "risk": "Medium",
+      "_id": {
+        "$oid": "68638ab35d64e3d86f6be504"
+      }
+    }
+  ],
+  "predictedAt": {
+    "$date": "2025-07-01T07:13:55.050Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68638b045d64e3d86f6be7e7"
+  },
+  "userId": {
+    "$oid": "685f97941aa225d3c95aacec"
+  },
+  "inputData": {
+    "location": "Current Location",
+    "locationCoordinates": {
+      "lat": 27.641587,
+      "lng": 84.367446
+    },
+    "soilType": "clay",
+    "nitrogenRequired": "90",
+    "phosphorousRequired": "34",
+    "potassiumRequired": "45",
+    "soilpH": "8",
+    "temperature": "25",
+    "humidity": "87",
+    "rainfall": "201",
+    "farmSize": "23",
+    "climate": "subtropical",
+    "previousCrop": "soybeans",
+    "budget": "medium",
+    "experience": "intermediate",
+    "notes": "sadkalja"
+  },
+  "recommendedCrops": [
+    {
+      "cropName": "coffee",
+      "scientificName": "Coffea arabica",
+      "suitability": 15,
+      "risk": "High",
+      "_id": {
+        "$oid": "68638b045d64e3d86f6be7e8"
+      }
+    },
+    {
+      "cropName": "rice",
+      "scientificName": "Oryza sativa",
+      "suitability": 50,
+      "risk": "Low",
+      "_id": {
+        "$oid": "68638b045d64e3d86f6be7e9"
+      }
+    },
+    {
+      "cropName": "jute",
+      "scientificName": "Corchorus olitorius",
+      "suitability": 20,
+      "risk": "Medium",
+      "_id": {
+        "$oid": "68638b045d64e3d86f6be7ea"
+      }
+    }
+  ],
+  "predictedAt": {
+    "$date": "2025-07-01T07:15:16.264Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686494412b6275ea46f3f583"
+  },
+  "userId": {
+    "$oid": "685aba74ad3275a4a39980ab"
+  },
+  "inputData": {
+    "location": "Current Location",
+    "locationCoordinates": {
+      "lat": 27.598726410958907,
+      "lng": 84.34211357534245
+    },
+    "soilType": "clay",
+    "nitrogenRequired": "90",
+    "phosphorousRequired": "45",
+    "potassiumRequired": "43",
+    "soilpH": "7",
+    "temperature": "31",
+    "humidity": "87",
+    "rainfall": "201",
+    "farmSize": "23",
+    "climate": "subtropical",
+    "previousCrop": "none",
+    "budget": "low",
+    "experience": "beginner",
+    "notes": "We are predicting for a demo purpose. "
+  },
+  "recommendedCrops": [
+    {
+      "cropName": "jute",
+      "scientificName": "Corchorus olitorius",
+      "suitability": 20,
+      "risk": "High",
+      "_id": {
+        "$oid": "686494412b6275ea46f3f584"
+      }
+    },
+    {
+      "cropName": "rice",
+      "scientificName": "Oryza sativa",
+      "suitability": 40,
+      "risk": "Low",
+      "_id": {
+        "$oid": "686494412b6275ea46f3f585"
+      }
+    },
+    {
+      "cropName": "papaya",
+      "scientificName": "Carica papaya",
+      "suitability": 20,
+      "risk": "Medium",
+      "_id": {
+        "$oid": "686494412b6275ea46f3f586"
+      }
+    }
+  ],
+  "predictedAt": {
+    "$date": "2025-07-02T02:06:57.431Z"
+  },
+  "__v": 0
+}]
